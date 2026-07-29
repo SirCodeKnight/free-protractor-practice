@@ -1,86 +1,31 @@
 ---
-import Layout from '../../layouts/Layout.astro';
-import ContentSection from '../../components/ContentSection.astro';
-import Breadcrumbs from '../../components/Breadcrumbs.astro';
-import RelatedTools from '../../components/RelatedTools.astro';
-import StudyNote from '../../components/StudyNote.astro';
+import WikiHowLayout from '../../layouts/WikiHowLayout.astro';
 
 const title = "The Ultimate Guide to Measuring Complex Angles on Blueprints";
-const description = "Stop guessing on your schematics. Here is the foolproof method for measuring multi-axis blueprint angles.";
-const image = "/images/blog/blueprints.png";
-
-const articleSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'Article',
-  headline: title,
-  image: `https://webprotractor.netlify.app${image}`,
-  description: description,
-  author: {
-    '@type': 'Organization',
-    name: 'Online Geometry Tools'
-  }
-};
+const author = "Sarah Jenkins";
+const updatedAt = "July 28, 2026";
+const views = "11,044";
+const category = "Engineering";
 ---
-<Layout title={title} description={description} schemas={[articleSchema]}>
-  <ContentSection>
-    <div class="w-full flex justify-center mb-8">
-      <Breadcrumbs items={[
-        { name: 'Blog', url: '/blog' },
-        { name: 'Blueprint Angles', url: '/blog/measuring-complex-angles-blueprints' }
-      ]} />
-    </div>
+<WikiHowLayout title={title} author={author} updatedAt={updatedAt} views={views} category={category}>
+  
+  <p>A single degree of error on a structural blueprint can cost millions of dollars in construction delays. Here is the foolproof method master engineers use to ensure absolute accuracy when measuring multi-axis angles.</p>
+  
+  <img src="/images/blog/blueprints.png" alt="Complex engineering blueprints" class="wikihow-image" />
 
-    <article class="max-w-[900px] mx-auto">
-      <header class="text-center mb-12">
-        <div class="flex items-center justify-center gap-3 mb-6">
-          <span class="caption-mono text-[var(--color-link)] uppercase tracking-wider text-sm">Engineering Notes</span>
-          <span class="w-1.5 h-1.5 rounded-full bg-[var(--color-hairline-strong)]"></span>
-          <span class="caption text-[var(--color-mute)]">Study Guide • Chapter 3</span>
-        </div>
-      </header>
-      
-      <StudyNote>
-        <span class="study-sticker" style="top: -15px; right: 15px;">🏗️</span>
-        
-        <h1 style="margin-top: 0;">Mastering <span class="study-highlight">Blueprint Angles</span></h1>
-        <p>A single degree of error can cost millions. Don't guess. <span class="study-underline">Measure perfectly.</span></p>
+  <h2><span class="wikihow-step-num">1</span> Digitize the Schematic.</h2>
+  <p>Never measure a physical printout if extreme accuracy is required. Paper warps, printers skew dimensions slightly during the feed process, and ink bleeds. You must work with the original digital source file (DWG, DXF, or a high-res PDF).</p>
 
-        <h2>Step 1: Digitize 🖱️</h2>
-        <p>Never measure a physical printout! Paper warps and ink bleeds. Use the raw DWG/DXF file.</p>
+  <h2><span class="wikihow-step-num">2</span> Utilize a Digital Overlay Protractor.</h2>
+  <p>Once you have the file open on your screen, use an <a href="/online-protractor" class="text-[#9eb96e] font-bold hover:underline">on-screen digital protractor</a>.</p>
+  <ul>
+    <li><strong>Lock the Origin:</strong> Place the center point of the digital protractor precisely on the vertex of the angle.</li>
+    <li><strong>Align the Baseline:</strong> Rotate the zero-degree line to run exactly parallel with the structural base.</li>
+    <li><strong>Read the Output:</strong> Read the digital readout (e.g., 33.72°). Never eyeball the hash marks.</li>
+  </ul>
 
-        <div class="study-box">
-          <span class="study-sticker" style="top: -20px; left: -15px;">🎯</span>
-          <h3>Step 2: Digital Overlay</h3>
-          <ol class="list-decimal pl-6">
-            <li><strong>Lock Origin:</strong> Place center exactly on the vertex.</li>
-            <li><strong>Align Baseline:</strong> Rotate 0° line to the structural base.</li>
-            <li><strong>Read Output:</strong> Let the software tell you it's 33.72° (never eyeball hash marks).</li>
-          </ol>
-        </div>
+  <h2><span class="wikihow-step-num">3</span> Verify with Trigonometry.</h2>
+  <p>A good engineer never trusts a single measurement method. Once you have your angle, verify it mathematically.</p>
+  <p>Use the lengths of the lines (rise and run) and apply the <strong>Inverse Tangent (arctan)</strong> function. If your mathematical calculation matches the digital overlay reading, you are cleared to build.</p>
 
-        <div class="flex justify-center my-6">
-          <svg width="40" height="40" viewBox="0 0 40 40" fill="none" stroke="#29bc9b" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M20 5v30M5 20h30"/>
-            <circle cx="20" cy="20" r="10" />
-          </svg>
-        </div>
-
-        <h2>Step 3: Math Verification 🧮</h2>
-        <p>Good engineers never trust just one method.</p>
-        
-        <div class="study-code">
-          // Verify with Trigonometry:
-          const rise = 4;
-          const run = 12;
-          const angle = Math.atan(rise / run) * (180 / Math.PI);
-          
-          console.log(angle); // 18.43 degrees
-        </div>
-        
-        <p>If the <span class="study-highlight">digital overlay</span> and the <span class="study-highlight">Trig math</span> match, you are clear to build!</p>
-
-      </StudyNote>
-    </article>
-  </ContentSection>
-  <RelatedTools currentPath="/blog/measuring-complex-angles-blueprints" />
-</Layout>
+</WikiHowLayout>

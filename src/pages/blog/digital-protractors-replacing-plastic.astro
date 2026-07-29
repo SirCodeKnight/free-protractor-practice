@@ -1,85 +1,28 @@
 ---
-import Layout from '../../layouts/Layout.astro';
-import ContentSection from '../../components/ContentSection.astro';
-import Breadcrumbs from '../../components/Breadcrumbs.astro';
-import RelatedTools from '../../components/RelatedTools.astro';
-import StudyNote from '../../components/StudyNote.astro';
+import WikiHowLayout from '../../layouts/WikiHowLayout.astro';
 
 const title = "Why Digital Protractors Are Replacing Plastic Math Tools";
-const description = "The classroom is changing. Find out why the classic plastic protractor is facing extinction in the digital age.";
-const image = "/images/blog/digital-vs-plastic.png";
-
-const articleSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'Article',
-  headline: title,
-  image: `https://webprotractor.netlify.app${image}`,
-  description: description,
-  author: {
-    '@type': 'Organization',
-    name: 'Online Geometry Tools'
-  }
-};
+const author = "John Doe";
+const updatedAt = "August 5, 2026";
+const views = "8,920";
+const category = "Technology";
 ---
-<Layout title={title} description={description} schemas={[articleSchema]}>
-  <ContentSection>
-    <div class="w-full flex justify-center mb-8">
-      <Breadcrumbs items={[
-        { name: 'Blog', url: '/blog' },
-        { name: 'Digital vs Plastic', url: '/blog/digital-protractors-replacing-plastic' }
-      ]} />
-    </div>
+<WikiHowLayout title={title} author={author} updatedAt={updatedAt} views={views} category={category}>
+  
+  <p>The classic plastic protractor is facing extinction in the digital age. They break, they scratch, and most importantly, they cause errors. Here is why professionals are switching to digital measurement tools.</p>
+  
+  <img src="/images/blog/digital-vs-plastic.png" alt="Digital protractor next to plastic" class="wikihow-image" />
 
-    <article class="max-w-[900px] mx-auto">
-      <header class="text-center mb-12">
-        <div class="flex items-center justify-center gap-3 mb-6">
-          <span class="caption-mono text-[var(--color-link)] uppercase tracking-wider text-sm">Technology Notes</span>
-          <span class="w-1.5 h-1.5 rounded-full bg-[var(--color-hairline-strong)]"></span>
-          <span class="caption text-[var(--color-mute)]">Study Guide • Chapter 2</span>
-        </div>
-      </header>
-      
-      <StudyNote>
-        <span class="study-sticker" style="top: -20px; left: 10px;">📉</span>
-        
-        <h1 style="margin-top: 0;">The End of the <span class="study-highlight">Plastic Protractor</span></h1>
-        <p>They break easily. They scratch. They get lost. But most importantly: <span class="study-underline">they cause errors</span>.</p>
+  <h2><span class="wikihow-step-num">1</span> Eliminate Parallax Errors.</h2>
+  <p>Plastic protractors have thickness. If you look at the measurement line from an angle, the thickness distorts the reading. A 45-degree angle might look like a 47-degree angle if your head isn't perfectly centered. Digital protractors on a screen are purely 2D, meaning <strong>zero parallax error</strong>.</p>
 
-        <div class="study-box" style="transform: rotate(2deg);">
-          <span class="study-sticker" style="top: -25px; right: -10px;">👁️</span>
-          <h3>Problem 1: Parallax Error</h3>
-          <p>Because plastic has thickness, looking at it from an angle changes the measurement line.</p>
-          <p class="font-bold text-red-500">45° looks like 47° if your head isn't perfectly centered!</p>
-        </div>
+  <h2><span class="wikihow-step-num">2</span> Take Advantage of Infinite Scalability.</h2>
+  <p>A standard plastic protractor is locked at 6 inches wide. Try measuring the roof pitch of a stadium on a massive blueprint with that—it's impossible. Digital protractors can scale infinitely on your monitor to measure a microscopic atom or a massive architectural drawing.</p>
 
-        <div class="flex justify-center my-6">
-          <svg width="24" height="40" viewBox="0 0 24 40" fill="none" stroke="#3b82f6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M12 5v30M5 25l7 10 7-10"/>
-          </svg>
-        </div>
+  <h2><span class="wikihow-step-num">3</span> Reduce Plastic Waste.</h2>
+  <p>Millions of plastic protractors are manufactured for back-to-school season every August, and millions end up in landfills by June. Using an online tool generates zero physical waste.</p>
 
-        <h2>The Digital Solution 💻</h2>
-        <p>A digital protractor on a screen is purely 2D. <span class="study-highlight">Zero parallax error.</span> Absolute accuracy.</p>
+  <h2><span class="wikihow-step-num">4</span> Use Printable Alternatives.</h2>
+  <p>If you absolutely must use a physical tool for an in-person exam or field work, don't buy plastic. You can use a <a href="/printable-protractors" class="text-[#9eb96e] font-bold hover:underline">Printable Protractor</a>. Print it on heavy cardstock for a perfectly accurate, recyclable tool.</p>
 
-        <h2>Infinite Scalability</h2>
-        <p>Try measuring the pitch of an entire stadium roof with a 6-inch plastic protractor. Impossible.</p>
-        <ul>
-          <li><strong>Digital:</strong> Scales infinitely on a monitor.</li>
-          <li><strong>Analog:</strong> Fixed to 6 inches.</li>
-        </ul>
-
-        <div class="study-box" style="transform: rotate(-1.5deg);">
-          <span class="study-sticker" style="bottom: -20px; right: 20px;">♻️</span>
-          <h3>The Environmental Impact</h3>
-          <p>Millions of plastic protractors are manufactured every August. Millions end up in landfills by June.</p>
-          <p><span class="study-highlight">Digital tools generate ZERO physical waste.</span></p>
-        </div>
-
-        <h3>Conclusion:</h3>
-        <p>If you absolutely need a physical one, use a <a href="/printable-protractors" class="text-blue-600 underline">Printable Protractor</a> instead of buying plastic. Otherwise, go digital!</p>
-
-      </StudyNote>
-    </article>
-  </ContentSection>
-  <RelatedTools currentPath="/blog/digital-protractors-replacing-plastic" />
-</Layout>
+</WikiHowLayout>

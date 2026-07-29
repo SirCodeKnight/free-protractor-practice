@@ -1,85 +1,28 @@
 ---
-import Layout from '../../layouts/Layout.astro';
-import ContentSection from '../../components/ContentSection.astro';
-import Breadcrumbs from '../../components/Breadcrumbs.astro';
-import RelatedTools from '../../components/RelatedTools.astro';
-import StudyNote from '../../components/StudyNote.astro';
+import WikiHowLayout from '../../layouts/WikiHowLayout.astro';
 
 const title = "The Hidden Math: Unlocking the Golden Ratio in Modern Design";
-const description = "Why do certain websites look inherently beautiful? The answer lies in a 2,000-year-old mathematical sequence.";
-const image = "/images/blog/golden-ratio.png";
-
-const articleSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'Article',
-  headline: title,
-  image: `https://webprotractor.netlify.app${image}`,
-  description: description,
-  author: {
-    '@type': 'Organization',
-    name: 'Online Geometry Tools'
-  }
-};
+const author = "Elena Rostova";
+const updatedAt = "July 14, 2026";
+const views = "42,010";
+const category = "Web Design";
 ---
-<Layout title={title} description={description} schemas={[articleSchema]}>
-  <ContentSection>
-    <div class="w-full flex justify-center mb-8">
-      <Breadcrumbs items={[
-        { name: 'Blog', url: '/blog' },
-        { name: 'Golden Ratio', url: '/blog/golden-ratio-modern-design' }
-      ]} />
-    </div>
+<WikiHowLayout title={title} author={author} updatedAt={updatedAt} views={views} category={category}>
+  
+  <p>Why do certain websites look inherently beautiful while others feel "off"? The answer lies in a 2,000-year-old mathematical sequence known as the Golden Ratio. Here is how to apply it to your designs.</p>
+  
+  <img src="/images/blog/golden-ratio.png" alt="Golden ratio overlay" class="wikihow-image" />
 
-    <article class="max-w-[900px] mx-auto">
-      <header class="text-center mb-12">
-        <div class="flex items-center justify-center gap-3 mb-6">
-          <span class="caption-mono text-[var(--color-link)] uppercase tracking-wider text-sm">Design Notes</span>
-          <span class="w-1.5 h-1.5 rounded-full bg-[var(--color-hairline-strong)]"></span>
-          <span class="caption text-[var(--color-mute)]">Study Guide • Chapter 5</span>
-        </div>
-      </header>
-      
-      <StudyNote>
-        <span class="study-sticker" style="top: -10px; right: 20px;">✨</span>
-        
-        <h1 style="margin-top: 0;">Unlocking the <span class="study-highlight">Golden Ratio</span></h1>
-        <p>Why do Apple product pages look so good? It's not magic, it's <span class="study-underline">Geometry</span>.</p>
+  <h2><span class="wikihow-step-num">1</span> Understand Phi (1.618).</h2>
+  <p>The Golden Ratio is a mathematical constant found throughout nature. In geometry, a Golden Rectangle is one whose side lengths are in the ratio of 1:1.618. Human psychology is deeply wired to find this proportion aesthetically pleasing.</p>
 
-        <div class="study-box" style="transform: rotate(-1deg);">
-          <span class="study-sticker" style="top: -20px; left: -20px;">🧠</span>
-          <h3>The Math: Phi (φ)</h3>
-          <p>The Golden Ratio is <span class="study-highlight">1 : 1.618</span>.</p>
-          <p>It's found in galaxies, nautilus shells, and... UI Design!</p>
-        </div>
+  <h2><span class="wikihow-step-num">2</span> Scale Typography Mathematically.</h2>
+  <p>Top-tier UI designers do not guess font sizes. If your body text is 16px, multiply it by 1.618 to get your Header size (approx 26px). Multiply that by 1.618 for your Hero Title (approx 42px). This creates perfect typographic hierarchy.</p>
 
-        <h2>1. Typographic Hierarchy</h2>
-        <p>Don't guess font sizes. Use math!</p>
-        
-        <div class="study-code">
-          // The perfect font scale:
-          let bodyText = 16;
-          let h2Text = bodyText * 1.618; // ~26px
-          let h1Text = h2Text * 1.618;   // ~42px
-        </div>
+  <h2><span class="wikihow-step-num">3</span> Build Golden Layout Grids.</h2>
+  <p>Divide your total screen width by 1.618. For a standard 1920px wide screen, the main content area should be roughly 1187px wide, leaving exactly enough room for a perfectly proportioned sidebar.</p>
 
-        <div class="flex justify-center my-6">
-          <svg width="24" height="40" viewBox="0 0 24 40" fill="none" stroke="#f5a623" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M12 5v30M5 25l7 10 7-10"/>
-          </svg>
-        </div>
+  <h2><span class="wikihow-step-num">4</span> Validate with Digital Rulers.</h2>
+  <p>You don't need to guess if your layout is perfect. Use an <a href="/ruler" class="text-[#9eb96e] font-bold hover:underline">Online Digital Ruler</a> to measure the exact pixel widths of your columns on the screen and ensure they conform to the 1.618 ratio.</p>
 
-        <h2>2. Layout Grids</h2>
-        <p>Divide a 1920px screen by 1.618.</p>
-        <ul>
-          <li><strong>Main Content:</strong> 1187px</li>
-          <li><strong>Sidebar:</strong> The leftover space!</li>
-        </ul>
-        <p>This creates a perfectly balanced <span class="study-highlight">Golden Rectangle</span> on the screen.</p>
-        
-        <p class="mt-8 text-center font-bold">Use our <a href="/ruler" class="text-blue-600 underline">Digital Ruler</a> to audit your UI columns today!</p>
-
-      </StudyNote>
-    </article>
-  </ContentSection>
-  <RelatedTools currentPath="/blog/golden-ratio-modern-design" />
-</Layout>
+</WikiHowLayout>

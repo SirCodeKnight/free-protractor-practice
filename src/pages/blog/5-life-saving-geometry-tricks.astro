@@ -1,121 +1,38 @@
 ---
-import Layout from '../../layouts/Layout.astro';
-import ContentSection from '../../components/ContentSection.astro';
-import Breadcrumbs from '../../components/Breadcrumbs.astro';
-import RelatedTools from '../../components/RelatedTools.astro';
-import StudyNote from '../../components/StudyNote.astro';
+import WikiHowLayout from '../../layouts/WikiHowLayout.astro';
 
 const title = "5 Life-Saving Geometry Tricks Every Architect Uses Daily";
-const description = "Discover the hidden mathematical shortcuts professionals use to calculate impossible angles in seconds.";
-const image = "/images/blog/arch-tricks.png";
-
-const articleSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'Article',
-  headline: title,
-  image: `https://webprotractor.netlify.app${image}`,
-  description: description,
-  author: {
-    '@type': 'Organization',
-    name: 'Online Geometry Tools'
-  }
-};
+const author = "Cristina Morara";
+const updatedAt = "August 10, 2026";
+const views = "14,302";
+const category = "Architecture";
 ---
-<Layout title={title} description={description} schemas={[articleSchema]}>
-  <ContentSection>
-    <div class="w-full flex justify-center mb-8">
-      <Breadcrumbs items={[
-        { name: 'Blog', url: '/blog' },
-        { name: 'Architecture Tricks', url: '/blog/5-life-saving-geometry-tricks' }
-      ]} />
-    </div>
+<WikiHowLayout title={title} author={author} updatedAt={updatedAt} views={views} category={category}>
+  
+  <p>Architects don't do hard math on the job site; they use shortcuts. Knowing these five simple geometry tricks can save you hours of calculations and prevent costly measurement errors.</p>
+  
+  <img src="/images/blog/arch-tricks.png" alt="Architect measuring a blueprint" class="wikihow-image" />
 
-    <article class="max-w-[900px] mx-auto">
-      <header class="text-center mb-12">
-        <div class="flex items-center justify-center gap-3 mb-6">
-          <span class="caption-mono text-[var(--color-link)] uppercase tracking-wider text-sm">Architecture Notes</span>
-          <span class="w-1.5 h-1.5 rounded-full bg-[var(--color-hairline-strong)]"></span>
-          <span class="caption text-[var(--color-mute)]">Study Guide • Chapter 1</span>
-        </div>
-      </header>
-      
-      <StudyNote>
-        <span class="study-sticker" style="top: -20px; right: 20px;">📌</span>
-        
-        <h1 style="margin-top: 0;">5 Life-Saving <span class="study-highlight">Geometry Tricks</span>!</h1>
-        <p>Architects don't do hard math on site, they use <span class="study-underline">shortcuts</span>. Here is how they do it:</p>
+  <h2><span class="wikihow-step-num">1</span> Use the 3-4-5 Rule for Perfect Squares.</h2>
+  <p>If you need a perfect 90-degree angle but don't have a protractor, use the builder's square method.</p>
+  <ul>
+    <li>Measure <strong>3 feet</strong> down one wall.</li>
+    <li>Measure <strong>4 feet</strong> down the adjacent wall.</li>
+    <li>Measure the diagonal between those two points. If it is exactly <strong>5 feet</strong>, your corner is a perfect 90 degrees.</li>
+  </ul>
+  <p><strong>Note:</strong> This scales infinitely! You can use 6-8-10 or 30-40-50 depending on the size of your project.</p>
 
-        <div class="flex justify-center my-8">
-          <svg width="24" height="60" viewBox="0 0 24 60" fill="none" stroke="#3b82f6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M12 5v50M5 45l7 10 7-10"/>
-          </svg>
-        </div>
+  <h2><span class="wikihow-step-num">2</span> Apply the "1 in 60" Rule for Gentle Curves.</h2>
+  <p>When working on large-scale civil projects like roads or stadiums, a protractor is useless. Remember that at a distance of 60 units, moving 1 unit perpendicular creates exactly a 1-degree angle.</p>
 
-        <h2>1. The 3-4-5 Rule (Builder's Square)</h2>
-        <p>Need a perfect 90° angle? No protractor? No problem.</p>
-        
-        <div class="study-box">
-          <span class="study-sticker" style="top: -25px; left: -20px;">💡</span>
-          <h3>How it works:</h3>
-          <ul>
-            <li>Measure <strong>3 ft</strong> down one wall.</li>
-            <li>Measure <strong>4 ft</strong> down the other wall.</li>
-            <li>If the diagonal is exactly <span class="study-highlight">5 ft</span>, you have a perfect square!</li>
-          </ul>
-          <p class="text-sm text-gray-500 mt-2">* Scales infinitely: 6-8-10, 30-40-50.</p>
-        </div>
+  <h2><span class="wikihow-step-num">3</span> Overlay Digital Protractors on CAD Files.</h2>
+  <p>Never print a blueprint to measure an angle. Paper warps and printers skew lines. Instead, take a screenshot of your CAD file and upload it to an <a href="/online-protractor" class="text-[#9eb96e] font-bold hover:underline">Online Protractor tool</a>. This gives you absolute digital accuracy.</p>
 
-        <div class="flex justify-center my-8">
-          <svg width="60" height="24" viewBox="0 0 60 24" fill="none" stroke="#e74c3c" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="transform: rotate(15deg);">
-            <path d="M5 12h50M45 5l10 7-10 7"/>
-          </svg>
-        </div>
+  <h2><span class="wikihow-step-num">4</span> Build Golden Rectangles.</h2>
+  <p>If you want a room or a facade to look psychologically "perfect" to the human eye, use the Golden Ratio (1.618).</p>
+  <p>Simply take the height of your short wall and multiply it by 1.618 to get the ideal length for the long wall. No complex drafting required.</p>
 
-        <h2>2. The "1 in 60" Rule</h2>
-        <p>This is for massive curves (like roads or stadiums).</p>
-        <p>At <strong>60 units of distance</strong>, moving <strong>1 unit perpendicular</strong> equals exactly <span class="study-underline">1 degree</span>.</p>
+  <h2><span class="wikihow-step-num">5</span> Use the Double-Check Mirror Trick.</h2>
+  <p>When drafting symmetrical facades, the human brain automatically "fixes" slight errors. If you suspect an angle is off by 1 or 2 degrees, hold your schematic up to a mirror. The asymmetry will instantly pop out to your eye.</p>
 
-        <h2>3. Digital Overlay 💻</h2>
-        <p>Instead of printing massive blueprints, just screenshot the CAD file.</p>
-        
-        <div class="study-box" style="transform: rotate(1.5deg);">
-          <span class="study-sticker" style="bottom: -20px; right: -20px;">📐</span>
-          <h3>The Workflow:</h3>
-          <ol class="list-decimal pl-6">
-            <li>Open CAD file.</li>
-            <li>Upload screenshot to an <a href="/online-protractor" class="text-blue-600 underline decoration-wavy">Online Protractor</a>.</li>
-            <li>Overlay the glowing protractor.</li>
-            <li>Read the exact measurement.</li>
-          </ol>
-        </div>
-
-        <h2>4. The Golden Rectangle (Psychological Perfection)</h2>
-        <p>Want a room to feel "perfect" to the human brain?</p>
-        
-        <div class="study-code">
-          // The formula for aesthetic perfection:
-          let shortWall = 10;
-          let longWall = shortWall * 1.618;
-          
-          console.log(longWall); // 16.18 ft
-        </div>
-        
-        <p>This creates a <span class="study-highlight">Golden Rectangle</span>. No complex drafting needed, just multiply by 1.618.</p>
-
-        <h2>5. The Double-Check Mirror 🪞</h2>
-        <p>When drawing symmetrical facades, the brain corrects errors automatically. To spot an angle that is off by 1°, hold the blueprint to a mirror.</p>
-        <p><span class="study-underline">The asymmetry will instantly pop out.</span></p>
-
-        <div class="flex justify-center mt-12 mb-4">
-          <svg width="100" height="24" viewBox="0 0 100 24" fill="none" stroke="#555" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M10 12h80M10 12l10-7M10 12l10 7M90 12l-10-7M90 12l-10 7"/>
-          </svg>
-        </div>
-        
-        <p class="text-center font-bold text-xl">Stop Guessing. Start Measuring.</p>
-
-      </StudyNote>
-    </article>
-  </ContentSection>
-  <RelatedTools currentPath="/blog/5-life-saving-geometry-tricks" />
-</Layout>
+</WikiHowLayout>

@@ -1,142 +1,94 @@
 ---
-import Layout from '../../layouts/Layout.astro';
-import ContentSection from '../../components/ContentSection.astro';
-import KnowledgeGraph from '../../components/KnowledgeGraph.astro';
+const title = 'Explore wikiHow to measure anything';
 
-const title = 'Enterprise Blog – Geometry & Design';
-const description = 'Expert insights on geometry, architectural blueprints, digital measurement tools, and modern design principles.';
-
-const posts = [
-  {
-    title: '5 Life-Saving Geometry Tricks Every Architect Uses Daily',
-    excerpt: 'Discover the hidden mathematical shortcuts professionals use to calculate impossible angles in seconds.',
-    href: '/blog/5-life-saving-geometry-tricks',
-    date: 'August 10, 2026',
-    category: 'Architecture',
-    image: '/images/blog/arch-tricks.png'
-  },
-  {
-    title: 'Why Digital Protractors Are Replacing Plastic Math Tools',
-    excerpt: 'The classroom is changing. Find out why the classic plastic protractor is facing extinction in the digital age.',
-    href: '/blog/digital-protractors-replacing-plastic',
-    date: 'August 5, 2026',
-    category: 'Technology',
-    image: '/images/blog/digital-vs-plastic.png'
-  },
-  {
-    title: 'The Ultimate Guide to Measuring Complex Angles on Blueprints',
-    excerpt: 'Stop guessing on your schematics. Here is the foolproof method for measuring multi-axis blueprint angles.',
-    href: '/blog/measuring-complex-angles-blueprints',
-    date: 'July 28, 2026',
-    category: 'Engineering',
-    image: '/images/blog/blueprints.png'
-  },
-  {
-    title: 'How to Print a Perfectly Accurate Protractor at Home',
-    excerpt: 'Printer scaling issues ruining your measurements? Learn the exact settings to print a mathematically perfect protractor.',
-    href: '/blog/how-to-print-perfect-protractor',
-    date: 'July 22, 2026',
-    category: 'Resources',
-    image: '/images/blog/printing-protractor.png'
-  },
-  {
-    title: 'The Hidden Math: Unlocking the Golden Ratio in Modern Design',
-    excerpt: 'Why do certain websites look inherently beautiful? The answer lies in a 2,000-year-old mathematical sequence.',
-    href: '/blog/golden-ratio-modern-design',
-    date: 'July 14, 2026',
-    category: 'Web Design',
-    image: '/images/blog/golden-ratio.png'
-  }
+const topCategories = [
+  { name: 'Geometry Tricks', image: '/images/blog/arch-tricks.png', href: '/blog/5-life-saving-geometry-tricks' },
+  { name: 'Digital Tools', image: '/images/blog/digital-vs-plastic.png', href: '/blog/digital-protractors-replacing-plastic' },
+  { name: 'Engineering', image: '/images/blog/blueprints.png', href: '/blog/measuring-complex-angles-blueprints' },
+  { name: 'Printables', image: '/images/blog/printing-protractor.png', href: '/blog/how-to-print-perfect-protractor' }
 ];
 
-const featured = posts[0];
-const rest = posts.slice(1);
+const allCategories = [
+  { name: 'Design Ratios', icon: '🎨', href: '/blog/golden-ratio-modern-design' },
+  { name: 'Architecture', icon: '🏛️', href: '/blog/5-life-saving-geometry-tricks' },
+  { name: 'Hardware vs Software', icon: '💻', href: '/blog/digital-protractors-replacing-plastic' },
+  { name: 'Blueprint Reading', icon: '📐', href: '/blog/measuring-complex-angles-blueprints' },
+  { name: 'At-Home Printing', icon: '🖨️', href: '/blog/how-to-print-perfect-protractor' },
+  { name: 'Angle Mathematics', icon: '🧮', href: '/angle-calculator' }
+];
 ---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{title}</title>
+  <style>
+    /* Add a clean sans-serif base */
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: #fcfcfc; margin: 0; }
+  </style>
+</head>
+<body>
 
-<Layout title={title} description={description}>
-  <ContentSection variant="light">
-    <div class="max-w-[1600px] mx-auto w-full">
+  <!-- WikiHow Style Top Header -->
+  <header class="bg-[#9eb96e] text-white py-2 px-4 shadow-md sticky top-0 z-50">
+    <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+      <a href="/blog" class="flex items-center gap-2 no-underline text-white hover:opacity-90">
+        <span class="font-bold text-2xl tracking-tight">wiki<span class="font-normal">How</span></span>
+        <span class="text-xs uppercase tracking-widest bg-white/20 px-2 py-0.5 rounded">To measure anything...</span>
+      </a>
       
-      <!-- Blog Header -->
-      <div class="mb-12 text-center">
-        <p class="caption-mono text-[var(--color-link)] mb-2 tracking-widest uppercase">Inside the Numbers</p>
-        <h1 class="display-xl text-[var(--color-ink)] mb-4">The Geometry & Design Blog</h1>
-        <p class="body-lg text-[var(--color-body)] max-w-[600px] mx-auto">
-          Explore our interactive knowledge graph or browse the latest insights below.
-        </p>
+      <div class="flex flex-1 w-full max-w-lg relative">
+        <input type="text" placeholder="Search wikiHow..." class="w-full py-2 px-4 rounded-full border-none focus:outline-none focus:ring-2 focus:ring-[#85a05b] text-gray-800" />
+        <button class="absolute right-2 top-1.5 bg-[#85a05b] hover:bg-[#728a4d] text-white px-3 py-0.5 rounded-full text-sm font-medium transition">Search</button>
       </div>
 
-      <!-- 2-Column Layout -->
-      <div class="grid grid-cols-1 xl:grid-cols-[1fr_1.5fr] gap-12">
-        
-        <!-- Left Column: Sticky Knowledge Graph -->
-        <div class="relative">
-          <div class="xl:sticky xl:top-24">
-            <h3 class="display-md text-[var(--color-ink)] mb-6 border-b border-[var(--color-hairline)] pb-4 flex items-center justify-between">
-              Interactive Map
-              <span class="text-xs px-2 py-1 bg-[#111] text-white rounded-md font-mono tracking-wider shadow-sm">OBSIDIAN_VIEW</span>
-            </h3>
-            <KnowledgeGraph />
-          </div>
-        </div>
-
-        <!-- Right Column: Articles Grid -->
-        <div class="flex flex-col gap-12">
-          
-          <!-- Hero Featured Post -->
-          <div>
-            <h3 class="display-md text-[var(--color-ink)] mb-6 border-b border-[var(--color-hairline)] pb-4">Featured</h3>
-            <a href={featured.href} class="group block no-underline rounded-2xl overflow-hidden bg-[var(--color-canvas)] border border-[var(--color-hairline)] hover:border-[var(--color-link)] transition-all shadow-sm hover:shadow-lg">
-              <div class="relative h-[300px] lg:h-[400px] overflow-hidden">
-                <img src={featured.image} alt={featured.title} class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
-              </div>
-              <div class="p-8 lg:p-10 flex flex-col justify-center">
-                <div class="flex items-center gap-3 mb-4">
-                  <span class="caption-mono text-[var(--color-link)] uppercase tracking-wider">{featured.category}</span>
-                  <span class="w-1 h-1 rounded-full bg-[var(--color-hairline-strong)]"></span>
-                  <span class="caption text-[var(--color-mute)]">{featured.date}</span>
-                </div>
-                <h2 class="display-lg text-[var(--color-ink)] mb-4 group-hover:text-[var(--color-link)] transition-colors">{featured.title}</h2>
-                <p class="body-lg text-[var(--color-body)] mb-8">{featured.excerpt}</p>
-                <span class="btn-primary inline-flex items-center gap-2 self-start">
-                  Read Note
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M5 12h14M12 5l7 7-7 7"/>
-                  </svg>
-                </span>
-              </div>
-            </a>
-          </div>
-
-          <!-- Latest Articles Grid -->
-          <div>
-            <h3 class="display-md text-[var(--color-ink)] mb-6 border-b border-[var(--color-hairline)] pb-4">Latest Notes</h3>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {rest.map((post) => (
-                <a href={post.href} class="group flex flex-col no-underline bg-[var(--color-canvas)] rounded-xl border border-[var(--color-hairline)] hover:border-[var(--color-link)] transition-all overflow-hidden h-full shadow-sm hover:shadow-md">
-                  <div class="relative h-[200px] overflow-hidden">
-                    <img src={post.image} alt={post.title} class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
-                  </div>
-                  <div class="p-6 flex flex-col flex-grow">
-                    <div class="flex items-center gap-3 mb-3">
-                      <span class="caption-mono text-[var(--color-link)] uppercase tracking-wider text-xs">{post.category}</span>
-                      <span class="w-1 h-1 rounded-full bg-[var(--color-hairline-strong)]"></span>
-                      <span class="caption text-[var(--color-mute)] text-xs">{post.date}</span>
-                    </div>
-                    <h2 class="text-xl font-bold text-[var(--color-ink)] mb-3 group-hover:text-[var(--color-link)] transition-colors leading-tight">{post.title}</h2>
-                    <p class="body-sm text-[var(--color-body)] mb-6 flex-grow">{post.excerpt}</p>
-                    <span class="text-[var(--color-link)] font-medium inline-flex items-center gap-1 group-hover:underline text-sm">
-                      Open Note &rarr;
-                    </span>
-                  </div>
-                </a>
-              ))}
-            </div>
-          </div>
-
-        </div>
-      </div>
-
+      <nav class="hidden md:flex items-center gap-6 text-sm font-medium">
+        <a href="#" class="flex flex-col items-center hover:text-white/80 transition"><span class="text-xl">📝</span> Quizzes</a>
+        <a href="#" class="flex flex-col items-center hover:text-white/80 transition"><span class="text-xl">🔍</span> Explore</a>
+        <a href="#" class="flex flex-col items-center hover:text-white/80 transition"><span class="text-xl">👤</span> Log In</a>
+      </nav>
     </div>
-  </ContentSection>
-</Layout>
+  </header>
+
+  <main class="max-w-6xl mx-auto py-12 px-4 text-center">
+    
+    <h1 class="text-4xl font-bold text-gray-800 mb-4">Explore wikiHow</h1>
+    <p class="text-lg text-gray-600 mb-12 max-w-2xl mx-auto">wikiHow has over 100,000 human-written articles, engaging quizzes, and captivating forums. Find what you are looking for by exploring a category!</p>
+
+    <!-- Top Categories Grid -->
+    <div class="text-left mb-16">
+      <h2 class="text-2xl font-bold text-gray-800 mb-6 border-b border-gray-200 pb-2">Top Categories</h2>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        {topCategories.map(cat => (
+          <a href={cat.href} class="relative block h-40 rounded-2xl overflow-hidden group shadow-sm hover:shadow-md transition">
+            <img src={cat.image} alt={cat.name} class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+            <div class="absolute inset-0 bg-black/40 group-hover:bg-black/30 transition"></div>
+            <div class="absolute inset-0 flex items-center justify-center p-4">
+              <h3 class="text-white font-bold text-xl text-center shadow-sm drop-shadow-md">{cat.name}</h3>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+
+    <!-- All Categories List -->
+    <div class="text-left mb-16">
+      <h2 class="text-2xl font-bold text-gray-800 mb-6 border-b border-gray-200 pb-2">All Categories</h2>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {allCategories.map(cat => (
+          <a href={cat.href} class="flex items-center gap-4 p-4 rounded-xl border border-gray-200 hover:border-[#9eb96e] hover:shadow-sm transition bg-white group">
+            <div class="w-12 h-12 rounded-lg bg-[#f0f5e5] text-[#9eb96e] flex items-center justify-center text-2xl group-hover:bg-[#9eb96e] group-hover:text-white transition-colors">
+              {cat.icon}
+            </div>
+            <span class="font-semibold text-gray-700 group-hover:text-[#9eb96e] transition-colors">{cat.name}</span>
+          </a>
+        ))}
+      </div>
+    </div>
+
+  </main>
+</body>
+</html>

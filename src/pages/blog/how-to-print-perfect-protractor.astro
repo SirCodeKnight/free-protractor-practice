@@ -1,79 +1,34 @@
 ---
-import Layout from '../../layouts/Layout.astro';
-import ContentSection from '../../components/ContentSection.astro';
-import Breadcrumbs from '../../components/Breadcrumbs.astro';
-import RelatedTools from '../../components/RelatedTools.astro';
-import StudyNote from '../../components/StudyNote.astro';
+import WikiHowLayout from '../../layouts/WikiHowLayout.astro';
 
 const title = "How to Print a Perfectly Accurate Protractor at Home";
-const description = "Printer scaling issues ruining your measurements? Learn the exact settings to print a mathematically perfect protractor.";
-const image = "/images/blog/printing-protractor.png";
-
-const articleSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'Article',
-  headline: title,
-  image: `https://webprotractor.netlify.app${image}`,
-  description: description,
-  author: {
-    '@type': 'Organization',
-    name: 'Online Geometry Tools'
-  }
-};
+const author = "Alex Chen";
+const updatedAt = "July 22, 2026";
+const views = "25,109";
+const category = "Resources";
 ---
-<Layout title={title} description={description} schemas={[articleSchema]}>
-  <ContentSection>
-    <div class="w-full flex justify-center mb-8">
-      <Breadcrumbs items={[
-        { name: 'Blog', url: '/blog' },
-        { name: 'Printing Protractors', url: '/blog/how-to-print-perfect-protractor' }
-      ]} />
-    </div>
+<WikiHowLayout title={title} author={author} updatedAt={updatedAt} views={views} category={category}>
+  
+  <p>Printer scaling issues can completely distort the mathematical geometry of a printable tool. Learn the exact settings required to print a mathematically perfect protractor from your home printer.</p>
+  
+  <img src="/images/blog/printing-protractor.png" alt="Printing a protractor" class="wikihow-image" />
 
-    <article class="max-w-[900px] mx-auto">
-      <header class="text-center mb-12">
-        <div class="flex items-center justify-center gap-3 mb-6">
-          <span class="caption-mono text-[var(--color-link)] uppercase tracking-wider text-sm">Resource Notes</span>
-          <span class="w-1.5 h-1.5 rounded-full bg-[var(--color-hairline-strong)]"></span>
-          <span class="caption text-[var(--color-mute)]">Study Guide • Chapter 4</span>
-        </div>
-      </header>
-      
-      <StudyNote>
-        <span class="study-sticker" style="top: -20px; left: 15px;">🖨️</span>
-        
-        <h1 style="margin-top: 0;">How to Print a <span class="study-highlight">Perfect Protractor</span></h1>
-        <p>You printed a free protractor, and your homework is completely wrong. What happened? <span class="study-underline">Your printer scaled it.</span></p>
+  <h2><span class="wikihow-step-num">1</span> Disable Printer Scaling.</h2>
+  <p>This is the most important step. When you open your print dialogue box, printers default to "Fit to Page" or "Scale to Fit" to ensure the image doesn't get cut off. This will ruin the protractor.</p>
+  <p>You must change your scaling setting to <strong>"Actual Size"</strong> or <strong>"100% Scale"</strong>.</p>
 
-        <div class="study-box" style="transform: rotate(1deg);">
-          <span class="study-sticker" style="top: -20px; right: -15px;">⚠️</span>
-          <h3>The Golden Rule: Do Not Scale</h3>
-          <p>Printers try to force images into "safe margins". You must disable this.</p>
-          <ul>
-            <li>❌ <strong>Bad:</strong> "Fit to Page"</li>
-            <li>✅ <strong>Good:</strong> <span class="study-highlight">"Actual Size" or "100% Scale"</span></li>
-          </ul>
-        </div>
+  <h2><span class="wikihow-step-num">2</span> Download a Vector File.</h2>
+  <p>Never print a JPG or PNG. Raster images can be blurry and distort easily. Always use a Vector format (SVG) or a high-quality PDF. Our <a href="/printable-protractors" class="text-[#9eb96e] font-bold hover:underline">Printable Protractor Library</a> uses pure SVGs.</p>
 
-        <h2>File Type Matters 📄</h2>
-        <p>Never print a JPG! Raster images distort. Always print mathematically perfect Vectors (like SVG or PDF).</p>
+  <h2><span class="wikihow-step-num">3</span> Use the Right Paper.</h2>
+  <p>Standard 20lb copy paper is too flimsy for a measurement tool.</p>
+  <ul>
+    <li>Print on <strong>Cardstock (65lb - 110lb)</strong> for rigidity.</li>
+    <li>Alternatively, print on standard paper and use a glue stick to adhere it to a piece of cardboard before cutting it out.</li>
+    <li><strong>Pro Tip:</strong> Print on transparent acetate sheets (transparency film) so you can see through it just like a real plastic protractor!</li>
+  </ul>
 
-        <div class="flex justify-center my-6">
-          <svg width="40" height="24" viewBox="0 0 40 24" fill="none" stroke="#e74c3c" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M5 12h30M25 5l10 7-10 7"/>
-          </svg>
-        </div>
+  <h2><span class="wikihow-step-num">4</span> Test the Accuracy.</h2>
+  <p>Before using it for important work, draw a straight line. Use your printed tool to mark exactly 90 degrees. Verify that mark using a known square edge (like the corner of a hardcover book). If it matches perfectly, your print settings were correct.</p>
 
-        <h2>Paper Quality Hack</h2>
-        <p>Standard 20lb paper bends and warps when measuring.</p>
-        <ul>
-          <li>Use <strong>Cardstock (65lb - 110lb)</strong>.</li>
-          <li>Or, use a glue stick to paste it onto cardboard before cutting!</li>
-          <li><span class="study-highlight">Pro-Hack:</span> Print on transparency film so you can see through it like real plastic!</li>
-        </ul>
-
-      </StudyNote>
-    </article>
-  </ContentSection>
-  <RelatedTools currentPath="/blog/how-to-print-perfect-protractor" />
-</Layout>
+</WikiHowLayout>
