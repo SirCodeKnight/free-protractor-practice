@@ -1,12 +1,34 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import ContentSection from '../components/ContentSection.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import RelatedTools from '../components/RelatedTools.astro';
 
 const title = "Angle Calculator - Add, Subtract & Find Angles";
 const description = "Free online angle calculator. Calculate complementary, supplementary, and vertical angles instantly.";
+
+const webAppSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebApplication',
+  name: 'Angle Calculator',
+  url: 'https://webprotractor.netlify.app/angle-calculator',
+  description: description,
+  applicationCategory: 'UtilityApplication',
+  operatingSystem: 'Any',
+};
+
+const websiteSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'Online Geometry Tools',
+  url: 'https://webprotractor.netlify.app'
+};
 ---
-<Layout title={title} description={description}>
+<Layout title={title} description={description} schemas={[webAppSchema, websiteSchema]}>
   <ContentSection>
+    <div class="w-full flex justify-center">
+      <Breadcrumbs items={[{ name: 'Angle Calculator', url: '/angle-calculator' }]} />
+    </div>
     <div class="max-w-[768px] w-full mx-auto text-center" style="margin-bottom: var(--spacing-xl);">
       <p class="caption-mono text-[var(--color-mute)]" style="margin-bottom: var(--spacing-xs);">FREE ONLINE TOOL</p>
       <h1 class="display-lg text-[var(--color-ink)]">Angle Calculator</h1>
@@ -180,4 +202,5 @@ const description = "Free online angle calculator. Calculate complementary, supp
       calculate();
     });
   </script>
+  <RelatedTools currentPath="/angle-calculator" />
 </Layout>

@@ -1,92 +1,31 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import ContentSection from '../components/ContentSection.astro';
-import ProtractorTool from '../components/protractor/ProtractorTool.astro';
 import FAQ from '../components/FAQ.astro';
 
-const title = 'Free Online Protractor Tool – Measure Angles Accurately | Protractor.tool';
-const description = 'Measure angles online with our free digital protractor tool. Use your phone\'s accelerometer, mouse, or camera. No download required. Accurate 0-360° measurement.';
+const title = 'Free Geometry Tools – Online Protractor, Ruler, Angle Calculator';
+const description = 'A suite of free online geometry tools including a digital protractor, angle calculator, printable protractor PDFs, and an on-screen ruler.';
 
 const faqItems = [
   {
-    question: 'Can I use my phone as a protractor?',
-    answer: 'Yes, your phone can function as a protractor using its built-in accelerometer sensors. Our online protractor tool uses the Device Orientation API to detect your phone\'s tilt angle in real-time, giving you accurate angle measurements without any additional hardware. Simply switch to Gyroscope mode and tilt your device.',
+    question: 'Are all these tools free?',
+    answer: 'Yes! Our entire suite of geometry tools is completely free to use. There are no downloads, sign-ups, or subscriptions required.',
   },
   {
-    question: 'Is there a protractor online?',
-    answer: 'Absolutely! Our free online protractor tool allows you to measure angles directly in your web browser. No downloads, installations, or sign-ups required. It works on any modern browser across desktop, tablet, and mobile devices with three measurement modes: screen, gyroscope, and camera.',
+    question: 'Do the tools work on mobile devices?',
+    answer: 'Absolutely. The online protractor, compass, and calculators are fully responsive and designed to work perfectly on smartphones, tablets, and desktop computers.',
   },
   {
-    question: 'How to measure an angle without a protractor?',
-    answer: 'You can measure angles without a physical protractor using our digital tool. On desktop, click and drag two arms on the on-screen protractor. On mobile, use the gyroscope mode to tilt your phone and measure the angle. You can also upload or capture a photo and place markers to measure angles in images.',
-  },
-  {
-    question: 'How to use an online protractor?',
-    answer: 'Using our online protractor is simple: 1) Open the tool in your browser. 2) Choose your measurement mode (Screen, Gyroscope, or Camera). 3) In Screen mode, drag the blue and purple arms to set your angle. 4) Read the angle value displayed at the top. You can also type an exact angle in the input field or use the mouse wheel for fine adjustments of ±1°.',
-  },
-  {
-    question: 'Can a smartphone measure angles?',
-    answer: 'Yes! Modern smartphones have built-in accelerometers and gyroscopes that can accurately measure angles and tilt. Our tool leverages these sensors through the Device Orientation API, turning your smartphone into a precise digital protractor. It works on both iOS and Android devices.',
-  },
-  {
-    question: 'Can I use my camera as a protractor?',
-    answer: 'Yes, our Camera Protractor mode lets you capture a photo or upload an image, then place three markers (a vertex point and two arm endpoints) to measure the angle between them. This is perfect for measuring angles on physical objects, architectural drawings, or any real-world surface.',
-  },
-  {
-    question: 'How to measure angles online?',
-    answer: 'To measure angles online, visit our tool and choose from three modes: Screen Protractor (drag arms on a virtual dial), Gyroscope Protractor (tilt your mobile device), or Camera Protractor (measure angles in photos). Each mode displays the angle in real-time with precision up to one decimal place.',
-  },
-  {
-    question: 'What is a digital protractor?',
-    answer: 'A digital protractor is a tool that measures angles electronically rather than using a traditional physical protractor. Our online digital protractor runs entirely in your web browser and offers multiple measurement methods including touch/mouse interaction, device sensors, and camera-based measurement. Digital protractors are more versatile, always available, and can measure full 360° angles.',
-  },
-  {
-    question: 'How accurate is an online protractor?',
-    answer: 'Our online protractor provides accuracy to 0.1 degrees in Screen mode, which is sufficient for most educational, DIY, and professional applications. The Gyroscope mode accuracy depends on your device\'s sensors (typically ±1°). For the highest precision, use the manual input field to set exact angle values.',
-  },
-  {
-    question: 'How to use a protractor on my phone?',
-    answer: 'Open our website on your phone\'s browser and select "Gyroscope" mode. Grant permission to access motion sensors when prompted (required on iOS). Hold your phone flat or against a surface, tap "Set Zero" to calibrate, then tilt to measure. The angle updates in real-time on the circular dial.',
+    question: 'Can I print the protractor?',
+    answer: 'Yes, we offer a dedicated Printable Protractor tool that allows you to download or print a perfectly scaled, high-resolution 180° protractor.',
   },
 ];
 
-// Structured data
-const webAppSchema = {
+const websiteSchema = {
   '@context': 'https://schema.org',
-  '@type': 'WebApplication',
-  name: 'Online Protractor Tool',
-  url: 'https://webprotractor.netlify.app',
-  description: description,
-  applicationCategory: 'UtilityApplication',
-  operatingSystem: 'Any',
-  browserRequirements: 'Requires a modern web browser',
-  offers: {
-    '@type': 'Offer',
-    price: '0',
-    priceCurrency: 'USD',
-  },
-  featureList: [
-    'Screen-based angle measurement',
-    'Gyroscope/accelerometer angle detection',
-    'Camera-based angle measurement',
-    '0-360 degree measurement range',
-    'Manual angle input',
-    'Mouse wheel fine-tuning',
-    'Set Zero calibration',
-  ],
-};
-
-const breadcrumbSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'BreadcrumbList',
-  itemListElement: [
-    {
-      '@type': 'ListItem',
-      position: 1,
-      name: 'Home',
-      item: 'https://webprotractor.netlify.app',
-    },
-  ],
+  '@type': 'WebSite',
+  name: 'Online Geometry Tools',
+  url: 'https://webprotractor.netlify.app'
 };
 
 const orgSchema = {
@@ -98,233 +37,50 @@ const orgSchema = {
   description: 'Free online angle measurement tools for education, engineering, construction, and DIY projects.',
 };
 
-const faqSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'FAQPage',
-  mainEntity: faqItems.map(item => ({
-    '@type': 'Question',
-    name: item.question,
-    acceptedAnswer: {
-      '@type': 'Answer',
-      text: item.answer
-    }
-  }))
-};
-
-const websiteSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'WebSite',
-  name: 'Online Protractor Tool',
-  url: 'https://webprotractor.netlify.app'
-};
+const tools = [
+  { name: 'Online Protractor', url: '/online-protractor', desc: 'Measure angles using your screen, phone gyroscope, or camera.' },
+  { name: 'Printable Protractor', url: '/printable-protractor', desc: 'Download a perfectly scaled 180° PDF protractor for printing.' },
+  { name: 'Angle Calculator', url: '/angle-calculator', desc: 'Calculate complementary, supplementary, and vertical angles instantly.' },
+  { name: 'Online Ruler', url: '/ruler', desc: 'Measure objects on your screen with a perfectly calibrated digital ruler.' },
+  { name: 'Compass Tool', url: '/compass', desc: 'Use your phone\'s magnetometer to find North directly in your browser.' },
+  { name: 'Geometry Calculator', url: '/geometry-calculator', desc: 'Calculate area and perimeter for circles, rectangles, and triangles.' },
+];
 ---
 
-<Layout title={title} description={description}>
-  <!-- Structured Data -->
-  <script slot="head" type="application/ld+json" set:html={JSON.stringify(webAppSchema)} />
-  <script slot="head" type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
-  <script slot="head" type="application/ld+json" set:html={JSON.stringify(orgSchema)} />
-  <script slot="head" type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
-  <script slot="head" type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
-
+<Layout title={title} description={description} schemas={[websiteSchema, orgSchema]}>
   <!-- Hero Section -->
   <section class="relative overflow-hidden bg-[var(--color-canvas)]" style="padding: var(--spacing-4xl) var(--spacing-lg);">
-    <!-- Mesh gradient backdrop -->
     <div class="absolute inset-0 opacity-20 pointer-events-none" aria-hidden="true"
       style="background: radial-gradient(ellipse at 20% 50%, #007cf0 0%, transparent 50%),
-             radial-gradient(ellipse at 80% 20%, #7928ca 0%, transparent 50%),
-             radial-gradient(ellipse at 60% 80%, #ff0080 0%, transparent 50%),
-             radial-gradient(ellipse at 40% 30%, #00dfd8 0%, transparent 50%),
-             radial-gradient(ellipse at 90% 60%, #f9cb28 0%, transparent 40%);"
+             radial-gradient(ellipse at 80% 20%, #7928ca 0%, transparent 50%);"
     ></div>
 
     <div class="relative mx-auto text-center flex flex-col items-center" style="max-width: 800px; gap: var(--spacing-lg);">
-      <!-- Eyebrow badge -->
       <div class="inline-flex items-center caption-mono text-[var(--color-body)] bg-[var(--color-canvas-soft)] border border-[var(--color-hairline)]"
         style="padding: var(--spacing-xxs) var(--spacing-sm); border-radius: var(--radius-full); gap: var(--spacing-xs);">
         <span class="inline-block w-1.5 h-1.5 rounded-full bg-[var(--color-cyan-deep)]"></span>
-        FREE TOOL — NO DOWNLOAD REQUIRED
+        FREE ONLINE TOOLKIT
       </div>
 
       <h1 class="display-xl text-[var(--color-ink)]" style="max-width: 700px;">
-        Free Online Protractor – Digital Angle Measurement Tool.
+        The Ultimate Collection of Free Geometry Tools.
       </h1>
 
       <p class="body-lg text-[var(--color-body)]" style="max-width: 560px;">
-        Measure angles accurately using your screen, phone sensors, or camera. Works on any device, any browser. Zero setup required.
+        Measure, calculate, and explore angles and shapes right in your browser. No downloads or sign-ups required.
       </p>
-
-      <div class="flex flex-wrap items-center justify-center" style="gap: var(--spacing-sm);">
-        <a href="#protractor-tool" class="btn-primary no-underline">
-          Start Measuring
-        </a>
-        <a href="#how-it-works" class="btn-secondary no-underline">
-          Learn More
-        </a>
-      </div>
     </div>
   </section>
 
-  <!-- Protractor Tool Section -->
-  <ContentSection variant="soft" id="protractor-tool-section">
-    <div class="mx-auto" style="max-width: 700px;">
-      <ProtractorTool />
-    </div>
-  </ContentSection>
-
-  <!-- Features Section -->
-  <ContentSection variant="light" id="how-it-works">
-    <div class="text-center" style="margin-bottom: var(--spacing-3xl);">
-      <p class="caption-mono text-[var(--color-mute)]" style="margin-bottom: var(--spacing-xs);">MEASUREMENT MODES</p>
-      <h2 class="display-lg text-[var(--color-ink)]">Three ways to measure angles.</h2>
-      <p class="body-lg text-[var(--color-body)] mx-auto" style="max-width: 560px; margin-top: var(--spacing-sm);">
-        Choose the mode that fits your use case — from precise on-screen measurement to real-world angle detection.
-      </p>
-    </div>
-
-    <div class="grid grid-cols-1 md:grid-cols-3" style="gap: var(--spacing-lg);">
-      <!-- Screen Mode Card -->
-      <div class="card-base elevation-3 flex flex-col" style="gap: var(--spacing-md);">
-        <div class="flex items-center justify-center w-12 h-12 rounded-[var(--radius-md)] bg-[var(--color-link-bg-soft)]">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--color-link)" stroke-width="1.5" stroke-linecap="round">
-            <rect x="2" y="3" width="20" height="14" rx="2" />
-            <line x1="8" y1="21" x2="16" y2="21" />
-            <line x1="12" y1="17" x2="12" y2="21" />
-          </svg>
-        </div>
-        <h3 class="display-sm text-[var(--color-ink)]">Screen Protractor</h3>
-        <p class="body-md text-[var(--color-body)]">
-          Drag two arms on a virtual protractor dial. Supports mouse, touch, keyboard, and scroll wheel for fine-tuning. Perfect for precise digital measurements.
-        </p>
-        <ul class="body-sm text-[var(--color-body)] flex flex-col pl-4" style="gap: var(--spacing-xxs);">
-          <li>Click and drag to position arms</li>
-          <li>Mouse wheel for ±1° adjustments</li>
-          <li>Manual angle input field</li>
-          <li>Snap-to-grid alignment</li>
-        </ul>
-      </div>
-
-      <!-- Gyroscope Mode Card -->
-      <div class="card-base elevation-3 flex flex-col" style="gap: var(--spacing-md);">
-        <div class="flex items-center justify-center w-12 h-12 rounded-[var(--radius-md)] bg-[var(--color-violet-soft)]">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--color-violet)" stroke-width="1.5" stroke-linecap="round">
-            <rect x="5" y="2" width="14" height="20" rx="3" />
-            <circle cx="12" cy="18" r="1" fill="var(--color-violet)" />
-            <line x1="12" y1="7" x2="12" y2="12" />
-            <line x1="12" y1="12" x2="16" y2="10" />
-          </svg>
-        </div>
-        <h3 class="display-sm text-[var(--color-ink)]">Gyroscope Protractor</h3>
-        <p class="body-md text-[var(--color-body)]">
-          Use your phone's built-in accelerometer and gyroscope to measure real-world angles. Simply tilt your device and read the angle in real-time.
-        </p>
-        <ul class="body-sm text-[var(--color-body)] flex flex-col pl-4" style="gap: var(--spacing-xxs);">
-          <li>Real-time sensor data</li>
-          <li>Set Zero calibration</li>
-          <li>Lock angle reading</li>
-          <li>Works on iOS and Android</li>
-        </ul>
-      </div>
-
-      <!-- Camera Mode Card -->
-      <div class="card-base elevation-3 flex flex-col" style="gap: var(--spacing-md);">
-        <div class="flex items-center justify-center w-12 h-12 rounded-[var(--radius-md)]" style="background-color: rgba(255, 0, 128, 0.1);">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--color-highlight-pink)" stroke-width="1.5" stroke-linecap="round">
-            <path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z" />
-            <circle cx="12" cy="13" r="4" />
-          </svg>
-        </div>
-        <h3 class="display-sm text-[var(--color-ink)]">Camera Protractor</h3>
-        <p class="body-md text-[var(--color-body)]">
-          Capture a photo or upload an image, then place three markers to measure angles on real-world objects, blueprints, or any visual reference.
-        </p>
-        <ul class="body-sm text-[var(--color-body)] flex flex-col pl-4" style="gap: var(--spacing-xxs);">
-          <li>Live camera capture</li>
-          <li>Image upload support</li>
-          <li>3-point angle measurement</li>
-          <li>Visual angle overlay</li>
-        </ul>
-      </div>
-    </div>
-  </ContentSection>
-
-  <!-- SEO Content Section (600+ words) -->
-  <ContentSection variant="soft" id="learn-more">
-    <div class="mx-auto" style="max-width: 720px;">
-      <p class="caption-mono text-[var(--color-mute)]" style="margin-bottom: var(--spacing-xs);">COMPREHENSIVE GUIDE</p>
-      <h2 class="display-lg text-[var(--color-ink)]" style="margin-bottom: var(--spacing-lg);">
-        Everything you need to know about online protractors.
-      </h2>
-
-      <div class="flex flex-col body-md text-[var(--color-body)]" style="gap: var(--spacing-lg);">
-        <!-- AI Optimization Box -->
-        <div class="card-base elevation-1" style="background: var(--color-canvas-soft); border-left: 4px solid var(--color-primary); padding: var(--spacing-md);">
-          <h3 class="display-sm text-[var(--color-ink)]" style="margin-bottom: var(--spacing-xs);">Quick Answer</h3>
-          <p>
-            An <strong>online protractor</strong> is a free digital tool used to measure angles accurately directly in your web browser. It features a 360-degree interactive dial for measuring angles on your screen, a gyroscope mode for measuring physical slopes using your phone's sensors, and a camera mode to measure angles in photos. It is designed for students, teachers, engineers, and DIY enthusiasts who need a reliable angle measurement tool without downloading an app.
-          </p>
-        </div>
-
-        <div>
-          <h3 class="display-sm text-[var(--color-ink)]" style="margin-bottom: var(--spacing-xs);">What is an Online Protractor?</h3>
-          <p>
-            An online protractor is a digital tool that allows you to measure and create angles directly in your web browser. Unlike a traditional physical protractor made of plastic or metal, our digital protractor is accessible from any device with a browser — desktop computers, laptops, tablets, and smartphones. It uses advanced web technologies like SVG rendering, the Device Orientation API, and camera access to provide accurate angle measurements without any downloads or installations.
-          </p>
-        </div>
-
-        <div>
-          <h3 class="display-sm text-[var(--color-ink)]" style="margin-bottom: var(--spacing-xs);">How Does It Work?</h3>
-          <p>
-            Our online protractor offers three distinct measurement modes, each designed for different use cases. The <strong>Screen Protractor</strong> renders an interactive SVG-based dial with two adjustable arms. You drag the arms to set your desired angle, and the tool calculates the precise measurement using trigonometric functions (specifically <code>Math.atan2()</code>). The <strong>Gyroscope Protractor</strong> leverages the accelerometer and gyroscope sensors built into modern smartphones through the Device Orientation API. When you tilt your phone, the sensor data is translated into real-time angle readings. The <strong>Camera Protractor</strong> allows you to photograph or upload an image and place measurement markers to calculate angles on physical objects or drawings.
-          </p>
-        </div>
-
-        <div>
-          <h3 class="display-sm text-[var(--color-ink)]" style="margin-bottom: var(--spacing-xs);">Different Measurement Modes</h3>
-          <p>
-            <strong>Mode 1 — Screen Protractor:</strong> Ideal for digital design work, homework, and precise measurements on your screen. Supports mouse, touch, and keyboard input with fine-tuning via the mouse wheel (±1° increments). You can also type an exact angle value into the input field for maximum precision.
-          </p>
-          <p style="margin-top: var(--spacing-xs);">
-            <strong>Mode 2 — Gyroscope Protractor:</strong> Perfect for measuring real-world surfaces, slopes, and tilts. Place your phone on any surface and read the angle. The calibration feature ("Set Zero") lets you set a reference point, and the lock function freezes the current reading for easy reference.
-          </p>
-          <p style="margin-top: var(--spacing-xs);">
-            <strong>Mode 3 — Camera Protractor:</strong> Best for measuring angles in photographs, architectural plans, or physical objects you can't easily reach. Capture or upload an image, place a vertex point and two arm endpoints, and the tool calculates the angle between them with a visual overlay.
-          </p>
-        </div>
-
-        <div>
-          <h3 class="display-sm text-[var(--color-ink)]" style="margin-bottom: var(--spacing-xs);">Real-World Applications</h3>
-          <p>
-            Digital protractors are used across many fields. In <strong>education</strong>, students and teachers use them for geometry lessons, trigonometry exercises, and interactive learning. <strong>Engineers</strong> and <strong>architects</strong> rely on them for quick angle verification in blueprints and technical drawings. <strong>Construction workers</strong> use the gyroscope mode to check surface slopes, roof pitches, and pipe angles on-site. <strong>DIY enthusiasts</strong> use them for woodworking projects, tile cutting, and furniture assembly. <strong>Photographers</strong> and <strong>designers</strong> use the camera mode to analyze perspectives and composition angles.
-          </p>
-        </div>
-
-        <div>
-          <h3 class="display-sm text-[var(--color-ink)]" style="margin-bottom: var(--spacing-xs);">Why Choose Digital Over Physical Protractors?</h3>
-          <p>
-            A digital online protractor offers several advantages over traditional tools. First, it's <strong>always available</strong> — you don't need to carry a physical tool; just open your browser. Second, it offers <strong>greater precision</strong> with measurements down to 0.1 degrees and a manual input field for exact values. Third, it supports <strong>full 360-degree measurement</strong>, unlike most physical protractors that only cover 180 degrees. Fourth, the <strong>multiple modes</strong> (screen, gyroscope, camera) make it far more versatile than any single physical tool. Finally, it's completely <strong>free</strong> — no cost, no ads, no sign-up required.
-          </p>
-        </div>
-
-        <div>
-          <h3 class="display-sm text-[var(--color-ink)]" style="margin-bottom: var(--spacing-xs);">How to Use the Online Protractor</h3>
-          <ol class="flex flex-col pl-5" style="gap: var(--spacing-xxs);">
-            <li><strong>Open the tool</strong> — Visit our website and scroll to the protractor tool, or click "Start Measuring."</li>
-            <li><strong>Choose a mode</strong> — Select Screen, Gyroscope, or Camera based on your needs.</li>
-            <li><strong>Screen Mode:</strong> Drag the blue arm to set the first reference line. Drag the purple arm to measure the angle between them. Use the mouse wheel to fine-tune by ±1° or type an exact value in the input field.</li>
-            <li><strong>Gyroscope Mode:</strong> Allow sensor access when prompted. Place your phone on the surface you want to measure. Tap "Set Zero" to calibrate. Tilt to read the angle.</li>
-            <li><strong>Camera Mode:</strong> Use your camera or upload an image. Click to place the vertex (point V), first arm endpoint (point A), and second arm endpoint (point B). The angle is calculated and displayed instantly.</li>
-            <li><strong>Read the result</strong> — The angle is displayed prominently at the top of the tool in degrees with one decimal place precision.</li>
-          </ol>
-        </div>
-
-        <div>
-          <h3 class="display-sm text-[var(--color-ink)]" style="margin-bottom: var(--spacing-xs);">Supported Devices and Browsers</h3>
-          <p>
-            Our online protractor works on all modern browsers including Chrome, Firefox, Safari, and Edge. The Screen mode works on any device. The Gyroscope mode requires a mobile device or tablet with motion sensors (available on virtually all smartphones manufactured since 2015). The Camera mode requires browser camera access (HTTPS only in production). For the best experience, we recommend using the latest version of your preferred browser on a device with a screen size of at least 320px wide.
-          </p>
-        </div>
-      </div>
+  <!-- Tools Directory -->
+  <ContentSection variant="soft">
+    <div class="max-w-[1000px] mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {tools.map(tool => (
+        <a href={tool.url} class="card-base elevation-1 hover:elevation-3 transition-all p-8 flex flex-col bg-[var(--color-canvas)] no-underline border border-[var(--color-hairline)] hover:border-[var(--color-link)] group">
+          <h2 class="display-sm text-[var(--color-ink)] group-hover:text-[var(--color-link)] mb-2 transition-colors">{tool.name}</h2>
+          <p class="body-md text-[var(--color-body)] leading-relaxed">{tool.desc}</p>
+        </a>
+      ))}
     </div>
   </ContentSection>
 
@@ -332,23 +88,10 @@ const websiteSchema = {
   <ContentSection variant="light" id="faq">
     <div class="mx-auto" style="max-width: 720px;">
       <div class="text-center" style="margin-bottom: var(--spacing-xl);">
-        <p class="caption-mono text-[var(--color-mute)]" style="margin-bottom: var(--spacing-xs);">FREQUENTLY ASKED QUESTIONS</p>
-        <h2 class="display-lg text-[var(--color-ink)]">Common questions about online protractors.</h2>
+        <p class="caption-mono text-[var(--color-mute)]" style="margin-bottom: var(--spacing-xs);">FAQ</p>
+        <h2 class="display-lg text-[var(--color-ink)]">Common questions.</h2>
       </div>
       <FAQ items={faqItems} />
-    </div>
-  </ContentSection>
-
-  <!-- CTA Band -->
-  <ContentSection variant="dark">
-    <div class="text-center flex flex-col items-center" style="gap: var(--spacing-lg);">
-      <h2 class="display-lg">Start measuring angles now.</h2>
-      <p class="body-lg opacity-80" style="max-width: 480px;">
-        No downloads, no sign-ups, no cost. Our protractor works right in your browser.
-      </p>
-      <a href="#protractor-tool" class="btn-secondary no-underline" style="background: var(--color-on-primary); color: var(--color-ink);">
-        Open Protractor Tool
-      </a>
     </div>
   </ContentSection>
 </Layout>

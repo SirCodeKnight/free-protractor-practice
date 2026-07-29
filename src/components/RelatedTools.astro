@@ -1,0 +1,27 @@
+---
+const tools = [
+  { name: 'Online Protractor', url: '/online-protractor' },
+  { name: 'Printable Protractor', url: '/printable-protractor' },
+  { name: 'Angle Calculator', url: '/angle-calculator' },
+  { name: 'Online Ruler', url: '/ruler' },
+  { name: 'Compass Tool', url: '/compass' },
+  { name: 'Geometry Calculator', url: '/geometry-calculator' },
+];
+
+export interface Props {
+  currentPath: string;
+}
+
+const { currentPath } = Astro.props;
+const filteredTools = tools.filter(tool => tool.url !== currentPath);
+---
+<section class="mt-24 mb-12 w-full max-w-[768px] mx-auto border-t border-[var(--color-hairline)] pt-12">
+  <h2 class="display-sm text-[var(--color-ink)] mb-6">Related Geometry Tools</h2>
+  <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+    {filteredTools.map(tool => (
+      <a href={tool.url} class="p-4 rounded-xl flex flex-col items-center text-center group bg-[var(--color-canvas)] no-underline border border-[var(--color-hairline)] hover:border-[var(--color-link)] transition-all">
+        <span class="body-sm-strong text-[var(--color-ink)] group-hover:text-[var(--color-link)] transition-colors">{tool.name}</span>
+      </a>
+    ))}
+  </div>
+</section>

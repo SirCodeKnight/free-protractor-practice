@@ -1,14 +1,36 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import ContentSection from '../components/ContentSection.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import RelatedTools from '../components/RelatedTools.astro';
 
 const title = "Printable Protractor - Free High-Res PDF & Image";
 const description = "Download and print a free high-resolution 180-degree protractor. Perfect for students, teachers, and math practice. Standard actual size.";
 
 const ticks = Array.from({ length: 181 }, (_, i) => i);
+
+const webAppSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebApplication',
+  name: 'Printable Protractor',
+  url: 'https://webprotractor.netlify.app/printable-protractor',
+  description: description,
+  applicationCategory: 'UtilityApplication',
+  operatingSystem: 'Any',
+};
+
+const websiteSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'Online Geometry Tools',
+  url: 'https://webprotractor.netlify.app'
+};
 ---
-<Layout title={title} description={description}>
+<Layout title={title} description={description} schemas={[webAppSchema, websiteSchema]}>
   <ContentSection>
+    <div class="w-full flex justify-center">
+      <Breadcrumbs items={[{ name: 'Printable Protractor', url: '/printable-protractor' }]} />
+    </div>
     <div class="max-w-[768px] w-full mx-auto text-center" style="margin-bottom: var(--spacing-xl);">
       <p class="caption-mono text-[var(--color-mute)]" style="margin-bottom: var(--spacing-xs);">FREE PRINTABLE TOOL</p>
       <h1 class="display-lg text-[var(--color-ink)]">Printable Protractor</h1>
@@ -126,4 +148,5 @@ const ticks = Array.from({ length: 181 }, (_, i) => i);
       </div>
     </div>
   </ContentSection>
+  <RelatedTools currentPath="/printable-protractor" />
 </Layout>

@@ -1,12 +1,34 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import ContentSection from '../components/ContentSection.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import RelatedTools from '../components/RelatedTools.astro';
 
 const title = "Online Digital Compass - Find Your Direction";
 const description = "Free online compass tool. Find North, South, East, and West using your device's magnetometer and GPS sensors.";
+
+const webAppSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebApplication',
+  name: 'Online Compass Tool',
+  url: 'https://webprotractor.netlify.app/compass',
+  description: description,
+  applicationCategory: 'UtilityApplication',
+  operatingSystem: 'Any',
+};
+
+const websiteSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'Online Geometry Tools',
+  url: 'https://webprotractor.netlify.app'
+};
 ---
-<Layout title={title} description={description}>
+<Layout title={title} description={description} schemas={[webAppSchema, websiteSchema]}>
   <ContentSection>
+    <div class="w-full flex justify-center">
+      <Breadcrumbs items={[{ name: 'Compass Tool', url: '/compass' }]} />
+    </div>
     <div class="max-w-[768px] w-full mx-auto text-center" style="margin-bottom: var(--spacing-xl);">
       <p class="caption-mono text-[var(--color-mute)]" style="margin-bottom: var(--spacing-xs);">FREE ONLINE TOOL</p>
       <h1 class="display-lg text-[var(--color-ink)]">Online Digital Compass</h1>
@@ -136,4 +158,5 @@ const description = "Free online compass tool. Find North, South, East, and West
       });
     });
   </script>
+  <RelatedTools currentPath="/compass" />
 </Layout>

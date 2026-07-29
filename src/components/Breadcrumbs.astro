@@ -1,0 +1,45 @@
+---
+export interface Props {
+  items: { name: string; url: string }[];
+}
+
+const { items } = Astro.props;
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    {
+      '@type': 'ListItem',
+      position: 1,
+      name: 'Home',
+      item: 'https://webprotractor.netlify.app'
+    },
+    ...items.map((item, index) => ({
+      '@type': 'ListItem',
+      position: index + 2,
+      name: item.name,
+      item: `https://webprotractor.netlify.app${item.url}`
+    }))
+  ]
+};
+---
+
+<nav aria-label="Breadcrumb" class="w-full max-w-[768px] mx-auto mb-8">
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+  <ol class="flex flex-wrap items-center gap-2 text-sm text-[var(--color-mute)]">
+    <li>
+      <a href="/" class="hover:text-[var(--color-link)] transition-colors">Home</a>
+    </li>
+    {items.map((item, index) => (
+      <li class="flex items-center gap-2">
+        <svg class="w-4 h-4 text-[var(--color-hairline-strong)]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+        {index === items.length - 1 ? (
+          <span class="text-[var(--color-ink)] font-medium" aria-current="page">{item.name}</span>
+        ) : (
+          <a href={item.url} class="hover:text-[var(--color-link)] transition-colors">{item.name}</a>
+        )}
+      </li>
+    ))}
+  </ol>
+</nav>
