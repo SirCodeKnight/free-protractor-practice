@@ -165,12 +165,10 @@ const websiteSchema = {
     .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
   </style>
 
-  <!-- Load Three.js as ES module -->
-  <script type="module">
-    import * as THREE from 'https://unpkg.com/three@0.158.0/build/three.module.js';
-    import { OrbitControls } from 'https://unpkg.com/three@0.158.0/examples/jsm/controls/OrbitControls.js';
-    import { TextGeometry } from 'https://unpkg.com/three@0.158.0/examples/jsm/geometries/TextGeometry.js';
-    import { FontLoader } from 'https://unpkg.com/three@0.158.0/examples/jsm/loaders/FontLoader.js';
+  <!-- Load Three.js locally via Vite bundler -->
+  <script>
+    import * as THREE from 'three';
+    import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
     document.addEventListener('DOMContentLoaded', () => {
       // --- DOM Elements ---
