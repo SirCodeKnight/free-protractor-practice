@@ -5,12 +5,12 @@ import Breadcrumbs from '../components/Breadcrumbs.astro';
 import RelatedTools from '../components/RelatedTools.astro';
 
 const title = "Geometry Calculator - Area, Volume & Perimeter";
-const description = "Free online geometry calculator. Calculate area, volume, and perimeter for all 2D and 3D shapes.";
+const description = "Free online geometry calculator. Calculate area, volume, and perimeter for 2D and 3D shapes with a real-time interactive 3D visualizer.";
 
 const webAppSchema = {
   '@context': 'https://schema.org',
   '@type': 'WebApplication',
-  name: 'Geometry Calculator',
+  name: 'Geometry Calculator with 3D Visualizer',
   url: 'https://webprotractor.netlify.app/geometry-calculator',
   description: description,
   applicationCategory: 'UtilityApplication',
@@ -30,40 +30,47 @@ const websiteSchema = {
       <Breadcrumbs items={[{ name: 'Geometry Calculator', url: '/geometry-calculator' }]} />
     </div>
     <div class="max-w-[768px] w-full mx-auto text-center" style="margin-bottom: var(--spacing-xl);">
-      <p class="caption-mono text-[var(--color-mute)]" style="margin-bottom: var(--spacing-xs);">FREE ONLINE TOOL</p>
+      <p class="caption-mono text-[var(--color-mute)]" style="margin-bottom: var(--spacing-xs);">INTERACTIVE 3D TOOL</p>
       <h1 class="display-lg text-[var(--color-ink)]">Geometry Calculator</h1>
       <p class="body-lg text-[var(--color-body)] mt-4">
-        Instantly calculate the Area and Perimeter of basic 2D shapes. Select a shape below to begin.
+        Calculate the properties of 2D and 3D shapes. Enter dimensions below and watch the shape update in real-time in the 3D visualizer!
       </p>
     </div>
 
-    <div class="max-w-[768px] w-full mx-auto bg-[var(--color-canvas)] p-6 rounded-xl shadow-sm border border-[var(--color-hairline)]">
+    <div class="max-w-[1200px] w-full mx-auto bg-[var(--color-canvas)] rounded-xl shadow-sm border border-[var(--color-hairline)] overflow-hidden flex flex-col">
       <!-- Shape Tabs -->
-      <div class="flex border-b border-[var(--color-hairline)] mb-6 overflow-x-auto hide-scrollbar">
-        <button class="shape-tab active flex-1 py-3 px-4 font-medium text-[var(--color-ink)] border-b-2 border-[var(--color-ink)]" data-shape="circle">Circle</button>
-        <button class="shape-tab flex-1 py-3 px-4 font-medium text-[var(--color-mute)] border-b-2 border-transparent hover:text-[var(--color-ink)]" data-shape="rectangle">Rectangle</button>
-        <button class="shape-tab flex-1 py-3 px-4 font-medium text-[var(--color-mute)] border-b-2 border-transparent hover:text-[var(--color-ink)]" data-shape="triangle">Triangle</button>
+      <div class="flex border-b border-[var(--color-hairline)] overflow-x-auto hide-scrollbar bg-[var(--color-canvas-soft)]">
+        <div class="flex items-center px-4 py-2 text-[var(--color-mute)] text-xs font-bold tracking-wider">2D SHAPES:</div>
+        <button class="shape-tab active flex-1 py-3 px-4 font-medium text-[var(--color-ink)] border-b-2 border-[var(--color-ink)] whitespace-nowrap" data-shape="circle">Circle</button>
+        <button class="shape-tab flex-1 py-3 px-4 font-medium text-[var(--color-mute)] border-b-2 border-transparent hover:text-[var(--color-ink)] whitespace-nowrap" data-shape="rectangle">Rectangle</button>
+        <button class="shape-tab flex-1 py-3 px-4 font-medium text-[var(--color-mute)] border-b-2 border-transparent hover:text-[var(--color-ink)] whitespace-nowrap" data-shape="triangle">Triangle</button>
+        <div class="flex items-center px-4 py-2 text-[var(--color-mute)] text-xs font-bold tracking-wider border-l border-[var(--color-hairline)]">3D SHAPES:</div>
+        <button class="shape-tab flex-1 py-3 px-4 font-medium text-[var(--color-mute)] border-b-2 border-transparent hover:text-[var(--color-ink)] whitespace-nowrap" data-shape="sphere">Sphere</button>
+        <button class="shape-tab flex-1 py-3 px-4 font-medium text-[var(--color-mute)] border-b-2 border-transparent hover:text-[var(--color-ink)] whitespace-nowrap" data-shape="box">Box (Prism)</button>
+        <button class="shape-tab flex-1 py-3 px-4 font-medium text-[var(--color-mute)] border-b-2 border-transparent hover:text-[var(--color-ink)] whitespace-nowrap" data-shape="cylinder">Cylinder</button>
       </div>
 
-      <div class="flex flex-col md:flex-row gap-8">
+      <div class="flex flex-col lg:flex-row min-h-[500px]">
         
-        <!-- Inputs -->
-        <div class="flex-1">
+        <!-- Column 1: Inputs -->
+        <div class="w-full lg:w-[300px] p-6 border-b lg:border-b-0 lg:border-r border-[var(--color-hairline)] flex flex-col justify-center">
+          <h3 class="display-sm text-[var(--color-ink)] mb-6">Dimensions</h3>
+          
           <!-- Circle Inputs -->
           <div id="inputs-circle" class="shape-inputs">
             <label class="block body-md-strong text-[var(--color-ink)] mb-2">Radius (r)</label>
-            <input type="number" id="input-radius" class="w-full px-4 py-3 border border-[var(--color-hairline-strong)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--color-link)]" value="5" min="0" />
+            <input type="number" id="i-circle-r" class="w-full px-4 py-3 border border-[var(--color-hairline-strong)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--color-link)]" value="5" min="0.1" step="0.1" />
           </div>
 
           <!-- Rectangle Inputs -->
           <div id="inputs-rectangle" class="shape-inputs hidden">
             <div class="mb-4">
-              <label class="block body-md-strong text-[var(--color-ink)] mb-2">Length (l)</label>
-              <input type="number" id="input-length" class="w-full px-4 py-3 border border-[var(--color-hairline-strong)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--color-link)]" value="10" min="0" />
+              <label class="block body-md-strong text-[var(--color-ink)] mb-2">Width (w)</label>
+              <input type="number" id="i-rect-w" class="w-full px-4 py-3 border border-[var(--color-hairline-strong)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--color-link)]" value="10" min="0.1" step="0.1" />
             </div>
             <div>
-              <label class="block body-md-strong text-[var(--color-ink)] mb-2">Width (w)</label>
-              <input type="number" id="input-width" class="w-full px-4 py-3 border border-[var(--color-hairline-strong)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--color-link)]" value="5" min="0" />
+              <label class="block body-md-strong text-[var(--color-ink)] mb-2">Height (h)</label>
+              <input type="number" id="i-rect-h" class="w-full px-4 py-3 border border-[var(--color-hairline-strong)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--color-link)]" value="5" min="0.1" step="0.1" />
             </div>
           </div>
 
@@ -71,125 +78,364 @@ const websiteSchema = {
           <div id="inputs-triangle" class="shape-inputs hidden">
             <div class="mb-4">
               <label class="block body-md-strong text-[var(--color-ink)] mb-2">Base (b)</label>
-              <input type="number" id="input-base" class="w-full px-4 py-3 border border-[var(--color-hairline-strong)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--color-link)]" value="6" min="0" />
+              <input type="number" id="i-tri-b" class="w-full px-4 py-3 border border-[var(--color-hairline-strong)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--color-link)]" value="6" min="0.1" step="0.1" />
             </div>
             <div class="mb-4">
               <label class="block body-md-strong text-[var(--color-ink)] mb-2">Height (h)</label>
-              <input type="number" id="input-height" class="w-full px-4 py-3 border border-[var(--color-hairline-strong)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--color-link)]" value="4" min="0" />
+              <input type="number" id="i-tri-h" class="w-full px-4 py-3 border border-[var(--color-hairline-strong)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--color-link)]" value="4" min="0.1" step="0.1" />
             </div>
             <div>
-              <label class="block body-md-strong text-[var(--color-ink)] mb-2">Side a, Side c <span class="font-normal text-sm text-[var(--color-mute)]">(for perimeter)</span></label>
+              <label class="block body-md-strong text-[var(--color-ink)] mb-2">Side a, Side c <span class="font-normal text-xs text-[var(--color-mute)]">(for perimeter)</span></label>
               <div class="flex gap-2">
-                <input type="number" id="input-sideA" class="w-1/2 px-4 py-3 border border-[var(--color-hairline-strong)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--color-link)]" value="5" placeholder="Side A" min="0" />
-                <input type="number" id="input-sideC" class="w-1/2 px-4 py-3 border border-[var(--color-hairline-strong)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--color-link)]" value="5" placeholder="Side C" min="0" />
+                <input type="number" id="i-tri-a" class="w-1/2 px-4 py-3 border border-[var(--color-hairline-strong)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--color-link)]" value="5" min="0.1" step="0.1" />
+                <input type="number" id="i-tri-c" class="w-1/2 px-4 py-3 border border-[var(--color-hairline-strong)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--color-link)]" value="5" min="0.1" step="0.1" />
               </div>
+            </div>
+          </div>
+
+          <!-- Sphere Inputs -->
+          <div id="inputs-sphere" class="shape-inputs hidden">
+            <label class="block body-md-strong text-[var(--color-ink)] mb-2">Radius (r)</label>
+            <input type="number" id="i-sphere-r" class="w-full px-4 py-3 border border-[var(--color-hairline-strong)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--color-link)]" value="5" min="0.1" step="0.1" />
+          </div>
+
+          <!-- Box Inputs -->
+          <div id="inputs-box" class="shape-inputs hidden">
+            <div class="mb-4">
+              <label class="block body-md-strong text-[var(--color-ink)] mb-2">Width (w)</label>
+              <input type="number" id="i-box-w" class="w-full px-4 py-3 border border-[var(--color-hairline-strong)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--color-link)]" value="8" min="0.1" step="0.1" />
+            </div>
+            <div class="mb-4">
+              <label class="block body-md-strong text-[var(--color-ink)] mb-2">Height (h)</label>
+              <input type="number" id="i-box-h" class="w-full px-4 py-3 border border-[var(--color-hairline-strong)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--color-link)]" value="4" min="0.1" step="0.1" />
+            </div>
+            <div>
+              <label class="block body-md-strong text-[var(--color-ink)] mb-2">Depth (d)</label>
+              <input type="number" id="i-box-d" class="w-full px-4 py-3 border border-[var(--color-hairline-strong)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--color-link)]" value="6" min="0.1" step="0.1" />
+            </div>
+          </div>
+
+          <!-- Cylinder Inputs -->
+          <div id="inputs-cylinder" class="shape-inputs hidden">
+            <div class="mb-4">
+              <label class="block body-md-strong text-[var(--color-ink)] mb-2">Radius (r)</label>
+              <input type="number" id="i-cyl-r" class="w-full px-4 py-3 border border-[var(--color-hairline-strong)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--color-link)]" value="4" min="0.1" step="0.1" />
+            </div>
+            <div>
+              <label class="block body-md-strong text-[var(--color-ink)] mb-2">Height (h)</label>
+              <input type="number" id="i-cyl-h" class="w-full px-4 py-3 border border-[var(--color-hairline-strong)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--color-link)]" value="10" min="0.1" step="0.1" />
             </div>
           </div>
         </div>
 
-        <!-- Results -->
-        <div class="flex-1 bg-[var(--color-canvas-soft)] rounded-xl border border-[var(--color-hairline)] p-6 flex flex-col justify-center">
-          <div class="mb-6">
-            <p class="caption-mono text-[var(--color-mute)] mb-1">AREA</p>
-            <p id="result-area" class="display-lg text-[var(--color-ink)]">78.54</p>
-            <p id="formula-area" class="caption text-[var(--color-mute)] mt-1">Formula: A = &pi;r&sup2;</p>
+        <!-- Column 2: 3D Visualizer -->
+        <div class="flex-1 relative bg-[#111111] overflow-hidden" id="visualizer-container" style="min-height: 400px;">
+          <!-- Loading state -->
+          <div id="vis-loading" class="absolute inset-0 flex items-center justify-center text-white/50 text-sm font-mono tracking-widest z-10 pointer-events-none">
+            INITIALIZING 3D ENGINE...
           </div>
+          <!-- ThreeJS Canvas attaches here -->
+          <div class="absolute bottom-4 left-4 z-10 text-white/30 text-xs font-mono pointer-events-none">DRAG TO ROTATE • SCROLL TO ZOOM</div>
+        </div>
+
+        <!-- Column 3: Results -->
+        <div class="w-full lg:w-[350px] bg-[var(--color-canvas-soft)] p-8 flex flex-col justify-center border-t lg:border-t-0 lg:border-l border-[var(--color-hairline)]">
+          <h3 class="display-sm text-[var(--color-ink)] mb-8">Results</h3>
+          
+          <div class="mb-8">
+            <p id="label-primary" class="caption-mono text-[var(--color-link)] mb-2 tracking-wider">AREA</p>
+            <p id="result-primary" class="display-xl text-[var(--color-ink)] leading-none mb-2">0.00</p>
+            <p id="formula-primary" class="body-sm text-[var(--color-mute)] font-mono bg-[var(--color-canvas)] p-2 rounded border border-[var(--color-hairline)] inline-block mt-2">A = ?</p>
+          </div>
+          
           <div>
-            <p class="caption-mono text-[var(--color-mute)] mb-1">PERIMETER (CIRCUMFERENCE)</p>
-            <p id="result-perimeter" class="display-lg text-[var(--color-ink)]">31.42</p>
-            <p id="formula-perimeter" class="caption text-[var(--color-mute)] mt-1">Formula: C = 2&pi;r</p>
+            <p id="label-secondary" class="caption-mono text-[var(--color-mute)] mb-2 tracking-wider">PERIMETER</p>
+            <p id="result-secondary" class="display-lg text-[var(--color-ink)] leading-none mb-2">0.00</p>
+            <p id="formula-secondary" class="body-sm text-[var(--color-mute)] font-mono bg-[var(--color-canvas)] p-2 rounded border border-[var(--color-hairline)] inline-block mt-2">P = ?</p>
           </div>
         </div>
 
       </div>
     </div>
   </ContentSection>
+  <RelatedTools currentPath="/geometry-calculator" />
 
   <style>
     .hide-scrollbar::-webkit-scrollbar { display: none; }
     .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
   </style>
 
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      let currentShape = 'circle';
+  <!-- Load Three.js as ES module -->
+  <script type="module">
+    import * as THREE from 'https://unpkg.com/three@0.158.0/build/three.module.js';
+    import { OrbitControls } from 'https://unpkg.com/three@0.158.0/examples/jsm/controls/OrbitControls.js';
+    import { TextGeometry } from 'https://unpkg.com/three@0.158.0/examples/jsm/geometries/TextGeometry.js';
+    import { FontLoader } from 'https://unpkg.com/three@0.158.0/examples/jsm/loaders/FontLoader.js';
 
+    document.addEventListener('DOMContentLoaded', () => {
+      // --- DOM Elements ---
       const tabs = document.querySelectorAll('.shape-tab');
       const inputGroups = document.querySelectorAll('.shape-inputs');
+      const container = document.getElementById('visualizer-container');
+      const loading = document.getElementById('vis-loading');
+      
+      const rPrimary = document.getElementById('result-primary');
+      const rSecondary = document.getElementById('result-secondary');
+      const lPrimary = document.getElementById('label-primary');
+      const lSecondary = document.getElementById('label-secondary');
+      const fPrimary = document.getElementById('formula-primary');
+      const fSecondary = document.getElementById('formula-secondary');
 
-      // Inputs
-      const iRadius = document.getElementById('input-radius') as HTMLInputElement;
-      const iLength = document.getElementById('input-length') as HTMLInputElement;
-      const iWidth = document.getElementById('input-width') as HTMLInputElement;
-      const iBase = document.getElementById('input-base') as HTMLInputElement;
-      const iHeight = document.getElementById('input-height') as HTMLInputElement;
-      const iSideA = document.getElementById('input-sideA') as HTMLInputElement;
-      const iSideC = document.getElementById('input-sideC') as HTMLInputElement;
+      let currentShape = 'circle';
 
-      // Outputs
-      const rArea = document.getElementById('result-area');
-      const fArea = document.getElementById('formula-area');
-      const rPerim = document.getElementById('result-perimeter');
-      const fPerim = document.getElementById('formula-perimeter');
+      // --- Math Logic ---
+      function getInputs() {
+        return {
+          circleR: parseFloat(document.getElementById('i-circle-r').value) || 0.1,
+          rectW: parseFloat(document.getElementById('i-rect-w').value) || 0.1,
+          rectH: parseFloat(document.getElementById('i-rect-h').value) || 0.1,
+          triB: parseFloat(document.getElementById('i-tri-b').value) || 0.1,
+          triH: parseFloat(document.getElementById('i-tri-h').value) || 0.1,
+          triA: parseFloat(document.getElementById('i-tri-a').value) || 0.1,
+          triC: parseFloat(document.getElementById('i-tri-c').value) || 0.1,
+          sphereR: parseFloat(document.getElementById('i-sphere-r').value) || 0.1,
+          boxW: parseFloat(document.getElementById('i-box-w').value) || 0.1,
+          boxH: parseFloat(document.getElementById('i-box-h').value) || 0.1,
+          boxD: parseFloat(document.getElementById('i-box-d').value) || 0.1,
+          cylR: parseFloat(document.getElementById('i-cyl-r').value) || 0.1,
+          cylH: parseFloat(document.getElementById('i-cyl-h').value) || 0.1,
+        };
+      }
 
-      function calculate() {
+      function updateResults() {
+        const v = getInputs();
         if (currentShape === 'circle') {
-          const r = parseFloat(iRadius.value) || 0;
-          rArea!.textContent = (Math.PI * r * r).toFixed(2);
-          rPerim!.textContent = (2 * Math.PI * r).toFixed(2);
-          fArea!.innerHTML = 'Formula: A = &pi;r&sup2;';
-          fPerim!.innerHTML = 'Formula: C = 2&pi;r';
-        } 
-        else if (currentShape === 'rectangle') {
-          const l = parseFloat(iLength.value) || 0;
-          const w = parseFloat(iWidth.value) || 0;
-          rArea!.textContent = (l * w).toFixed(2);
-          rPerim!.textContent = (2 * (l + w)).toFixed(2);
-          fArea!.innerHTML = 'Formula: A = l &times; w';
-          fPerim!.innerHTML = 'Formula: P = 2(l + w)';
-        }
-        else if (currentShape === 'triangle') {
-          const b = parseFloat(iBase.value) || 0;
-          const h = parseFloat(iHeight.value) || 0;
-          const a = parseFloat(iSideA.value) || 0;
-          const c = parseFloat(iSideC.value) || 0;
-          rArea!.textContent = (0.5 * b * h).toFixed(2);
-          rPerim!.textContent = (a + b + c).toFixed(2);
-          fArea!.innerHTML = 'Formula: A = &frac12;bh';
-          fPerim!.innerHTML = 'Formula: P = a + b + c';
+          lPrimary.textContent = "AREA"; lSecondary.textContent = "CIRCUMFERENCE";
+          rPrimary.textContent = (Math.PI * v.circleR * v.circleR).toFixed(2);
+          rSecondary.textContent = (2 * Math.PI * v.circleR).toFixed(2);
+          fPrimary.innerHTML = "A = πr²"; fSecondary.innerHTML = "C = 2πr";
+        } else if (currentShape === 'rectangle') {
+          lPrimary.textContent = "AREA"; lSecondary.textContent = "PERIMETER";
+          rPrimary.textContent = (v.rectW * v.rectH).toFixed(2);
+          rSecondary.textContent = (2 * (v.rectW + v.rectH)).toFixed(2);
+          fPrimary.innerHTML = "A = w × h"; fSecondary.innerHTML = "P = 2(w + h)";
+        } else if (currentShape === 'triangle') {
+          lPrimary.textContent = "AREA"; lSecondary.textContent = "PERIMETER";
+          rPrimary.textContent = (0.5 * v.triB * v.triH).toFixed(2);
+          rSecondary.textContent = (v.triA + v.triB + v.triC).toFixed(2);
+          fPrimary.innerHTML = "A = ½bh"; fSecondary.innerHTML = "P = a + b + c";
+        } else if (currentShape === 'sphere') {
+          lPrimary.textContent = "VOLUME"; lSecondary.textContent = "SURFACE AREA";
+          rPrimary.textContent = ((4/3) * Math.PI * Math.pow(v.sphereR, 3)).toFixed(2);
+          rSecondary.textContent = (4 * Math.PI * Math.pow(v.sphereR, 2)).toFixed(2);
+          fPrimary.innerHTML = "V = ⁴⁄₃πr³"; fSecondary.innerHTML = "SA = 4πr²";
+        } else if (currentShape === 'box') {
+          lPrimary.textContent = "VOLUME"; lSecondary.textContent = "SURFACE AREA";
+          rPrimary.textContent = (v.boxW * v.boxH * v.boxD).toFixed(2);
+          rSecondary.textContent = (2 * (v.boxW*v.boxH + v.boxH*v.boxD + v.boxD*v.boxW)).toFixed(2);
+          fPrimary.innerHTML = "V = w × h × d"; fSecondary.innerHTML = "SA = 2(wh + hd + dw)";
+        } else if (currentShape === 'cylinder') {
+          lPrimary.textContent = "VOLUME"; lSecondary.textContent = "SURFACE AREA";
+          rPrimary.textContent = (Math.PI * Math.pow(v.cylR, 2) * v.cylH).toFixed(2);
+          rSecondary.textContent = (2 * Math.PI * v.cylR * v.cylH + 2 * Math.PI * Math.pow(v.cylR, 2)).toFixed(2);
+          fPrimary.innerHTML = "V = πr²h"; fSecondary.innerHTML = "SA = 2πrh + 2πr²";
         }
       }
 
+      // --- Three.js Setup ---
+      const scene = new THREE.Scene();
+      // Add subtle fog to blend into background
+      scene.fog = new THREE.FogExp2(0x111111, 0.015);
+
+      const camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 1000);
+      camera.position.set(20, 20, 30);
+
+      const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+      renderer.setSize(container.clientWidth, container.clientHeight);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      renderer.shadowMap.enabled = true;
+      renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+      container.appendChild(renderer.domElement);
+
+      const controls = new OrbitControls(camera, renderer.domElement);
+      controls.enableDamping = true;
+      controls.dampingFactor = 0.05;
+      controls.autoRotate = true;
+      controls.autoRotateSpeed = 2.0;
+
+      // Lighting
+      const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+      scene.add(ambientLight);
+
+      const dirLight = new THREE.DirectionalLight(0xffffff, 1.2);
+      dirLight.position.set(10, 20, 10);
+      dirLight.castShadow = true;
+      dirLight.shadow.mapSize.width = 1024;
+      dirLight.shadow.mapSize.height = 1024;
+      scene.add(dirLight);
+
+      const fillLight = new THREE.DirectionalLight(0x007cf0, 0.5); // Brand blue tint
+      fillLight.position.set(-10, 0, -10);
+      scene.add(fillLight);
+
+      // Grid & Floor
+      const gridHelper = new THREE.GridHelper(50, 50, 0x333333, 0x222222);
+      gridHelper.position.y = -0.01;
+      scene.add(gridHelper);
+
+      // Material for 2D shapes
+      const material2D = new THREE.MeshPhysicalMaterial({
+        color: 0x007cf0,
+        metalness: 0.1,
+        roughness: 0.5,
+        transparent: true,
+        opacity: 0.9,
+        side: THREE.DoubleSide
+      });
+
+      // Material for 3D shapes (glassy/plastic)
+      const material3D = new THREE.MeshPhysicalMaterial({
+        color: 0x7928ca, // Purple gradient brand color
+        metalness: 0.2,
+        roughness: 0.1,
+        clearcoat: 1.0,
+        clearcoatRoughness: 0.1,
+        transparent: true,
+        opacity: 0.85
+      });
+
+      // Material for edges (Wireframe style)
+      const lineMaterial = new THREE.LineBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.5 });
+
+      let currentMesh = null;
+      let currentEdges = null;
+
+      function createShape() {
+        if (currentMesh) {
+          scene.remove(currentMesh);
+          currentMesh.geometry.dispose();
+        }
+        if (currentEdges) {
+          scene.remove(currentEdges);
+          currentEdges.geometry.dispose();
+        }
+
+        const v = getInputs();
+        let geometry;
+        let is2D = false;
+
+        // Scale down huge values so they fit in camera
+        const scaleFactor = 1;
+
+        if (currentShape === 'circle') {
+          geometry = new THREE.CylinderGeometry(v.circleR, v.circleR, 0.2, 64);
+          is2D = true;
+        } else if (currentShape === 'rectangle') {
+          geometry = new THREE.BoxGeometry(v.rectW, 0.2, v.rectH); // mapping H to depth for flat look
+          is2D = true;
+        } else if (currentShape === 'triangle') {
+          // Simple right triangle for visualization purposes
+          const shape = new THREE.Shape();
+          shape.moveTo(-v.triB/2, -v.triH/2);
+          shape.lineTo(v.triB/2, -v.triH/2);
+          shape.lineTo(-v.triB/2, v.triH/2);
+          shape.lineTo(-v.triB/2, -v.triH/2);
+          const extrudeSettings = { depth: 0.2, bevelEnabled: false };
+          geometry = new THREE.ExtrudeGeometry(shape, extrudeSettings);
+          // Center it
+          geometry.center();
+          // Rotate to lay flat
+          geometry.rotateX(Math.PI / 2);
+          is2D = true;
+        } else if (currentShape === 'sphere') {
+          geometry = new THREE.SphereGeometry(v.sphereR, 64, 32);
+        } else if (currentShape === 'box') {
+          geometry = new THREE.BoxGeometry(v.boxW, v.boxH, v.boxD);
+        } else if (currentShape === 'cylinder') {
+          geometry = new THREE.CylinderGeometry(v.cylR, v.cylR, v.cylH, 64);
+        }
+
+        const material = is2D ? material2D : material3D;
+        currentMesh = new THREE.Mesh(geometry, material);
+        currentMesh.castShadow = true;
+        currentMesh.receiveShadow = true;
+        
+        // Sit on grid
+        geometry.computeBoundingBox();
+        const bbox = geometry.boundingBox;
+        currentMesh.position.y = -bbox.min.y;
+
+        // Add Edges for better definition
+        const edges = new THREE.EdgesGeometry(geometry);
+        currentEdges = new THREE.LineSegments(edges, lineMaterial);
+        currentEdges.position.copy(currentMesh.position);
+
+        scene.add(currentMesh);
+        scene.add(currentEdges);
+
+        // Adjust camera distance based on object size
+        const maxDim = Math.max(
+          bbox.max.x - bbox.min.x,
+          bbox.max.y - bbox.min.y,
+          bbox.max.z - bbox.min.z
+        );
+        
+        // Tween camera position (simple lerp in animation loop could be better, but instant is fine for math inputs)
+        camera.position.setLength(maxDim * 2.5 + 5);
+      }
+
+      // --- Event Listeners ---
+      
+      // Resize Handler
+      window.addEventListener('resize', () => {
+        if(!container) return;
+        camera.aspect = container.clientWidth / container.clientHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(container.clientWidth, container.clientHeight);
+      });
+
+      // Input Handlers
+      const allInputs = document.querySelectorAll('.shape-inputs input');
+      allInputs.forEach(input => {
+        input.addEventListener('input', () => {
+          updateResults();
+          createShape();
+        });
+      });
+
+      // Tab Handlers
       tabs.forEach(tab => {
         tab.addEventListener('click', () => {
-          // Reset styling
           tabs.forEach(t => {
             t.classList.remove('text-[var(--color-ink)]', 'border-[var(--color-ink)]', 'active');
             t.classList.add('text-[var(--color-mute)]', 'border-transparent');
           });
           
-          // Apply active styling
           tab.classList.add('text-[var(--color-ink)]', 'border-[var(--color-ink)]', 'active');
           tab.classList.remove('text-[var(--color-mute)]', 'border-transparent');
 
           currentShape = tab.getAttribute('data-shape') || 'circle';
 
-          // Show correct inputs
           inputGroups.forEach(group => group.classList.add('hidden'));
           document.getElementById(`inputs-${currentShape}`)?.classList.remove('hidden');
 
-          calculate();
+          updateResults();
+          createShape();
         });
       });
 
-      // Add listeners to all inputs
-      [iRadius, iLength, iWidth, iBase, iHeight, iSideA, iSideC].forEach(input => {
-        input?.addEventListener('input', calculate);
-      });
+      // Initialization
+      loading.style.display = 'none';
+      updateResults();
+      createShape();
 
-      // Initial calculation
-      calculate();
+      // Animation Loop
+      function animate() {
+        requestAnimationFrame(animate);
+        controls.update();
+        renderer.render(scene, camera);
+      }
+      animate();
     });
   </script>
-  <RelatedTools currentPath="/geometry-calculator" />
 </Layout>
