@@ -3,6 +3,7 @@ import Layout from '../../layouts/Layout.astro';
 import ContentSection from '../../components/ContentSection.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import RelatedTools from '../../components/RelatedTools.astro';
+import StudyNote from '../../components/StudyNote.astro';
 
 const title = "5 Life-Saving Geometry Tricks Every Architect Uses Daily";
 const description = "Discover the hidden mathematical shortcuts professionals use to calculate impossible angles in seconds.";
@@ -29,47 +30,91 @@ const articleSchema = {
       ]} />
     </div>
 
-    <article class="max-w-[800px] mx-auto">
+    <article class="max-w-[900px] mx-auto">
       <header class="text-center mb-12">
         <div class="flex items-center justify-center gap-3 mb-6">
-          <span class="caption-mono text-[var(--color-link)] uppercase tracking-wider text-sm">Architecture</span>
+          <span class="caption-mono text-[var(--color-link)] uppercase tracking-wider text-sm">Architecture Notes</span>
           <span class="w-1.5 h-1.5 rounded-full bg-[var(--color-hairline-strong)]"></span>
-          <span class="caption text-[var(--color-mute)]">August 10, 2026 • 6 min read</span>
+          <span class="caption text-[var(--color-mute)]">Study Guide • Chapter 1</span>
         </div>
-        <h1 class="display-xl text-[var(--color-ink)] mb-8 leading-tight">5 Life-Saving Geometry Tricks Every Architect Uses Daily</h1>
-        <img src={image} alt="High-end cinematic flat-lay photography of an architect's desk with blueprints and a metallic protractor" class="w-full rounded-2xl shadow-lg border border-[var(--color-hairline)]" />
       </header>
       
-      <div class="prose prose-lg mx-auto text-[var(--color-body)] prose-headings:text-[var(--color-ink)] prose-a:text-[var(--color-link)] prose-strong:text-[var(--color-ink)] prose-img:rounded-xl">
-        <p class="lead text-xl text-[var(--color-ink)] mb-8 font-medium">You’re staring at a blueprint. The math isn’t adding up, the walls aren't squaring, and the client is breathing down your neck. What do you do?</p>
+      <StudyNote>
+        <span class="study-sticker" style="top: -20px; right: 20px;">📌</span>
         
-        <p>If you're an amateur, you pull out a calculator and start sweating over trigonometry formulas. If you're a seasoned architect, you use these 5 geometry shortcuts that feel almost like cheating.</p>
+        <h1 style="margin-top: 0;">5 Life-Saving <span class="study-highlight">Geometry Tricks</span>!</h1>
+        <p>Architects don't do hard math on site, they use <span class="study-underline">shortcuts</span>. Here is how they do it:</p>
 
-        <h2>1. The 3-4-5 Rule (The Builder’s Square)</h2>
-        <p>Forget the Pythagorean theorem equation. If you need a perfect 90-degree right angle on a job site, all you need is a tape measure. Measure 3 feet down one wall, 4 feet down the other. If the diagonal between those two points is exactly 5 feet, your corner is perfectly square. It scales infinitely: 6-8-10, 30-40-50.</p>
-        
-        <div class="bg-[var(--color-canvas-soft)] p-6 rounded-xl border border-[var(--color-hairline)] my-8">
-          <h4 class="display-xs mt-0 mb-2">Pro Tip</h4>
-          <p class="m-0">Need to calculate the exact area of that newly squared room? Use our <a href="/geometry-calculator">3D Geometry Calculator</a> to instantly find the volume and surface area for HVAC requirements.</p>
+        <div class="flex justify-center my-8">
+          <svg width="24" height="60" viewBox="0 0 24 60" fill="none" stroke="#3b82f6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 5v50M5 45l7 10 7-10"/>
+          </svg>
         </div>
 
-        <h2>2. The Subtended Angle Hack</h2>
-        <p>When drafting large circular elements, finding the exact degree of a subtle curve can be a nightmare. Instead of struggling with physical protractors that are too small for the blueprint, professionals use the "1 in 60" rule. At 60 units of distance, 1 unit of offset equals exactly 1 degree.</p>
+        <h2>1. The 3-4-5 Rule (Builder's Square)</h2>
+        <p>Need a perfect 90° angle? No protractor? No problem.</p>
+        
+        <div class="study-box">
+          <span class="study-sticker" style="top: -25px; left: -20px;">💡</span>
+          <h3>How it works:</h3>
+          <ul>
+            <li>Measure <strong>3 ft</strong> down one wall.</li>
+            <li>Measure <strong>4 ft</strong> down the other wall.</li>
+            <li>If the diagonal is exactly <span class="study-highlight">5 ft</span>, you have a perfect square!</li>
+          </ul>
+          <p class="text-sm text-gray-500 mt-2">* Scales infinitely: 6-8-10, 30-40-50.</p>
+        </div>
 
-        <h2>3. The Digital Overlay Method</h2>
-        <p>Gone are the days of printing out revisions just to check a roof pitch. Modern architects simply screenshot the CAD file and upload it to an <a href="/online-protractor">Online Protractor</a>. By overlaying a transparent digital tool directly on the screen, you can verify angles without ever touching a physical tool.</p>
+        <div class="flex justify-center my-8">
+          <svg width="60" height="24" viewBox="0 0 60 24" fill="none" stroke="#e74c3c" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="transform: rotate(15deg);">
+            <path d="M5 12h50M45 5l10 7-10 7"/>
+          </svg>
+        </div>
 
-        <h2>4. The Golden Rectangle Quick-Draft</h2>
-        <p>Want a room to feel psychologically "perfect"? Multiply the short wall by 1.618. If your room is 10 feet wide, make it 16 feet long. You've just created a Golden Rectangle, a shape proven to be the most aesthetically pleasing to the human eye. No complex math required.</p>
+        <h2>2. The "1 in 60" Rule</h2>
+        <p>This is for massive curves (like roads or stadiums).</p>
+        <p>At <strong>60 units of distance</strong>, moving <strong>1 unit perpendicular</strong> equals exactly <span class="study-underline">1 degree</span>.</p>
 
-        <h2>5. The Double-Check Mirror</h2>
-        <p>When drawing symmetrical facades, the human eye will naturally correct small errors on paper. To spot an angle that is off by just 1 or 2 degrees, architects will physically hold the blueprint up to a mirror (or flip the canvas horizontally in software). The brain instantly recognizes the asymmetry.</p>
+        <h2>3. Digital Overlay 💻</h2>
+        <p>Instead of printing massive blueprints, just screenshot the CAD file.</p>
+        
+        <div class="study-box" style="transform: rotate(1.5deg);">
+          <span class="study-sticker" style="bottom: -20px; right: -20px;">📐</span>
+          <h3>The Workflow:</h3>
+          <ol class="list-decimal pl-6">
+            <li>Open CAD file.</li>
+            <li>Upload screenshot to an <a href="/online-protractor" class="text-blue-600 underline decoration-wavy">Online Protractor</a>.</li>
+            <li>Overlay the glowing protractor.</li>
+            <li>Read the exact measurement.</li>
+          </ol>
+        </div>
 
-        <hr class="my-12 border-[var(--color-hairline-strong)]" />
+        <h2>4. The Golden Rectangle (Psychological Perfection)</h2>
+        <p>Want a room to feel "perfect" to the human brain?</p>
+        
+        <div class="study-code">
+          // The formula for aesthetic perfection:
+          let shortWall = 10;
+          let longWall = shortWall * 1.618;
+          
+          console.log(longWall); // 16.18 ft
+        </div>
+        
+        <p>This creates a <span class="study-highlight">Golden Rectangle</span>. No complex drafting needed, just multiply by 1.618.</p>
 
-        <h3>Stop Guessing, Start Measuring</h3>
-        <p>The best architects don't do more math; they do <em>smarter</em> math. Bookmark our suite of free <a href="/">Digital Geometry Tools</a> to ensure your next project is mathematically flawless.</p>
-      </div>
+        <h2>5. The Double-Check Mirror 🪞</h2>
+        <p>When drawing symmetrical facades, the brain corrects errors automatically. To spot an angle that is off by 1°, hold the blueprint to a mirror.</p>
+        <p><span class="study-underline">The asymmetry will instantly pop out.</span></p>
+
+        <div class="flex justify-center mt-12 mb-4">
+          <svg width="100" height="24" viewBox="0 0 100 24" fill="none" stroke="#555" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M10 12h80M10 12l10-7M10 12l10 7M90 12l-10-7M90 12l-10 7"/>
+          </svg>
+        </div>
+        
+        <p class="text-center font-bold text-xl">Stop Guessing. Start Measuring.</p>
+
+      </StudyNote>
     </article>
   </ContentSection>
   <RelatedTools currentPath="/blog/5-life-saving-geometry-tricks" />

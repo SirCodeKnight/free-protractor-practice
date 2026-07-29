@@ -3,6 +3,7 @@ import Layout from '../../layouts/Layout.astro';
 import ContentSection from '../../components/ContentSection.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import RelatedTools from '../../components/RelatedTools.astro';
+import StudyNote from '../../components/StudyNote.astro';
 
 const title = "How to Print a Perfectly Accurate Protractor at Home";
 const description = "Printer scaling issues ruining your measurements? Learn the exact settings to print a mathematically perfect protractor.";
@@ -29,45 +30,49 @@ const articleSchema = {
       ]} />
     </div>
 
-    <article class="max-w-[800px] mx-auto">
+    <article class="max-w-[900px] mx-auto">
       <header class="text-center mb-12">
         <div class="flex items-center justify-center gap-3 mb-6">
-          <span class="caption-mono text-[var(--color-link)] uppercase tracking-wider text-sm">Resources</span>
+          <span class="caption-mono text-[var(--color-link)] uppercase tracking-wider text-sm">Resource Notes</span>
           <span class="w-1.5 h-1.5 rounded-full bg-[var(--color-hairline-strong)]"></span>
-          <span class="caption text-[var(--color-mute)]">July 22, 2026 • 4 min read</span>
+          <span class="caption text-[var(--color-mute)]">Study Guide • Chapter 4</span>
         </div>
-        <h1 class="display-xl text-[var(--color-ink)] mb-8 leading-tight">How to Print a Perfectly Accurate Protractor at Home</h1>
-        <img src={image} alt="High-end printer printing a crisp black-and-white protractor" class="w-full rounded-2xl shadow-lg border border-[var(--color-hairline)]" />
       </header>
       
-      <div class="prose prose-lg mx-auto text-[var(--color-body)] prose-headings:text-[var(--color-ink)] prose-a:text-[var(--color-link)] prose-strong:text-[var(--color-ink)] prose-img:rounded-xl">
-        <p class="lead text-xl text-[var(--color-ink)] mb-8 font-medium">You downloaded a free printable protractor, printed it out, and suddenly your math homework is completely wrong. What happened?</p>
+      <StudyNote>
+        <span class="study-sticker" style="top: -20px; left: 15px;">🖨️</span>
         
-        <p>The problem isn't you, and it isn't the file. It's your printer's default settings. Printers are notoriously aggressive about resizing images to fit into "safe print margins," which completely distorts the mathematical geometry of a protractor. Here is how to fix it.</p>
+        <h1 style="margin-top: 0;">How to Print a <span class="study-highlight">Perfect Protractor</span></h1>
+        <p>You printed a free protractor, and your homework is completely wrong. What happened? <span class="study-underline">Your printer scaled it.</span></p>
 
-        <h2>The Golden Rule: Do Not Scale</h2>
-        <p>When you hit `Ctrl+P` (or `Cmd+P`), your printer dialogue box will usually default to a setting called <strong>"Fit to Page"</strong> or <strong>"Scale to Fit"</strong>. You must disable this.</p>
-        <p>Change your scaling setting to <strong>"Actual Size"</strong>, <strong>"100%"</strong>, or <strong>"Custom Scale: 100"</strong>. This ensures the printer outputs the file exactly as it was mathematically generated.</p>
-
-        <h2>Choose the Right File Type</h2>
-        <p>Never print a `.JPG` or `.PNG` if you can avoid it. Raster images can be blurry and are easily distorted by printer software. Always use a Vector format like SVG or a high-quality PDF.</p>
-        
-        <div class="bg-[var(--color-canvas-soft)] p-6 rounded-xl border border-[var(--color-hairline)] my-8">
-          <h4 class="display-xs mt-0 mb-2">Get Vector Protractors</h4>
-          <p class="m-0">Our entire <a href="/printable-protractors">Printable Protractor Library</a> is generated using perfect SVG mathematics. When you print from our site, you are printing infinitely precise vectors.</p>
+        <div class="study-box" style="transform: rotate(1deg);">
+          <span class="study-sticker" style="top: -20px; right: -15px;">⚠️</span>
+          <h3>The Golden Rule: Do Not Scale</h3>
+          <p>Printers try to force images into "safe margins". You must disable this.</p>
+          <ul>
+            <li>❌ <strong>Bad:</strong> "Fit to Page"</li>
+            <li>✅ <strong>Good:</strong> <span class="study-highlight">"Actual Size" or "100% Scale"</span></li>
+          </ul>
         </div>
 
-        <h2>Paper Quality Matters</h2>
-        <p>Standard 20lb copy paper will warp and bend when you try to measure with it. If you want a printable protractor that feels like a real tool:</p>
+        <h2>File Type Matters 📄</h2>
+        <p>Never print a JPG! Raster images distort. Always print mathematically perfect Vectors (like SVG or PDF).</p>
+
+        <div class="flex justify-center my-6">
+          <svg width="40" height="24" viewBox="0 0 40 24" fill="none" stroke="#e74c3c" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 12h30M25 5l10 7-10 7"/>
+          </svg>
+        </div>
+
+        <h2>Paper Quality Hack</h2>
+        <p>Standard 20lb paper bends and warps when measuring.</p>
         <ul>
-          <li>Print on <strong>Cardstock (65lb - 110lb)</strong>.</li>
-          <li>Or, print on standard paper and use a glue stick to adhere it to a piece of cardboard before cutting it out.</li>
-          <li>For the ultimate hack: Print it on transparent acetate sheets (transparency film) so you can see through it just like a plastic protractor!</li>
+          <li>Use <strong>Cardstock (65lb - 110lb)</strong>.</li>
+          <li>Or, use a glue stick to paste it onto cardboard before cutting!</li>
+          <li><span class="study-highlight">Pro-Hack:</span> Print on transparency film so you can see through it like real plastic!</li>
         </ul>
 
-        <h3>Test the Accuracy</h3>
-        <p>Before you trust your newly printed tool, draw a straight line on a piece of paper. Use your printed protractor to mark exactly 90 degrees. Use a known square edge (like the corner of a book) to verify that your 90-degree mark is perfect. If it is, your printer settings were correct.</p>
-      </div>
+      </StudyNote>
     </article>
   </ContentSection>
   <RelatedTools currentPath="/blog/how-to-print-perfect-protractor" />

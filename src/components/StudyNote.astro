@@ -1,0 +1,33 @@
+---
+---
+<div class="study-notebook">
+  <!-- Skeleton Loader (shows initially, hides after JS executes) -->
+  <div id="skeleton-loader" class="skeleton-container">
+    <div class="skeleton-line" style="width: 80%"></div>
+    <div class="skeleton-line" style="width: 60%"></div>
+    <div class="skeleton-box" style="width: 90%"></div>
+    <div class="skeleton-line" style="width: 75%"></div>
+    <div class="skeleton-line" style="width: 85%"></div>
+    <div class="skeleton-line" style="width: 40%"></div>
+  </div>
+
+  <!-- Actual Content (hidden initially, reveals with animation) -->
+  <div id="study-content" class="study-content" style="opacity: 0; transition: opacity 0.5s ease;">
+    <slot />
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const loader = document.getElementById('skeleton-loader');
+    const content = document.getElementById('study-content');
+    
+    if (loader && content) {
+      // Simulate 1 second load time to show skeleton effect (student opening notebook)
+      setTimeout(() => {
+        loader.style.display = 'none';
+        content.style.opacity = '1';
+      }, 1000);
+    }
+  });
+</script>

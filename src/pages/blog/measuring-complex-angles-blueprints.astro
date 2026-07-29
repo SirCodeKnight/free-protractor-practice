@@ -3,6 +3,7 @@ import Layout from '../../layouts/Layout.astro';
 import ContentSection from '../../components/ContentSection.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import RelatedTools from '../../components/RelatedTools.astro';
+import StudyNote from '../../components/StudyNote.astro';
 
 const title = "The Ultimate Guide to Measuring Complex Angles on Blueprints";
 const description = "Stop guessing on your schematics. Here is the foolproof method for measuring multi-axis blueprint angles.";
@@ -29,45 +30,56 @@ const articleSchema = {
       ]} />
     </div>
 
-    <article class="max-w-[800px] mx-auto">
+    <article class="max-w-[900px] mx-auto">
       <header class="text-center mb-12">
         <div class="flex items-center justify-center gap-3 mb-6">
-          <span class="caption-mono text-[var(--color-link)] uppercase tracking-wider text-sm">Engineering</span>
+          <span class="caption-mono text-[var(--color-link)] uppercase tracking-wider text-sm">Engineering Notes</span>
           <span class="w-1.5 h-1.5 rounded-full bg-[var(--color-hairline-strong)]"></span>
-          <span class="caption text-[var(--color-mute)]">July 28, 2026 • 8 min read</span>
+          <span class="caption text-[var(--color-mute)]">Study Guide • Chapter 3</span>
         </div>
-        <h1 class="display-xl text-[var(--color-ink)] mb-8 leading-tight">The Ultimate Guide to Measuring Complex Angles on Blueprints</h1>
-        <img src={image} alt="Macro photography of complex architectural blueprints" class="w-full rounded-2xl shadow-lg border border-[var(--color-hairline)]" />
       </header>
       
-      <div class="prose prose-lg mx-auto text-[var(--color-body)] prose-headings:text-[var(--color-ink)] prose-a:text-[var(--color-link)] prose-strong:text-[var(--color-ink)] prose-img:rounded-xl">
-        <p class="lead text-xl text-[var(--color-ink)] mb-8 font-medium">A single degree of error on a structural blueprint can cost millions of dollars in construction delays. Here is how master engineers ensure absolute accuracy.</p>
+      <StudyNote>
+        <span class="study-sticker" style="top: -15px; right: 15px;">🏗️</span>
         
-        <h2>The Danger of the "Almost Right" Angle</h2>
-        <p>When drafting complex roof valleys or steel truss structures, you rarely deal with simple 90 or 45-degree angles. You are dealing with 33.7-degree intersecting planes. A standard protractor cannot handle this level of precision.</p>
+        <h1 style="margin-top: 0;">Mastering <span class="study-highlight">Blueprint Angles</span></h1>
+        <p>A single degree of error can cost millions. Don't guess. <span class="study-underline">Measure perfectly.</span></p>
 
-        <h2>Step 1: Digitize the Schematic</h2>
-        <p>Never measure a physical printout if extreme accuracy is required. Paper warps, printers skew dimensions slightly during the feed process, and ink bleeds. You must work with the digital source file (DWG, DXF, or a high-res PDF).</p>
+        <h2>Step 1: Digitize 🖱️</h2>
+        <p>Never measure a physical printout! Paper warps and ink bleeds. Use the raw DWG/DXF file.</p>
 
-        <h2>Step 2: Utilize a Digital Overlay Protractor</h2>
-        <p>Once you have the file open on your screen, use an <a href="/online-protractor">on-screen digital protractor</a>. These tools render on top of your other windows.</p>
-        <ul>
-          <li><strong>Lock the Origin:</strong> Place the origin (center point) of the digital protractor precisely on the vertex of the angle.</li>
-          <li><strong>Align the Baseline:</strong> Rotate the zero-degree line of the protractor to run exactly parallel with one of the structural lines.</li>
-          <li><strong>Read the Output:</strong> Read the digital readout. Never eyeball the hash marks. Let the software tell you it's 33.72 degrees.</li>
-        </ul>
-
-        <h2>Step 3: Verify with Trigonometry</h2>
-        <p>A good engineer never trusts a single measurement method. Once you have your angle, verify it using the lengths of the lines. If you know the rise and run of a roof pitch, use the Inverse Tangent (arctan) function to calculate the angle mathematically. If the digital measurement and the math match, you are clear to build.</p>
-
-        <div class="bg-[var(--color-canvas-soft)] p-6 rounded-xl border border-[var(--color-hairline)] my-8">
-          <h4 class="display-xs mt-0 mb-2">Need a Physical Copy?</h4>
-          <p class="m-0">If you must measure on the job site, do not use cheap plastic. Print a mathematically precise tool from our <a href="/printable-protractors">Printable Protractor Library</a> on heavy cardstock.</p>
+        <div class="study-box">
+          <span class="study-sticker" style="top: -20px; left: -15px;">🎯</span>
+          <h3>Step 2: Digital Overlay</h3>
+          <ol class="list-decimal pl-6">
+            <li><strong>Lock Origin:</strong> Place center exactly on the vertex.</li>
+            <li><strong>Align Baseline:</strong> Rotate 0° line to the structural base.</li>
+            <li><strong>Read Output:</strong> Let the software tell you it's 33.72° (never eyeball hash marks).</li>
+          </ol>
         </div>
 
-        <h3>Conclusion</h3>
-        <p>Blueprint measurement is a science of zero tolerance. Equip yourself with the right digital tools, always verify with math, and never assume an angle is "close enough."</p>
-      </div>
+        <div class="flex justify-center my-6">
+          <svg width="40" height="40" viewBox="0 0 40 40" fill="none" stroke="#29bc9b" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 5v30M5 20h30"/>
+            <circle cx="20" cy="20" r="10" />
+          </svg>
+        </div>
+
+        <h2>Step 3: Math Verification 🧮</h2>
+        <p>Good engineers never trust just one method.</p>
+        
+        <div class="study-code">
+          // Verify with Trigonometry:
+          const rise = 4;
+          const run = 12;
+          const angle = Math.atan(rise / run) * (180 / Math.PI);
+          
+          console.log(angle); // 18.43 degrees
+        </div>
+        
+        <p>If the <span class="study-highlight">digital overlay</span> and the <span class="study-highlight">Trig math</span> match, you are clear to build!</p>
+
+      </StudyNote>
     </article>
   </ContentSection>
   <RelatedTools currentPath="/blog/measuring-complex-angles-blueprints" />

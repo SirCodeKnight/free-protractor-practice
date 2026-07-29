@@ -3,6 +3,7 @@ import Layout from '../../layouts/Layout.astro';
 import ContentSection from '../../components/ContentSection.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import RelatedTools from '../../components/RelatedTools.astro';
+import StudyNote from '../../components/StudyNote.astro';
 
 const title = "Why Digital Protractors Are Replacing Plastic Math Tools";
 const description = "The classroom is changing. Find out why the classic plastic protractor is facing extinction in the digital age.";
@@ -29,42 +30,55 @@ const articleSchema = {
       ]} />
     </div>
 
-    <article class="max-w-[800px] mx-auto">
+    <article class="max-w-[900px] mx-auto">
       <header class="text-center mb-12">
         <div class="flex items-center justify-center gap-3 mb-6">
-          <span class="caption-mono text-[var(--color-link)] uppercase tracking-wider text-sm">Technology</span>
+          <span class="caption-mono text-[var(--color-link)] uppercase tracking-wider text-sm">Technology Notes</span>
           <span class="w-1.5 h-1.5 rounded-full bg-[var(--color-hairline-strong)]"></span>
-          <span class="caption text-[var(--color-mute)]">August 5, 2026 • 5 min read</span>
+          <span class="caption text-[var(--color-mute)]">Study Guide • Chapter 2</span>
         </div>
-        <h1 class="display-xl text-[var(--color-ink)] mb-8 leading-tight">Why Digital Protractors Are Replacing Plastic Math Tools</h1>
-        <img src={image} alt="Holographic digital protractor next to a plastic school protractor" class="w-full rounded-2xl shadow-lg border border-[var(--color-hairline)]" />
       </header>
       
-      <div class="prose prose-lg mx-auto text-[var(--color-body)] prose-headings:text-[var(--color-ink)] prose-a:text-[var(--color-link)] prose-strong:text-[var(--color-ink)] prose-img:rounded-xl">
-        <p class="lead text-xl text-[var(--color-ink)] mb-8 font-medium">We all remember them: the easily snapped, highly scratchable, translucent plastic protractors from middle school geometry class. But in modern professional settings, they are officially dead.</p>
+      <StudyNote>
+        <span class="study-sticker" style="top: -20px; left: 10px;">📉</span>
         
-        <p>The transition from analog to digital measurement has been happening for decades, but the death of the physical protractor was rapid. Let's explore exactly why engineers, students, and designers are throwing away their plastic semi-circles.</p>
+        <h1 style="margin-top: 0;">The End of the <span class="study-highlight">Plastic Protractor</span></h1>
+        <p>They break easily. They scratch. They get lost. But most importantly: <span class="study-underline">they cause errors</span>.</p>
 
-        <h2>1. Zero Parallax Error</h2>
-        <p>When you use a physical protractor, you have to hover your head directly above the measurement line. If you look at it from an angle, the thickness of the plastic causes <em>parallax error</em>—making a 45-degree angle look like a 47-degree angle. <a href="/online-protractor">Screen-based digital protractors</a> are perfectly 2D. You cannot get a parallax error on a screen. The measurement is absolute.</p>
-
-        <h2>2. Infinite Scalability</h2>
-        <p>A standard plastic protractor is 6 inches wide. Try measuring the angle of a 4-foot architectural schematic with that. It’s impossible. Digital protractors scale infinitely. You can measure the angle of a microscopic atom on a monitor, or scale it up to measure the roof pitch of an entire stadium blueprint.</p>
-
-        <h2>3. Transparency & Overlay Capabilities</h2>
-        <p>With an online protractor, you can upload a photo of your homework, a CAD file, or a geographic map, and drop a highly visible, glowing protractor directly on top of it. You can't upload a PDF into a piece of plastic.</p>
-        
-        <div class="bg-[var(--color-canvas-soft)] p-6 rounded-xl border border-[var(--color-hairline)] my-8">
-          <h4 class="display-xs mt-0 mb-2">Try It Yourself</h4>
-          <p class="m-0">Upload an image and measure it instantly right in your browser using our free <a href="/online-protractor">Interactive Online Protractor</a>.</p>
+        <div class="study-box" style="transform: rotate(2deg);">
+          <span class="study-sticker" style="top: -25px; right: -10px;">👁️</span>
+          <h3>Problem 1: Parallax Error</h3>
+          <p>Because plastic has thickness, looking at it from an angle changes the measurement line.</p>
+          <p class="font-bold text-red-500">45° looks like 47° if your head isn't perfectly centered!</p>
         </div>
 
-        <h2>4. Environmental Impact & Waste</h2>
-        <p>Millions of plastic protractors are manufactured every August for back-to-school shopping. Millions end up in landfills by June. Digital tools require zero plastic, zero shipping, and generate zero physical waste.</p>
+        <div class="flex justify-center my-6">
+          <svg width="24" height="40" viewBox="0 0 24 40" fill="none" stroke="#3b82f6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 5v30M5 25l7 10 7-10"/>
+          </svg>
+        </div>
 
-        <h3>The Verdict</h3>
-        <p>Physical protractors will always have a nostalgic place in our hearts. If you truly need one, we recommend using a <a href="/printable-protractors">Printable Protractor</a> instead of buying plastic. But for accuracy, scalability, and modern workflows, the digital protractor is the undisputed king.</p>
-      </div>
+        <h2>The Digital Solution 💻</h2>
+        <p>A digital protractor on a screen is purely 2D. <span class="study-highlight">Zero parallax error.</span> Absolute accuracy.</p>
+
+        <h2>Infinite Scalability</h2>
+        <p>Try measuring the pitch of an entire stadium roof with a 6-inch plastic protractor. Impossible.</p>
+        <ul>
+          <li><strong>Digital:</strong> Scales infinitely on a monitor.</li>
+          <li><strong>Analog:</strong> Fixed to 6 inches.</li>
+        </ul>
+
+        <div class="study-box" style="transform: rotate(-1.5deg);">
+          <span class="study-sticker" style="bottom: -20px; right: 20px;">♻️</span>
+          <h3>The Environmental Impact</h3>
+          <p>Millions of plastic protractors are manufactured every August. Millions end up in landfills by June.</p>
+          <p><span class="study-highlight">Digital tools generate ZERO physical waste.</span></p>
+        </div>
+
+        <h3>Conclusion:</h3>
+        <p>If you absolutely need a physical one, use a <a href="/printable-protractors" class="text-blue-600 underline">Printable Protractor</a> instead of buying plastic. Otherwise, go digital!</p>
+
+      </StudyNote>
     </article>
   </ContentSection>
   <RelatedTools currentPath="/blog/digital-protractors-replacing-plastic" />
