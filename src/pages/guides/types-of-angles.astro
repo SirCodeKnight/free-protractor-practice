@@ -1,0 +1,59 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import ContentSection from '../../components/ContentSection.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import RelatedTools from '../../components/RelatedTools.astro';
+
+const title = "Types of Angles - Geometry Guide";
+const description = "Understand the different types of angles in geometry: Acute, Right, Obtuse, Straight, and Reflex angles with clear definitions and examples.";
+
+const articleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: title,
+  description: description,
+  author: {
+    '@type': 'Organization',
+    name: 'Online Geometry Tools'
+  }
+};
+---
+<Layout title={title} description={description} schemas={[articleSchema]}>
+  <ContentSection>
+    <div class="w-full flex justify-center">
+      <Breadcrumbs items={[
+        { name: 'Guides', url: '/guides' },
+        { name: 'Types of Angles', url: '/guides/types-of-angles' }
+      ]} />
+    </div>
+    <div class="max-w-[768px] w-full mx-auto" style="margin-bottom: var(--spacing-xl);">
+      <h1 class="display-lg text-[var(--color-ink)] text-center mb-12">The 5 Types of Angles</h1>
+      
+      <div class="prose prose-lg mx-auto text-[var(--color-body)]">
+        <p>In geometry, angles are classified based on their measurement in degrees. Understanding these classifications is the foundation for almost all geometric principles.</p>
+        
+        <h2>1. Acute Angle (0° to 89°)</h2>
+        <p>An acute angle is any angle that measures greater than 0° and less than 90°. These angles appear "sharp" or "narrow". If you look at an equilateral triangle, all three of its angles are acute (60°).</p>
+        
+        <h2>2. Right Angle (Exactly 90°)</h2>
+        <p>A right angle measures exactly 90 degrees. It forms a perfect "L" shape. In geometric diagrams, a right angle is often indicated by a small square drawn at the vertex rather than a curved arc. Squares and rectangles are made entirely of right angles.</p>
+
+        <h2>3. Obtuse Angle (91° to 179°)</h2>
+        <p>An obtuse angle is wider than a right angle, measuring greater than 90° but less than 180°. These angles appear "blunt" or "wide".</p>
+
+        <h2>4. Straight Angle (Exactly 180°)</h2>
+        <p>A straight angle measures exactly 180 degrees. It looks like a perfectly straight line. It is effectively two right angles placed side-by-side (90° + 90° = 180°).</p>
+
+        <h2>5. Reflex Angle (181° to 359°)</h2>
+        <p>A reflex angle is an angle that is greater than 180° but less than 360°. When you draw an acute or obtuse angle, the "outside" or remaining portion of the circle makes up the reflex angle.</p>
+
+        <div class="mt-8 p-6 bg-[var(--color-canvas-soft)] rounded-xl border border-[var(--color-hairline)] text-center">
+          <h3 class="display-sm mb-4">Calculate Unknown Angles</h3>
+          <p class="mb-6">Need to find complementary or supplementary angles? Use our free calculator.</p>
+          <a href="/angle-calculator" class="btn-primary inline-block no-underline">Open Angle Calculator</a>
+        </div>
+      </div>
+    </div>
+  </ContentSection>
+  <RelatedTools currentPath="/guides/types-of-angles" />
+</Layout>

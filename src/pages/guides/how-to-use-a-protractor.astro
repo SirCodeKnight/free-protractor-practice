@@ -1,0 +1,67 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import ContentSection from '../../components/ContentSection.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import RelatedTools from '../../components/RelatedTools.astro';
+
+const title = "How to Use a Protractor - Step by Step Guide";
+const description = "Learn how to accurately measure and draw angles using a standard 180-degree protractor with our easy step-by-step geometry guide.";
+
+const articleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: title,
+  description: description,
+  author: {
+    '@type': 'Organization',
+    name: 'Online Geometry Tools'
+  }
+};
+---
+<Layout title={title} description={description} schemas={[articleSchema]}>
+  <ContentSection>
+    <div class="w-full flex justify-center">
+      <Breadcrumbs items={[
+        { name: 'Guides', url: '/guides' },
+        { name: 'How to Use a Protractor', url: '/guides/how-to-use-a-protractor' }
+      ]} />
+    </div>
+    <div class="max-w-[768px] w-full mx-auto" style="margin-bottom: var(--spacing-xl);">
+      <h1 class="display-lg text-[var(--color-ink)] text-center mb-12">How to Use a Protractor</h1>
+      
+      <div class="prose prose-lg mx-auto text-[var(--color-body)]">
+        <p>A protractor is an essential geometry tool used for measuring and drawing angles. While it might look confusing with its double set of numbers, using one is quite simple once you understand the basic steps.</p>
+        
+        <h2>Understanding Your Protractor</h2>
+        <p>Before you measure, let's identify the three most important parts of your protractor:</p>
+        <ul>
+          <li><strong>The Baseline (Straight Edge):</strong> The flat bottom edge of the protractor.</li>
+          <li><strong>The Origin (Center Mark):</strong> A small hole, crosshair, or dot in the very middle of the baseline.</li>
+          <li><strong>The Two Scales:</strong> Most protractors have an inner scale and an outer scale. One goes from 0 to 180 left-to-right, and the other goes 0 to 180 right-to-left.</li>
+        </ul>
+
+        <h2>Step 1: Place the Center Mark</h2>
+        <p>Take your protractor and place the <strong>Origin (Center Mark)</strong> exactly over the vertex of the angle. The vertex is the point where the two lines meet.</p>
+
+        <h2>Step 2: Align the Baseline</h2>
+        <p>Keep the center mark exactly on the vertex, and rotate the protractor until the <strong>Baseline</strong> lines up perfectly with one of the lines of your angle. Ensure the line passes directly through the 0° mark on the protractor.</p>
+
+        <h2>Step 3: Read the Measurement</h2>
+        <p>Look at where the <em>second line</em> of your angle crosses the curved edge of the protractor.</p>
+        <ul>
+          <li>If the angle opens to the <strong>right</strong>, read the scale that starts with 0 on the right side.</li>
+          <li>If the angle opens to the <strong>left</strong>, read the scale that starts with 0 on the left side.</li>
+        </ul>
+        
+        <p>The number where the second line crosses the scale is your angle measurement!</p>
+
+        <div class="mt-8 p-6 bg-[var(--color-canvas-soft)] rounded-xl border border-[var(--color-hairline)] text-center">
+          <h3 class="display-sm mb-4">Practice Measuring Angles</h3>
+          <p class="mb-6">Ready to test your skills? Try our free digital protractor tool.</p>
+          <a href="/online-protractor" class="btn-primary inline-block no-underline">Open Online Protractor</a>
+        </div>
+      </div>
+    </div>
+  </ContentSection>
+  <RelatedTools currentPath="/guides/how-to-use-a-protractor" />
+</Layout>

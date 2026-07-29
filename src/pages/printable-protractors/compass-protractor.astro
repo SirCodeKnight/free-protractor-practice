@@ -1,0 +1,63 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import ContentSection from '../../components/ContentSection.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import RelatedTools from '../../components/RelatedTools.astro';
+import CompassProtractor from '../../components/protractors/CompassProtractor.astro';
+
+const title = "Compass Protractor - Free Printable Download";
+const description = "Print a free high-resolution compass protractor. Features North, South, East, West headings and 360 degree markings for navigation and mapping.";
+
+const webAppSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebApplication',
+  name: 'Compass Printable Protractor',
+  url: 'https://webprotractor.netlify.app/printable-protractors/compass-protractor',
+  description: description,
+  applicationCategory: 'UtilityApplication',
+  operatingSystem: 'Any',
+};
+
+const websiteSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'Online Geometry Tools',
+  url: 'https://webprotractor.netlify.app'
+};
+---
+<Layout title={title} description={description} schemas={[webAppSchema, websiteSchema]}>
+  <ContentSection>
+    <div class="w-full flex justify-center">
+      <Breadcrumbs items={[
+        { name: 'Printable Protractors', url: '/printable-protractors' },
+        { name: 'Compass Protractor', url: '/printable-protractors/compass-protractor' }
+      ]} />
+    </div>
+    <div class="max-w-[768px] w-full mx-auto text-center" style="margin-bottom: var(--spacing-xl);">
+      <p class="caption-mono text-[var(--color-mute)]" style="margin-bottom: var(--spacing-xs);">FREE PRINTABLE TOOL</p>
+      <h1 class="display-lg text-[var(--color-ink)]">Compass Protractor</h1>
+      <p class="body-lg text-[var(--color-body)] mt-4">
+        Need to measure bearings or navigate a map? Print this page at 100% scale to get an accurate compass rose protractor with 360-degree headings.
+      </p>
+    </div>
+
+    <!-- Printable Area -->
+    <div class="flex justify-center my-12 print:my-0">
+      <div class="w-[800px] max-w-full p-8 rounded-xl shadow-sm print:shadow-none print:p-0 border border-[var(--color-hairline)] print:border-none" style="background-color: #ffffff; color: #000000;">
+        <CompassProtractor width="100%" />
+      </div>
+    </div>
+
+    <div class="text-center print:hidden flex flex-col items-center gap-4">
+      <button onclick="window.print()" class="btn-primary flex items-center gap-2">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M6 9V2h12v7" />
+          <path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2" />
+          <path d="M6 14h12v8H6z" />
+        </svg>
+        Print Protractor
+      </button>
+    </div>
+  </ContentSection>
+  <RelatedTools currentPath="/printable-protractors/compass-protractor" />
+</Layout>

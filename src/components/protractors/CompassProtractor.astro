@@ -1,0 +1,83 @@
+---
+const ticks = Array.from({ length: 360 }, (_, i) => i);
+export interface Props {
+  width?: string;
+  id?: string;
+}
+const { width = "100%", id } = Astro.props;
+---
+<svg viewBox="0 0 400 400" width={width} id={id} style="font-family: Arial, Helvetica, sans-serif; color: #000000; overflow: visible;">
+  <!-- Outer Boundary Arc -->
+  <circle cx="200" cy="200" r="180" fill="none" stroke="currentColor" stroke-width="1.5"/>
+  
+  <!-- Center Crosshair -->
+  <line x1="200" y1="190" x2="200" y2="210" stroke="currentColor" stroke-width="1.5"/>
+  <line x1="190" y1="200" x2="210" y2="200" stroke="currentColor" stroke-width="1.5"/>
+  <circle cx="200" cy="200" r="2.5" fill="currentColor"/>
+  
+  <!-- Compass Headings (N, S, E, W) -->
+  <text x="200" y="55" text-anchor="middle" dominant-baseline="middle" font-size="28" font-weight="bold">N</text>
+  <text x="200" y="350" text-anchor="middle" dominant-baseline="middle" font-size="28" font-weight="bold">S</text>
+  <text x="350" y="200" text-anchor="middle" dominant-baseline="middle" font-size="28" font-weight="bold">E</text>
+  <text x="50" y="200" text-anchor="middle" dominant-baseline="middle" font-size="28" font-weight="bold">W</text>
+  
+  <!-- Sub-headings (NE, NW, SE, SW) -->
+  <text x="306" y="94" text-anchor="middle" dominant-baseline="middle" font-size="16" font-weight="bold">NE</text>
+  <text x="94" y="94" text-anchor="middle" dominant-baseline="middle" font-size="16" font-weight="bold">NW</text>
+  <text x="306" y="306" text-anchor="middle" dominant-baseline="middle" font-size="16" font-weight="bold">SE</text>
+  <text x="94" y="306" text-anchor="middle" dominant-baseline="middle" font-size="16" font-weight="bold">SW</text>
+
+  <!-- Horizontal & Vertical Baselines (faded) -->
+  <line x1="70" y1="200" x2="330" y2="200" stroke="currentColor" stroke-width="0.5" stroke-dasharray="4 4"/>
+  <line x1="200" y1="70" x2="200" y2="330" stroke="currentColor" stroke-width="0.5" stroke-dasharray="4 4"/>
+  
+  {ticks.map(tick => {
+    // Standard protractor angles (0 on right, CCW).
+    // For compass, 0 is North (top), clockwise.
+    // 0 deg compass = 90 deg standard (top)
+    // 90 deg compass = 0 deg standard (right)
+    // So standardAngle = 90 - compassAngle.
+    
+    // Actually, drawing the ticks purely around the circle:
+    const compassHeading = tick; // 0 to 359
+    // SVG 0 is right. We want 0 at top, so shift by -90 deg.
+    const displayAngleDeg = compassHeading - 90;
+    const angle = (displayAngleDeg * Math.PI) / 180;
+    
+    const isMajor = tick % 10 === 0;
+    const isMedium = tick % 5 === 0 && !isMajor;
+    const length = isMajor ? 15 : isMedium ? 10 : 5;
+    
+    // Ticks drop inwards from outer radius 180
+    const xOuter = 200 + 180 * Math.cos(angle);
+    const yOuter = 200 + 180 * Math.sin(angle); // + because SVG y goes down
+    const xInner = 200 + (180 - length) * Math.cos(angle);
+    const yInner = 200 + (180 - length) * Math.sin(angle);
+    
+    const textRadiusOuter = 155; 
+    const txO = 200 + textRadiusOuter * Math.cos(angle);
+    const tyO = 200 + textRadiusOuter * Math.sin(angle);
+
+    return (
+      <g>
+        <line x1={xOuter} y1={yOuter} x2={xInner} y2={yInner} stroke="currentColor" stroke-width={isMajor ? 1.5 : 1}/>
+        
+        {isMajor && (
+          <g>
+            <text 
+              x={txO} y={tyO} 
+              text-anchor="middle" dominant-baseline="middle" 
+              font-size="9" 
+              font-weight="bold"
+              transform={`rotate(${displayAngleDeg + 90}, ${txO}, ${tyO})`}
+            >
+              {tick}
+            </text>
+          </g>
+        )}
+      </g>
+    )
+  })}
+  
+  <circle cx="200" cy="200" r="142" fill="none" stroke="currentColor" stroke-width="0.75" />
+</svg>

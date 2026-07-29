@@ -1,0 +1,64 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import ContentSection from '../../components/ContentSection.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import RelatedTools from '../../components/RelatedTools.astro';
+import StandardProtractor from '../../components/protractors/StandardProtractor.astro';
+
+const title = "Large Printable Protractor - Free Full Page Download";
+const description = "Print a giant, full-page printable protractor. This oversized 180-degree protractor is perfect for classroom demonstrations and whiteboards.";
+
+const webAppSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebApplication',
+  name: 'Large Printable Protractor',
+  url: 'https://webprotractor.netlify.app/printable-protractors/large',
+  description: description,
+  applicationCategory: 'UtilityApplication',
+  operatingSystem: 'Any',
+};
+
+const websiteSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'Online Geometry Tools',
+  url: 'https://webprotractor.netlify.app'
+};
+---
+<Layout title={title} description={description} schemas={[webAppSchema, websiteSchema]}>
+  <ContentSection>
+    <div class="w-full flex justify-center">
+      <Breadcrumbs items={[
+        { name: 'Printable Protractors', url: '/printable-protractors' },
+        { name: 'Large Protractor', url: '/printable-protractors/large' }
+      ]} />
+    </div>
+    <div class="max-w-[768px] w-full mx-auto text-center" style="margin-bottom: var(--spacing-xl);">
+      <p class="caption-mono text-[var(--color-mute)]" style="margin-bottom: var(--spacing-xs);">FREE PRINTABLE TOOL</p>
+      <h1 class="display-lg text-[var(--color-ink)]">Large Printable Protractor</h1>
+      <p class="body-lg text-[var(--color-body)] mt-4">
+        Need a huge protractor for the classroom? Print this page to get a giant, full-width 180-degree protractor that stretches across the entire page.
+      </p>
+    </div>
+
+    <!-- Printable Area (Designed to fill the page) -->
+    <div class="flex justify-center my-12 print:my-0 print:w-full print:absolute print:top-0 print:left-0 print:mt-[30%]">
+      <div class="w-[1000px] max-w-full p-8 rounded-xl shadow-sm print:shadow-none print:p-0 border border-[var(--color-hairline)] print:border-none" style="background-color: #ffffff; color: #000000;">
+        <StandardProtractor width="100%" />
+      </div>
+    </div>
+
+    <div class="text-center print:hidden flex flex-col items-center gap-4">
+      <button onclick="window.print()" class="btn-primary flex items-center gap-2">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M6 9V2h12v7" />
+          <path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2" />
+          <path d="M6 14h12v8H6z" />
+        </svg>
+        Print Large Protractor
+      </button>
+      <p class="body-sm text-[var(--color-mute)]">Tip: Set printer to Landscape mode for the largest possible size.</p>
+    </div>
+  </ContentSection>
+  <RelatedTools currentPath="/printable-protractors/large" />
+</Layout>

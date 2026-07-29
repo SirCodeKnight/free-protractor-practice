@@ -1,0 +1,63 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import ContentSection from '../../components/ContentSection.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import RelatedTools from '../../components/RelatedTools.astro';
+import StandardProtractor from '../../components/protractors/StandardProtractor.astro';
+
+const title = "Half Moon Protractor - Free Printable Pattern";
+const description = "Download and print a free high-resolution half moon protractor. An accurate 180-degree tool for drafting, measuring, and geometry.";
+
+const webAppSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebApplication',
+  name: 'Half Moon Printable Protractor',
+  url: 'https://webprotractor.netlify.app/printable-protractors/half-moon',
+  description: description,
+  applicationCategory: 'UtilityApplication',
+  operatingSystem: 'Any',
+};
+
+const websiteSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'Online Geometry Tools',
+  url: 'https://webprotractor.netlify.app'
+};
+---
+<Layout title={title} description={description} schemas={[webAppSchema, websiteSchema]}>
+  <ContentSection>
+    <div class="w-full flex justify-center">
+      <Breadcrumbs items={[
+        { name: 'Printable Protractors', url: '/printable-protractors' },
+        { name: 'Half Moon Protractor', url: '/printable-protractors/half-moon' }
+      ]} />
+    </div>
+    <div class="max-w-[768px] w-full mx-auto text-center" style="margin-bottom: var(--spacing-xl);">
+      <p class="caption-mono text-[var(--color-mute)]" style="margin-bottom: var(--spacing-xs);">FREE PRINTABLE TOOL</p>
+      <h1 class="display-lg text-[var(--color-ink)]">Half Moon Protractor</h1>
+      <p class="body-lg text-[var(--color-body)] mt-4">
+        Print this page at 100% scale to get an accurate 180-degree half moon protractor for your math homework or drafting projects.
+      </p>
+    </div>
+
+    <!-- Printable Area -->
+    <div class="flex justify-center my-12 print:my-0">
+      <div class="w-[600px] max-w-full p-8 rounded-xl shadow-sm print:shadow-none print:p-0 border border-[var(--color-hairline)] print:border-none" style="background-color: #ffffff; color: #000000;">
+        <StandardProtractor width="100%" />
+      </div>
+    </div>
+
+    <div class="text-center print:hidden flex flex-col items-center gap-4">
+      <button onclick="window.print()" class="btn-primary flex items-center gap-2">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M6 9V2h12v7" />
+          <path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2" />
+          <path d="M6 14h12v8H6z" />
+        </svg>
+        Print Half Moon Protractor
+      </button>
+    </div>
+  </ContentSection>
+  <RelatedTools currentPath="/printable-protractors/half-moon" />
+</Layout>

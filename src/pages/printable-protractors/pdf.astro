@@ -1,0 +1,66 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import ContentSection from '../../components/ContentSection.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import RelatedTools from '../../components/RelatedTools.astro';
+import StandardProtractor from '../../components/protractors/StandardProtractor.astro';
+
+const title = "Printable Protractor PDF - Free Instant Download";
+const description = "Instantly print or save a free printable protractor PDF. No signup required. High-resolution vector PDF for perfect geometry measurements.";
+
+const webAppSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebApplication',
+  name: 'Printable Protractor PDF',
+  url: 'https://webprotractor.netlify.app/printable-protractors/pdf',
+  description: description,
+  applicationCategory: 'UtilityApplication',
+  operatingSystem: 'Any',
+};
+
+const websiteSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'Online Geometry Tools',
+  url: 'https://webprotractor.netlify.app'
+};
+---
+<Layout title={title} description={description} schemas={[webAppSchema, websiteSchema]}>
+  <ContentSection>
+    <div class="w-full flex justify-center">
+      <Breadcrumbs items={[
+        { name: 'Printable Protractors', url: '/printable-protractors' },
+        { name: 'Protractor PDF', url: '/printable-protractors/pdf' }
+      ]} />
+    </div>
+    <div class="max-w-[768px] w-full mx-auto text-center" style="margin-bottom: var(--spacing-xl);">
+      <p class="caption-mono text-[var(--color-mute)]" style="margin-bottom: var(--spacing-xs);">FREE PDF DOWNLOAD</p>
+      <h1 class="display-lg text-[var(--color-ink)]">Printable Protractor PDF</h1>
+      <p class="body-lg text-[var(--color-body)] mt-4">
+        Need a high-quality PDF protractor? Click the print button below and select "Save as PDF" in your print dialog, or print it directly to paper!
+      </p>
+    </div>
+
+    <!-- Printable Area -->
+    <div class="flex justify-center my-12 print:my-0">
+      <div class="w-[600px] max-w-full p-8 rounded-xl shadow-sm print:shadow-none print:p-0 border border-[var(--color-hairline)] print:border-none" style="background-color: #ffffff; color: #000000;">
+        <StandardProtractor width="100%" />
+      </div>
+    </div>
+
+    <div class="text-center print:hidden flex flex-col items-center gap-4">
+      <button onclick="window.print()" class="btn-primary flex items-center gap-2">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M6 9V2h12v7" />
+          <path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2" />
+          <path d="M6 14h12v8H6z" />
+        </svg>
+        Save as PDF / Print
+      </button>
+      <p class="body-sm text-[var(--color-mute)]">
+        In the print dialog window, change the destination to "Save as PDF".
+      </p>
+    </div>
+  </ContentSection>
+  <RelatedTools currentPath="/printable-protractors/pdf" />
+</Layout>

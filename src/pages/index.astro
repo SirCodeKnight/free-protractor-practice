@@ -39,11 +39,16 @@ const orgSchema = {
 
 const tools = [
   { name: 'Online Protractor', url: '/online-protractor', desc: 'Measure angles using your screen, phone gyroscope, or camera.' },
-  { name: 'Printable Protractor', url: '/printable-protractor', desc: 'Download a perfectly scaled 180° PDF protractor for printing.' },
   { name: 'Angle Calculator', url: '/angle-calculator', desc: 'Calculate complementary, supplementary, and vertical angles instantly.' },
   { name: 'Online Ruler', url: '/ruler', desc: 'Measure objects on your screen with a perfectly calibrated digital ruler.' },
   { name: 'Compass Tool', url: '/compass', desc: 'Use your phone\'s magnetometer to find North directly in your browser.' },
   { name: 'Geometry Calculator', url: '/geometry-calculator', desc: 'Calculate area and perimeter for circles, rectangles, and triangles.' },
+];
+
+const guides = [
+  { name: 'How to Use a Protractor', url: '/guides/how-to-use-a-protractor', desc: 'A step-by-step guide to measuring and drawing angles.' },
+  { name: 'Types of Angles', url: '/guides/types-of-angles', desc: 'Learn the difference between acute, right, obtuse, straight, and reflex angles.' },
+  { name: 'View All Guides', url: '/guides', desc: 'Browse our complete library of geometry tutorials.' },
 ];
 ---
 
@@ -59,7 +64,7 @@ const tools = [
       <div class="inline-flex items-center caption-mono text-[var(--color-body)] bg-[var(--color-canvas-soft)] border border-[var(--color-hairline)]"
         style="padding: var(--spacing-xxs) var(--spacing-sm); border-radius: var(--radius-full); gap: var(--spacing-xs);">
         <span class="inline-block w-1.5 h-1.5 rounded-full bg-[var(--color-cyan-deep)]"></span>
-        FREE ONLINE TOOLKIT
+        FREE GEOMETRY TOOLKIT
       </div>
 
       <h1 class="display-xl text-[var(--color-ink)]" style="max-width: 700px;">
@@ -67,20 +72,68 @@ const tools = [
       </h1>
 
       <p class="body-lg text-[var(--color-body)]" style="max-width: 560px;">
-        Measure, calculate, and explore angles and shapes right in your browser. No downloads or sign-ups required.
+        Measure, calculate, and explore angles right in your browser. Read our guides or download our free printable resources.
       </p>
     </div>
   </section>
 
-  <!-- Tools Directory -->
+  <!-- Web Tools Directory -->
   <ContentSection variant="soft">
-    <div class="max-w-[1000px] mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      {tools.map(tool => (
-        <a href={tool.url} class="card-base elevation-1 hover:elevation-3 transition-all p-8 flex flex-col bg-[var(--color-canvas)] no-underline border border-[var(--color-hairline)] hover:border-[var(--color-link)] group">
-          <h2 class="display-sm text-[var(--color-ink)] group-hover:text-[var(--color-link)] mb-2 transition-colors">{tool.name}</h2>
-          <p class="body-md text-[var(--color-body)] leading-relaxed">{tool.desc}</p>
-        </a>
-      ))}
+    <div class="max-w-[1000px] mx-auto">
+      <div class="mb-8">
+        <p class="caption-mono text-[var(--color-mute)] mb-2">INTERACTIVE</p>
+        <h2 class="display-lg text-[var(--color-ink)]">Web Tools</h2>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {tools.map(tool => (
+          <a href={tool.url} class="card-base elevation-1 hover:elevation-3 transition-all p-8 flex flex-col bg-[var(--color-canvas)] no-underline border border-[var(--color-hairline)] hover:border-[var(--color-link)] group">
+            <h3 class="display-sm text-[var(--color-ink)] group-hover:text-[var(--color-link)] mb-2 transition-colors">{tool.name}</h3>
+            <p class="body-md text-[var(--color-body)] leading-relaxed">{tool.desc}</p>
+          </a>
+        ))}
+      </div>
+    </div>
+  </ContentSection>
+
+  <!-- Resources (Printables) -->
+  <ContentSection variant="light">
+    <div class="max-w-[1000px] mx-auto">
+      <div class="mb-8">
+        <p class="caption-mono text-[var(--color-mute)] mb-2">RESOURCES</p>
+        <h2 class="display-lg text-[var(--color-ink)]">Printable Protractors</h2>
+      </div>
+      <div class="p-8 md:p-12 bg-[var(--color-canvas)] rounded-2xl border border-[var(--color-hairline)] flex flex-col md:flex-row items-center justify-between gap-8">
+        <div class="max-w-[500px]">
+          <h3 class="display-sm text-[var(--color-ink)] mb-4">Printable Protractor Library</h3>
+          <p class="body-lg text-[var(--color-body)] mb-6">Need a physical protractor? Browse our massive library of free, high-resolution printable PDFs. We have standard 180°, 360° circular, triangle, and ruler variations.</p>
+          <a href="/printable-protractors" class="btn-primary inline-block no-underline">Browse Printables</a>
+        </div>
+        <div class="hidden md:block w-[200px] h-[200px] bg-[var(--color-canvas-soft)] rounded-xl border border-[var(--color-hairline)] flex items-center justify-center relative overflow-hidden">
+           <svg viewBox="0 0 400 220" class="w-[150%] absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-20" style="color: var(--color-ink);">
+            <path d="M 20 200 A 180 180 0 0 1 380 200" fill="none" stroke="currentColor" stroke-width="4"/>
+            <line x1="10" y1="200" x2="390" y2="200" stroke="currentColor" stroke-width="4"/>
+            <circle cx="200" cy="200" r="10" fill="currentColor"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </ContentSection>
+
+  <!-- Guides Directory -->
+  <ContentSection variant="soft">
+    <div class="max-w-[1000px] mx-auto">
+      <div class="mb-8">
+        <p class="caption-mono text-[var(--color-mute)] mb-2">LEARN</p>
+        <h2 class="display-lg text-[var(--color-ink)]">Geometry Guides</h2>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {guides.map(guide => (
+          <a href={guide.url} class="card-base elevation-1 hover:elevation-3 transition-all p-6 flex flex-col bg-[var(--color-canvas)] no-underline border border-[var(--color-hairline)] hover:border-[var(--color-link)] group">
+            <h3 class="display-sm text-[var(--color-ink)] group-hover:text-[var(--color-link)] mb-2 transition-colors">{guide.name}</h3>
+            <p class="body-md text-[var(--color-body)] leading-relaxed">{guide.desc}</p>
+          </a>
+        ))}
+      </div>
     </div>
   </ContentSection>
 

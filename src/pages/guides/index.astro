@@ -1,0 +1,54 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import ContentSection from '../../components/ContentSection.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import RelatedTools from '../../components/RelatedTools.astro';
+
+const title = "Geometry Guides & Tutorials";
+const description = "Learn how to use a protractor, measure angles, and understand basic geometry with our free step-by-step guides.";
+
+const websiteSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'Online Geometry Tools',
+  url: 'https://webprotractor.netlify.app'
+};
+
+const guides = [
+  { 
+    title: 'How to Use a Protractor', 
+    url: '/guides/how-to-use-a-protractor', 
+    excerpt: 'A complete step-by-step guide to measuring and drawing angles accurately using a standard protractor.' 
+  },
+  { 
+    title: 'Types of Angles', 
+    url: '/guides/types-of-angles', 
+    excerpt: 'Learn the difference between acute, right, obtuse, straight, and reflex angles with clear visual examples.' 
+  }
+];
+---
+<Layout title={title} description={description} schemas={[websiteSchema]}>
+  <ContentSection>
+    <div class="w-full flex justify-center">
+      <Breadcrumbs items={[{ name: 'Guides', url: '/guides' }]} />
+    </div>
+    <div class="max-w-[768px] w-full mx-auto text-center" style="margin-bottom: var(--spacing-xl);">
+      <p class="caption-mono text-[var(--color-mute)]" style="margin-bottom: var(--spacing-xs);">EDUCATIONAL RESOURCES</p>
+      <h1 class="display-lg text-[var(--color-ink)]">Geometry Guides</h1>
+      <p class="body-lg text-[var(--color-body)] mt-4">
+        Master geometry with our easy-to-follow tutorials. Whether you are a student learning to measure angles or a teacher looking for resources, we have you covered.
+      </p>
+    </div>
+
+    <div class="max-w-[800px] mx-auto flex flex-col gap-6">
+      {guides.map(guide => (
+        <a href={guide.url} class="p-6 rounded-xl bg-[var(--color-canvas)] border border-[var(--color-hairline)] hover:border-[var(--color-link)] transition-colors no-underline group block">
+          <h2 class="display-sm text-[var(--color-ink)] group-hover:text-[var(--color-link)] mb-2">{guide.title}</h2>
+          <p class="body-md text-[var(--color-body)]">{guide.excerpt}</p>
+          <span class="text-[var(--color-link)] font-medium mt-4 inline-block">Read guide &rarr;</span>
+        </a>
+      ))}
+    </div>
+  </ContentSection>
+  <RelatedTools currentPath="/guides" />
+</Layout>

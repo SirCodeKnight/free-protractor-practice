@@ -9,6 +9,7 @@ import StandardProtractor from '../../components/protractors/StandardProtractor.
 import FullCircleProtractor from '../../components/protractors/FullCircleProtractor.astro';
 import TriangleProtractor from '../../components/protractors/TriangleProtractor.astro';
 import RulerProtractor from '../../components/protractors/RulerProtractor.astro';
+import CompassProtractor from '../../components/protractors/CompassProtractor.astro';
 
 const title = "Printable Protractors Directory - Free PDF & Image Downloads";
 const description = "A complete library of free printable protractors. Download 180 degree, 360 degree circular, triangle, and small protractors as high-quality PDFs.";
@@ -37,6 +38,11 @@ const protractors = [
   { name: 'Triangle Protractor', url: '/printable-protractors/triangle-protractor', Component: TriangleProtractor },
   { name: 'Protractor with Ruler', url: '/printable-protractors/with-ruler', Component: RulerProtractor },
   { name: 'Small Protractor', url: '/printable-protractors/small', Component: StandardProtractor },
+  { name: 'Compass Protractor', url: '/printable-protractors/compass-protractor', Component: CompassProtractor },
+  { name: 'Large Protractor', url: '/printable-protractors/large', Component: StandardProtractor },
+  { name: 'Printable PDF', url: '/printable-protractors/pdf', Component: StandardProtractor },
+  { name: 'Semicircle Protractor', url: '/printable-protractors/semicircle', Component: StandardProtractor },
+  { name: 'Half Moon Protractor', url: '/printable-protractors/half-moon', Component: StandardProtractor },
 ];
 ---
 <Layout title={title} description={description} schemas={[webAppSchema, websiteSchema]}>
