@@ -7,13 +7,171 @@ const description = "Free online digital ruler. Measure objects accurately on yo
 ---
 <Layout title={title} description={description}>
   <ContentSection>
-    <div class="max-w-3xl mx-auto text-center" style="margin-bottom: var(--spacing-xl);">
-      <p class="caption-mono text-[var(--color-mute)]" style="margin-bottom: var(--spacing-xs);">COMING SOON</p>
+    <div class="max-w-[768px] w-full mx-auto text-center" style="margin-bottom: var(--spacing-xl);">
+      <p class="caption-mono text-[var(--color-mute)]" style="margin-bottom: var(--spacing-xs);">FREE ONLINE TOOL</p>
       <h1 class="display-lg text-[var(--color-ink)]">Online Digital Ruler</h1>
       <p class="body-lg text-[var(--color-body)] mt-4">
-        Our online screen ruler is currently in development. Soon you will be able to calibrate your screen to accurately measure physical objects in inches and centimeters directly on your device.
+        Measure physical objects directly on your screen. First, calibrate the ruler using a standard credit card, then use the true-to-size markings below.
       </p>
-      <a href="/" class="btn-primary mt-8 inline-block no-underline">Return to Protractor</a>
+    </div>
+
+    <!-- Calibration Section -->
+    <div class="max-w-[768px] w-full mx-auto mb-12">
+      <div class="bg-white p-6 rounded-xl shadow-sm border border-[var(--color-hairline)]">
+        <h2 class="display-sm text-[var(--color-ink)] mb-2">1. Calibrate Screen</h2>
+        <p class="body-sm text-[var(--color-mute)] mb-6">
+          Standard credit cards are exactly 3.375 inches (85.6 mm) wide. Place a card against the screen and adjust the slider until the box matches your card's width.
+        </p>
+        
+        <div class="flex flex-col items-center">
+          <!-- The box that resizes -->
+          <div id="credit-card-box" class="bg-[var(--color-link-bg-soft)] border-2 border-[var(--color-link)] rounded-md flex items-center justify-center text-[var(--color-link-deep)] font-medium text-sm transition-all shadow-inner" style="width: 324px; height: 204px;">
+            Place Card Here
+          </div>
+          
+          <div class="w-full mt-8 flex flex-col md:flex-row items-center gap-4">
+            <span class="text-sm font-medium text-[var(--color-mute)] shrink-0">Smaller</span>
+            <input type="range" id="calibration-slider" min="200" max="600" value="324" class="w-full cursor-pointer accent-[var(--color-link)]" />
+            <span class="text-sm font-medium text-[var(--color-mute)] shrink-0">Larger</span>
+          </div>
+          
+          <div class="mt-4 text-center">
+            <p class="caption text-[var(--color-mute)]">Current PPI: <span id="ppi-display" class="font-mono text-[var(--color-ink)]">96</span></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Ruler Display Section -->
+    <div class="w-full max-w-[1200px] mx-auto overflow-x-auto bg-white border border-[var(--color-hairline)] rounded-xl shadow-sm hide-scrollbar relative">
+      <div class="min-w-[800px] p-8">
+        <h2 class="display-sm text-[var(--color-ink)] mb-8">2. Measure</h2>
+        
+        <!-- Inches Ruler -->
+        <div class="mb-16">
+          <p class="body-sm-strong text-[var(--color-mute)] mb-2">Inches (in)</p>
+          <div id="ruler-inches" class="relative h-16 border-t-2 border-[var(--color-ink)] w-full">
+            <!-- Dynamically populated by JS -->
+          </div>
+        </div>
+
+        <!-- Centimeters Ruler -->
+        <div>
+          <p class="body-sm-strong text-[var(--color-mute)] mb-2">Centimeters (cm)</p>
+          <div id="ruler-cm" class="relative h-16 border-t-2 border-[var(--color-ink)] w-full">
+            <!-- Dynamically populated by JS -->
+          </div>
+        </div>
+      </div>
     </div>
   </ContentSection>
+
+  <style>
+    /* Hide scrollbar for the ruler container but keep it scrollable */
+    .hide-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .hide-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const slider = document.getElementById('calibration-slider') as HTMLInputElement;
+      const ccBox = document.getElementById('credit-card-box');
+      const ppiDisplay = document.getElementById('ppi-display');
+      
+      const rulerInches = document.getElementById('ruler-inches');
+      const rulerCm = document.getElementById('ruler-cm');
+
+      // Standard credit card width is 3.375 inches
+      const CARD_WIDTH_INCHES = 3.375;
+      let currentPPI = 96;
+
+      function updateCalibration() {
+        const pixelWidth = parseInt(slider.value);
+        ccBox!.style.width = `${pixelWidth}px`;
+        
+        // height is typically 2.125 inches. Aspect ratio is 2.125 / 3.375 = ~0.6296
+        ccBox!.style.height = `${Math.round(pixelWidth * 0.6296)}px`;
+        
+        currentPPI = Math.round(pixelWidth / CARD_WIDTH_INCHES);
+        ppiDisplay!.textContent = currentPPI.toString();
+
+        drawRulers();
+      }
+
+      function drawRulers() {
+        if (!rulerInches || !rulerCm) return;
+        
+        rulerInches.innerHTML = '';
+        rulerCm.innerHTML = '';
+
+        // Draw 12 inches
+        for (let i = 0; i <= 12; i++) {
+          const inchDiv = document.createElement('div');
+          inchDiv.className = 'absolute top-0 border-l-2 border-[var(--color-ink)] h-8';
+          inchDiv.style.left = `${i * currentPPI}px`;
+          
+          if (i > 0) {
+            const label = document.createElement('span');
+            label.className = 'absolute top-8 -translate-x-1/2 text-sm font-medium';
+            label.textContent = i.toString();
+            inchDiv.appendChild(label);
+          }
+          
+          rulerInches.appendChild(inchDiv);
+
+          // Draw 1/2, 1/4, 1/8 inch marks
+          if (i < 12) {
+            for (let j = 1; j < 8; j++) {
+              const subMark = document.createElement('div');
+              let hClass = 'h-3';
+              if (j === 4) hClass = 'h-5'; // 1/2 inch
+              else if (j === 2 || j === 6) hClass = 'h-4'; // 1/4 inch
+              
+              subMark.className = `absolute top-0 border-l border-[var(--color-mute)] ${hClass}`;
+              subMark.style.left = `${i * currentPPI + (j / 8) * currentPPI}px`;
+              rulerInches.appendChild(subMark);
+            }
+          }
+        }
+
+        // Draw 30 cm
+        const ppcm = currentPPI / 2.54;
+        for (let i = 0; i <= 30; i++) {
+          const cmDiv = document.createElement('div');
+          cmDiv.className = 'absolute top-0 border-l-2 border-[var(--color-ink)] h-8';
+          cmDiv.style.left = `${i * ppcm}px`;
+          
+          if (i > 0) {
+            const label = document.createElement('span');
+            label.className = 'absolute top-8 -translate-x-1/2 text-sm font-medium';
+            label.textContent = i.toString();
+            cmDiv.appendChild(label);
+          }
+          
+          rulerCm.appendChild(cmDiv);
+
+          // Draw mm marks
+          if (i < 30) {
+            for (let j = 1; j < 10; j++) {
+              const mmMark = document.createElement('div');
+              const hClass = j === 5 ? 'h-5' : 'h-3';
+              mmMark.className = `absolute top-0 border-l border-[var(--color-mute)] ${hClass}`;
+              mmMark.style.left = `${i * ppcm + (j / 10) * ppcm}px`;
+              rulerCm.appendChild(mmMark);
+            }
+          }
+        }
+      }
+
+      slider.addEventListener('input', updateCalibration);
+      
+      // Initialize
+      updateCalibration();
+    });
+  </script>
 </Layout>

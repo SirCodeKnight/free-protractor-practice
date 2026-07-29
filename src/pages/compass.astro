@@ -7,13 +7,133 @@ const description = "Free online compass tool. Find North, South, East, and West
 ---
 <Layout title={title} description={description}>
   <ContentSection>
-    <div class="max-w-3xl mx-auto text-center" style="margin-bottom: var(--spacing-xl);">
-      <p class="caption-mono text-[var(--color-mute)]" style="margin-bottom: var(--spacing-xs);">COMING SOON</p>
+    <div class="max-w-[768px] w-full mx-auto text-center" style="margin-bottom: var(--spacing-xl);">
+      <p class="caption-mono text-[var(--color-mute)]" style="margin-bottom: var(--spacing-xs);">FREE ONLINE TOOL</p>
       <h1 class="display-lg text-[var(--color-ink)]">Online Digital Compass</h1>
       <p class="body-lg text-[var(--color-body)] mt-4">
-        We are building a highly accurate digital compass that utilizes your phone's magnetometer to help you find your bearings directly in the browser.
+        Find your bearings instantly. This digital compass uses your phone's built-in magnetometer to show you true North, South, East, and West.
       </p>
-      <a href="/" class="btn-primary mt-8 inline-block no-underline">Return to Protractor</a>
+    </div>
+
+    <div class="max-w-[500px] w-full mx-auto bg-white p-8 rounded-2xl shadow-sm border border-[var(--color-hairline)] text-center relative overflow-hidden">
+      <!-- Error / Permission state -->
+      <div id="compass-overlay" class="absolute inset-0 bg-white/90 backdrop-blur-sm z-10 flex flex-col items-center justify-center p-6 text-center">
+        <h3 class="display-sm text-[var(--color-ink)] mb-2">Compass Needs Permission</h3>
+        <p class="body-sm text-[var(--color-mute)] mb-6">
+          To find your direction, we need access to your device's orientation sensors. (Note: This requires a mobile device with a magnetometer).
+        </p>
+        <button id="start-btn" class="btn-primary w-full max-w-[200px]">Start Compass</button>
+        <p id="error-text" class="text-[var(--color-error)] text-sm mt-4 hidden"></p>
+      </div>
+
+      <!-- Compass UI -->
+      <div class="relative w-full aspect-square max-w-[350px] mx-auto">
+        <!-- Static Outer Ring -->
+        <svg viewBox="0 0 200 200" class="absolute inset-0 w-full h-full text-[var(--color-hairline-strong)]">
+          <circle cx="100" cy="100" r="95" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="2 4"/>
+          <!-- Fixed North Pointer Indicator -->
+          <polygon points="90,10 110,10 100,-5" fill="var(--color-error)" transform="translate(0, -10)" />
+        </svg>
+
+        <!-- Rotating Dial -->
+        <div id="compass-dial" class="absolute inset-0 w-full h-full transition-transform duration-200 ease-out flex items-center justify-center" style="transform: rotate(0deg);">
+          <svg viewBox="0 0 200 200" class="w-full h-full text-[var(--color-ink)]">
+            <circle cx="100" cy="100" r="85" fill="white" stroke="currentColor" stroke-width="4"/>
+            <!-- N, S, E, W Labels -->
+            <text x="100" y="30" text-anchor="middle" dominant-baseline="middle" font-size="20" font-weight="bold" fill="var(--color-error)">N</text>
+            <text x="100" y="175" text-anchor="middle" dominant-baseline="middle" font-size="20" font-weight="bold">S</text>
+            <text x="175" y="100" text-anchor="middle" dominant-baseline="middle" font-size="20" font-weight="bold">E</text>
+            <text x="25" y="100" text-anchor="middle" dominant-baseline="middle" font-size="20" font-weight="bold">W</text>
+            
+            <!-- Tick Marks -->
+            <path d="M 100 40 L 100 50 M 100 150 L 100 160 M 40 100 L 50 100 M 150 100 L 160 100" stroke="currentColor" stroke-width="3"/>
+          </svg>
+        </div>
+        
+        <!-- Center Info -->
+        <div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
+          <span id="heading-display" class="display-lg text-[var(--color-ink)] tabular-nums">0&deg;</span>
+          <span id="direction-display" class="body-sm-strong text-[var(--color-mute)] tracking-widest uppercase">North</span>
+        </div>
+      </div>
     </div>
   </ContentSection>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const startBtn = document.getElementById('start-btn');
+      const overlay = document.getElementById('compass-overlay');
+      const errorText = document.getElementById('error-text');
+      const dial = document.getElementById('compass-dial');
+      const headingDisplay = document.getElementById('heading-display');
+      const directionDisplay = document.getElementById('direction-display');
+
+      function getDirectionName(heading: number) {
+        if (heading >= 337.5 || heading < 22.5) return 'North';
+        if (heading >= 22.5 && heading < 67.5) return 'Northeast';
+        if (heading >= 67.5 && heading < 112.5) return 'East';
+        if (heading >= 112.5 && heading < 157.5) return 'Southeast';
+        if (heading >= 157.5 && heading < 202.5) return 'South';
+        if (heading >= 202.5 && heading < 247.5) return 'Southwest';
+        if (heading >= 247.5 && heading < 292.5) return 'West';
+        if (heading >= 292.5 && heading < 337.5) return 'Northwest';
+        return '';
+      }
+
+      function handleOrientation(event: DeviceOrientationEvent) {
+        let heading = 0;
+        
+        // Use webkitCompassHeading for iOS, alpha for Android
+        if ('webkitCompassHeading' in event && typeof event.webkitCompassHeading === 'number') {
+          heading = event.webkitCompassHeading;
+        } else if (event.alpha !== null) {
+          // Android absolute orientation
+          heading = 360 - event.alpha;
+        } else {
+          return; // No valid sensor data
+        }
+
+        // Hide overlay if we got data
+        if (!overlay?.classList.contains('hidden')) {
+          overlay?.classList.add('hidden');
+        }
+
+        headingDisplay!.textContent = `${Math.round(heading)}°`;
+        directionDisplay!.textContent = getDirectionName(heading);
+        
+        // Rotate the dial *opposite* to the heading so North always points true north
+        dial!.style.transform = `rotate(${-heading}deg)`;
+      }
+
+      startBtn?.addEventListener('click', async () => {
+        if (typeof (DeviceOrientationEvent as any).requestPermission === 'function') {
+          try {
+            const permissionState = await (DeviceOrientationEvent as any).requestPermission();
+            if (permissionState === 'granted') {
+              window.addEventListener('deviceorientationabsolute', handleOrientation as any, true);
+              window.addEventListener('deviceorientation', handleOrientation as any, true);
+            } else {
+              errorText!.textContent = 'Permission denied. Please enable sensors in your settings.';
+              errorText!.classList.remove('hidden');
+            }
+          } catch (e) {
+            errorText!.textContent = 'Failed to request permission. Make sure you are using HTTPS.';
+            errorText!.classList.remove('hidden');
+          }
+        } else {
+          // Non-iOS devices or devices that don't need explicit permission
+          window.addEventListener('deviceorientationabsolute', handleOrientation as any, true);
+          window.addEventListener('deviceorientation', handleOrientation as any, true);
+          
+          // Test if we get events, if not after 1 second, show error
+          setTimeout(() => {
+            if (!overlay?.classList.contains('hidden')) {
+              errorText!.textContent = 'No sensor data detected. Your device may not have a magnetometer.';
+              errorText!.classList.remove('hidden');
+            }
+          }, 1500);
+        }
+      });
+    });
+  </script>
 </Layout>

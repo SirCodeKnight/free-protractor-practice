@@ -7,13 +7,177 @@ const description = "Free online angle calculator. Calculate complementary, supp
 ---
 <Layout title={title} description={description}>
   <ContentSection>
-    <div class="max-w-3xl mx-auto text-center" style="margin-bottom: var(--spacing-xl);">
-      <p class="caption-mono text-[var(--color-mute)]" style="margin-bottom: var(--spacing-xs);">COMING SOON</p>
+    <div class="max-w-[768px] w-full mx-auto text-center" style="margin-bottom: var(--spacing-xl);">
+      <p class="caption-mono text-[var(--color-mute)]" style="margin-bottom: var(--spacing-xs);">FREE ONLINE TOOL</p>
       <h1 class="display-lg text-[var(--color-ink)]">Angle Calculator</h1>
       <p class="body-lg text-[var(--color-body)] mt-4">
-        We are currently building a comprehensive angle calculator to help you find complementary, supplementary, vertical, and missing angles in triangles and polygons.
+        Enter any angle in degrees to instantly find its complementary, supplementary, and vertical angles, complete with a visual representation.
       </p>
-      <a href="/" class="btn-primary mt-8 inline-block no-underline">Return to Protractor</a>
+    </div>
+
+    <div class="max-w-[768px] w-full mx-auto">
+      <div class="bg-white p-6 rounded-xl shadow-sm border border-[var(--color-hairline)] flex flex-col md:flex-row gap-8">
+        
+        <!-- Input Section -->
+        <div class="flex-1 flex flex-col gap-6">
+          <div>
+            <label for="angle-input" class="block body-md-strong text-[var(--color-ink)] mb-2">Enter Angle (&deg;)</label>
+            <div class="flex gap-2">
+              <input 
+                type="number" 
+                id="angle-input" 
+                class="flex-1 px-4 py-3 border border-[var(--color-hairline-strong)] rounded-lg text-lg focus:outline-none focus:ring-2 focus:ring-[var(--color-link)]" 
+                placeholder="e.g. 45"
+                value="45"
+                min="0"
+                max="360"
+              />
+              <button id="reset-btn" class="btn-secondary">Reset</button>
+            </div>
+            <p id="error-msg" class="text-[var(--color-error)] text-sm mt-2 hidden">Please enter a valid angle between 0 and 360.</p>
+          </div>
+
+          <!-- Results -->
+          <div class="grid grid-cols-2 gap-4">
+            <div class="bg-[var(--color-canvas-soft)] p-4 rounded-lg border border-[var(--color-hairline)]">
+              <p class="caption text-[var(--color-mute)] mb-1 uppercase tracking-wider">Complementary</p>
+              <p id="val-comp" class="display-sm text-[var(--color-ink)]">45&deg;</p>
+              <p id="msg-comp" class="caption text-[var(--color-mute)] hidden">Requires angle ≤ 90&deg;</p>
+            </div>
+            <div class="bg-[var(--color-canvas-soft)] p-4 rounded-lg border border-[var(--color-hairline)]">
+              <p class="caption text-[var(--color-mute)] mb-1 uppercase tracking-wider">Supplementary</p>
+              <p id="val-supp" class="display-sm text-[var(--color-ink)]">135&deg;</p>
+              <p id="msg-supp" class="caption text-[var(--color-mute)] hidden">Requires angle ≤ 180&deg;</p>
+            </div>
+            <div class="bg-[var(--color-canvas-soft)] p-4 rounded-lg border border-[var(--color-hairline)]">
+              <p class="caption text-[var(--color-mute)] mb-1 uppercase tracking-wider">Vertical</p>
+              <p id="val-vert" class="display-sm text-[var(--color-ink)]">45&deg;</p>
+            </div>
+            <div class="bg-[var(--color-canvas-soft)] p-4 rounded-lg border border-[var(--color-hairline)]">
+              <p class="caption text-[var(--color-mute)] mb-1 uppercase tracking-wider">Reference</p>
+              <p id="val-ref" class="display-sm text-[var(--color-ink)]">45&deg;</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Visualizer Section -->
+        <div class="flex-1 flex flex-col items-center justify-center bg-[var(--color-canvas-soft)] rounded-lg border border-[var(--color-hairline)] p-6 min-h-[300px]">
+          <p class="caption-mono text-[var(--color-mute)] mb-4">VISUALIZATION</p>
+          <svg id="angle-viz" viewBox="-110 -110 220 220" class="w-full max-w-[200px] aspect-square overflow-visible">
+            <!-- Axes -->
+            <line x1="-100" y1="0" x2="100" y2="0" stroke="currentColor" stroke-width="2" class="text-gray-300"/>
+            <line x1="0" y1="-100" x2="0" y2="100" stroke="currentColor" stroke-width="2" class="text-gray-300"/>
+            
+            <!-- Base Line -->
+            <line x1="0" y1="0" x2="100" y2="0" stroke="currentColor" stroke-width="3" class="text-blue-500"/>
+            
+            <!-- Angle Arc -->
+            <path id="viz-arc" d="" fill="rgba(59, 130, 246, 0.2)" stroke="#3b82f6" stroke-width="2"/>
+            
+            <!-- Angle Line -->
+            <line id="viz-line" x1="0" y1="0" x2="70.7" y2="-70.7" stroke="#000" stroke-width="3"/>
+            
+            <!-- Center Dot -->
+            <circle cx="0" cy="0" r="4" fill="#000"/>
+          </svg>
+        </div>
+
+      </div>
     </div>
   </ContentSection>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const input = document.getElementById('angle-input') as HTMLInputElement;
+      const resetBtn = document.getElementById('reset-btn');
+      
+      const valComp = document.getElementById('val-comp');
+      const msgComp = document.getElementById('msg-comp');
+      const valSupp = document.getElementById('val-supp');
+      const msgSupp = document.getElementById('msg-supp');
+      const valVert = document.getElementById('val-vert');
+      const valRef = document.getElementById('val-ref');
+      
+      const vizLine = document.getElementById('viz-line');
+      const vizArc = document.getElementById('viz-arc');
+
+      function calculate() {
+        let val = parseFloat(input.value);
+        if (isNaN(val)) val = 0;
+        
+        // Normalize angle to 0-360
+        val = ((val % 360) + 360) % 360;
+
+        // Complementary
+        if (val <= 90) {
+          valComp!.textContent = `${90 - val}°`;
+          valComp!.classList.remove('hidden');
+          msgComp!.classList.add('hidden');
+        } else {
+          valComp!.classList.add('hidden');
+          msgComp!.classList.remove('hidden');
+        }
+
+        // Supplementary
+        if (val <= 180) {
+          valSupp!.textContent = `${180 - val}°`;
+          valSupp!.classList.remove('hidden');
+          msgSupp!.classList.add('hidden');
+        } else {
+          valSupp!.classList.add('hidden');
+          msgSupp!.classList.remove('hidden');
+        }
+
+        // Vertical
+        valVert!.textContent = `${val}°`;
+
+        // Reference
+        let refAngle = 0;
+        if (val <= 90) refAngle = val;
+        else if (val <= 180) refAngle = 180 - val;
+        else if (val <= 270) refAngle = val - 180;
+        else refAngle = 360 - val;
+        
+        valRef!.textContent = `${refAngle}°`;
+
+        updateViz(val);
+      }
+
+      function updateViz(angle: number) {
+        // SVG math: standard angle is counter-clockwise from positive x-axis
+        // In SVG, positive y is down, so we use negative y for counter-clockwise up.
+        const rad = (angle * Math.PI) / 180;
+        const radius = 80;
+        
+        const x = radius * Math.cos(rad);
+        const y = -radius * Math.sin(rad); // negative for up
+        
+        vizLine?.setAttribute('x2', x.toString());
+        vizLine?.setAttribute('y2', y.toString());
+
+        // Arc calculation
+        const largeArcFlag = angle > 180 ? 1 : 0;
+        
+        if (angle === 0 || angle === 360) {
+           vizArc?.setAttribute('d', ''); // Empty if 0 or 360 to avoid weird fills
+           if (angle === 360) {
+             vizArc?.setAttribute('d', `M ${radius} 0 A ${radius} ${radius} 0 1 0 ${radius} -0.01`);
+           }
+        } else {
+          const pathData = `M ${radius} 0 A ${radius} ${radius} 0 ${largeArcFlag} 0 ${x} ${y} L 0 0 Z`;
+          vizArc?.setAttribute('d', pathData);
+        }
+      }
+
+      input?.addEventListener('input', calculate);
+      
+      resetBtn?.addEventListener('click', () => {
+        input.value = '45';
+        calculate();
+      });
+
+      // Initial calculation
+      calculate();
+    });
+  </script>
 </Layout>

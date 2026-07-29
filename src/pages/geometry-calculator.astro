@@ -7,13 +7,166 @@ const description = "Free online geometry calculator. Calculate area, volume, an
 ---
 <Layout title={title} description={description}>
   <ContentSection>
-    <div class="max-w-3xl mx-auto text-center" style="margin-bottom: var(--spacing-xl);">
-      <p class="caption-mono text-[var(--color-mute)]" style="margin-bottom: var(--spacing-xs);">COMING SOON</p>
+    <div class="max-w-[768px] w-full mx-auto text-center" style="margin-bottom: var(--spacing-xl);">
+      <p class="caption-mono text-[var(--color-mute)]" style="margin-bottom: var(--spacing-xs);">FREE ONLINE TOOL</p>
       <h1 class="display-lg text-[var(--color-ink)]">Geometry Calculator</h1>
       <p class="body-lg text-[var(--color-body)] mt-4">
-        We are building a complete geometry calculator to help you easily find the area, perimeter, surface area, and volume of any geometric shape.
+        Instantly calculate the Area and Perimeter of basic 2D shapes. Select a shape below to begin.
       </p>
-      <a href="/" class="btn-primary mt-8 inline-block no-underline">Return to Protractor</a>
+    </div>
+
+    <div class="max-w-[768px] w-full mx-auto bg-white p-6 rounded-xl shadow-sm border border-[var(--color-hairline)]">
+      <!-- Shape Tabs -->
+      <div class="flex border-b border-[var(--color-hairline)] mb-6 overflow-x-auto hide-scrollbar">
+        <button class="shape-tab active flex-1 py-3 px-4 font-medium text-[var(--color-ink)] border-b-2 border-[var(--color-ink)]" data-shape="circle">Circle</button>
+        <button class="shape-tab flex-1 py-3 px-4 font-medium text-[var(--color-mute)] border-b-2 border-transparent hover:text-[var(--color-ink)]" data-shape="rectangle">Rectangle</button>
+        <button class="shape-tab flex-1 py-3 px-4 font-medium text-[var(--color-mute)] border-b-2 border-transparent hover:text-[var(--color-ink)]" data-shape="triangle">Triangle</button>
+      </div>
+
+      <div class="flex flex-col md:flex-row gap-8">
+        
+        <!-- Inputs -->
+        <div class="flex-1">
+          <!-- Circle Inputs -->
+          <div id="inputs-circle" class="shape-inputs">
+            <label class="block body-md-strong text-[var(--color-ink)] mb-2">Radius (r)</label>
+            <input type="number" id="input-radius" class="w-full px-4 py-3 border border-[var(--color-hairline-strong)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--color-link)]" value="5" min="0" />
+          </div>
+
+          <!-- Rectangle Inputs -->
+          <div id="inputs-rectangle" class="shape-inputs hidden">
+            <div class="mb-4">
+              <label class="block body-md-strong text-[var(--color-ink)] mb-2">Length (l)</label>
+              <input type="number" id="input-length" class="w-full px-4 py-3 border border-[var(--color-hairline-strong)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--color-link)]" value="10" min="0" />
+            </div>
+            <div>
+              <label class="block body-md-strong text-[var(--color-ink)] mb-2">Width (w)</label>
+              <input type="number" id="input-width" class="w-full px-4 py-3 border border-[var(--color-hairline-strong)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--color-link)]" value="5" min="0" />
+            </div>
+          </div>
+
+          <!-- Triangle Inputs -->
+          <div id="inputs-triangle" class="shape-inputs hidden">
+            <div class="mb-4">
+              <label class="block body-md-strong text-[var(--color-ink)] mb-2">Base (b)</label>
+              <input type="number" id="input-base" class="w-full px-4 py-3 border border-[var(--color-hairline-strong)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--color-link)]" value="6" min="0" />
+            </div>
+            <div class="mb-4">
+              <label class="block body-md-strong text-[var(--color-ink)] mb-2">Height (h)</label>
+              <input type="number" id="input-height" class="w-full px-4 py-3 border border-[var(--color-hairline-strong)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--color-link)]" value="4" min="0" />
+            </div>
+            <div>
+              <label class="block body-md-strong text-[var(--color-ink)] mb-2">Side a, Side c <span class="font-normal text-sm text-[var(--color-mute)]">(for perimeter)</span></label>
+              <div class="flex gap-2">
+                <input type="number" id="input-sideA" class="w-1/2 px-4 py-3 border border-[var(--color-hairline-strong)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--color-link)]" value="5" placeholder="Side A" min="0" />
+                <input type="number" id="input-sideC" class="w-1/2 px-4 py-3 border border-[var(--color-hairline-strong)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--color-link)]" value="5" placeholder="Side C" min="0" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Results -->
+        <div class="flex-1 bg-[var(--color-canvas-soft)] rounded-xl border border-[var(--color-hairline)] p-6 flex flex-col justify-center">
+          <div class="mb-6">
+            <p class="caption-mono text-[var(--color-mute)] mb-1">AREA</p>
+            <p id="result-area" class="display-lg text-[var(--color-ink)]">78.54</p>
+            <p id="formula-area" class="caption text-[var(--color-mute)] mt-1">Formula: A = &pi;r&sup2;</p>
+          </div>
+          <div>
+            <p class="caption-mono text-[var(--color-mute)] mb-1">PERIMETER (CIRCUMFERENCE)</p>
+            <p id="result-perimeter" class="display-lg text-[var(--color-ink)]">31.42</p>
+            <p id="formula-perimeter" class="caption text-[var(--color-mute)] mt-1">Formula: C = 2&pi;r</p>
+          </div>
+        </div>
+
+      </div>
     </div>
   </ContentSection>
+
+  <style>
+    .hide-scrollbar::-webkit-scrollbar { display: none; }
+    .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  </style>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      let currentShape = 'circle';
+
+      const tabs = document.querySelectorAll('.shape-tab');
+      const inputGroups = document.querySelectorAll('.shape-inputs');
+
+      // Inputs
+      const iRadius = document.getElementById('input-radius') as HTMLInputElement;
+      const iLength = document.getElementById('input-length') as HTMLInputElement;
+      const iWidth = document.getElementById('input-width') as HTMLInputElement;
+      const iBase = document.getElementById('input-base') as HTMLInputElement;
+      const iHeight = document.getElementById('input-height') as HTMLInputElement;
+      const iSideA = document.getElementById('input-sideA') as HTMLInputElement;
+      const iSideC = document.getElementById('input-sideC') as HTMLInputElement;
+
+      // Outputs
+      const rArea = document.getElementById('result-area');
+      const fArea = document.getElementById('formula-area');
+      const rPerim = document.getElementById('result-perimeter');
+      const fPerim = document.getElementById('formula-perimeter');
+
+      function calculate() {
+        if (currentShape === 'circle') {
+          const r = parseFloat(iRadius.value) || 0;
+          rArea!.textContent = (Math.PI * r * r).toFixed(2);
+          rPerim!.textContent = (2 * Math.PI * r).toFixed(2);
+          fArea!.innerHTML = 'Formula: A = &pi;r&sup2;';
+          fPerim!.innerHTML = 'Formula: C = 2&pi;r';
+        } 
+        else if (currentShape === 'rectangle') {
+          const l = parseFloat(iLength.value) || 0;
+          const w = parseFloat(iWidth.value) || 0;
+          rArea!.textContent = (l * w).toFixed(2);
+          rPerim!.textContent = (2 * (l + w)).toFixed(2);
+          fArea!.innerHTML = 'Formula: A = l &times; w';
+          fPerim!.innerHTML = 'Formula: P = 2(l + w)';
+        }
+        else if (currentShape === 'triangle') {
+          const b = parseFloat(iBase.value) || 0;
+          const h = parseFloat(iHeight.value) || 0;
+          const a = parseFloat(iSideA.value) || 0;
+          const c = parseFloat(iSideC.value) || 0;
+          rArea!.textContent = (0.5 * b * h).toFixed(2);
+          rPerim!.textContent = (a + b + c).toFixed(2);
+          fArea!.innerHTML = 'Formula: A = &frac12;bh';
+          fPerim!.innerHTML = 'Formula: P = a + b + c';
+        }
+      }
+
+      tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          // Reset styling
+          tabs.forEach(t => {
+            t.classList.remove('text-[var(--color-ink)]', 'border-[var(--color-ink)]', 'active');
+            t.classList.add('text-[var(--color-mute)]', 'border-transparent');
+          });
+          
+          // Apply active styling
+          tab.classList.add('text-[var(--color-ink)]', 'border-[var(--color-ink)]', 'active');
+          tab.classList.remove('text-[var(--color-mute)]', 'border-transparent');
+
+          currentShape = tab.getAttribute('data-shape') || 'circle';
+
+          // Show correct inputs
+          inputGroups.forEach(group => group.classList.add('hidden'));
+          document.getElementById(`inputs-${currentShape}`)?.classList.remove('hidden');
+
+          calculate();
+        });
+      });
+
+      // Add listeners to all inputs
+      [iRadius, iLength, iWidth, iBase, iHeight, iSideA, iSideC].forEach(input => {
+        input?.addEventListener('input', calculate);
+      });
+
+      // Initial calculation
+      calculate();
+    });
+  </script>
 </Layout>
