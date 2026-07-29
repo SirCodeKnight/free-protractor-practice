@@ -19,45 +19,69 @@ const ticks = Array.from({ length: 181 }, (_, i) => i);
 
     <!-- Printable Area -->
     <div class="flex justify-center my-12 print:my-0">
-      <div class="w-[600px] max-w-full bg-white p-8 rounded-xl shadow-sm print:shadow-none print:p-0 border border-[var(--color-hairline)] print:border-none">
-        <svg viewBox="0 0 400 220" class="w-full text-black" style="font-family: Arial, sans-serif;">
-          <!-- Main Arc -->
-          <path d="M 20 200 A 180 180 0 0 1 380 200" fill="rgba(0,0,0,0.02)" stroke="currentColor" stroke-width="2"/>
-          <line x1="20" y1="200" x2="380" y2="200" stroke="currentColor" stroke-width="2"/>
-          <!-- Inner Arc -->
-          <path d="M 60 200 A 140 140 0 0 1 340 200" fill="none" stroke="currentColor" stroke-width="1" stroke-dasharray="2 4"/>
-          <circle cx="200" cy="200" r="4" fill="currentColor"/>
+      <!-- Forced white background and black text to ensure perfect printing and avoid dark-mode inversion -->
+      <div class="w-[600px] max-w-full p-8 rounded-xl shadow-sm print:shadow-none print:p-0 border border-[var(--color-hairline)] print:border-none" style="background-color: #ffffff; color: #000000;">
+        <svg viewBox="0 0 400 220" class="w-full" style="font-family: Arial, Helvetica, sans-serif; color: #000000;">
+          
+          <!-- Outer Boundary Arc -->
+          <path d="M 20 200 A 180 180 0 0 1 380 200" fill="none" stroke="currentColor" stroke-width="1.5"/>
+          
+          <!-- Baseline -->
+          <line x1="10" y1="200" x2="390" y2="200" stroke="currentColor" stroke-width="1.5"/>
+          
+          <!-- Center Crosshair -->
+          <line x1="200" y1="190" x2="200" y2="210" stroke="currentColor" stroke-width="1.5"/>
+          <line x1="190" y1="200" x2="210" y2="200" stroke="currentColor" stroke-width="1.5"/>
+          <circle cx="200" cy="200" r="2.5" fill="currentColor"/>
           
           {ticks.map(tick => {
             const angle = (tick * Math.PI) / 180;
             const isMajor = tick % 10 === 0;
             const isMedium = tick % 5 === 0 && !isMajor;
-            const length = isMajor ? 12 : isMedium ? 8 : 4;
+            const length = isMajor ? 15 : isMedium ? 10 : 5;
             
-            const x1 = 200 - 180 * Math.cos(angle);
-            const y1 = 200 - 180 * Math.sin(angle);
-            const x2 = 200 - (180 - length) * Math.cos(angle);
-            const y2 = 200 - (180 - length) * Math.sin(angle);
+            // Ticks drop inwards from the outer radius (180)
+            const xOuter = 200 - 180 * Math.cos(angle);
+            const yOuter = 200 - 180 * Math.sin(angle);
+            const xInner = 200 - (180 - length) * Math.cos(angle);
+            const yInner = 200 - (180 - length) * Math.sin(angle);
             
-            const textRadiusOuter = 160;
+            // Text positions
+            const textRadiusOuter = 155; // Outer numbers
             const txO = 200 - textRadiusOuter * Math.cos(angle);
             const tyO = 200 - textRadiusOuter * Math.sin(angle);
 
-            const textRadiusInner = 125;
+            const textRadiusInner = 140; // Inner numbers
             const txI = 200 - textRadiusInner * Math.cos(angle);
             const tyI = 200 - textRadiusInner * Math.sin(angle);
 
             return (
               <g>
-                <line x1={x1} y1={y1} x2={x2} y2={y2} stroke="currentColor" stroke-width={isMajor ? 1.5 : 1}/>
+                <line x1={xOuter} y1={yOuter} x2={xInner} y2={yInner} stroke="currentColor" stroke-width={isMajor ? 1.5 : 1}/>
+                
+                {/* Horizontal baseline extension lines every 10 degrees on the bottom flat edge? No, standard is just the arc. */}
+
                 {isMajor && (
                   <g>
-                    <!-- Outer scale (0-180 left to right) -->
-                    <text x={txO} y={tyO} text-anchor="middle" dominant-baseline="middle" font-size="8" transform={`rotate(${tick - 90}, ${txO}, ${tyO})`}>
+                    <!-- Outer scale (0 on left, 180 on right) -->
+                    <text 
+                      x={txO} y={tyO} 
+                      text-anchor="middle" dominant-baseline="middle" 
+                      font-size="9" 
+                      font-weight="bold"
+                      transform={`rotate(${tick - 90}, ${txO}, ${tyO})`}
+                    >
                       {tick}
                     </text>
-                    <!-- Inner scale (180-0 left to right) -->
-                    <text x={txI} y={tyI} text-anchor="middle" dominant-baseline="middle" font-size="8" transform={`rotate(${tick - 90}, ${txI}, ${tyI})`}>
+                    
+                    <!-- Inner scale (180 on left, 0 on right) -->
+                    <text 
+                      x={txI} y={tyI} 
+                      text-anchor="middle" dominant-baseline="middle" 
+                      font-size="8" 
+                      fill="#555"
+                      transform={`rotate(${tick - 90}, ${txI}, ${tyI})`}
+                    >
                       {180 - tick}
                     </text>
                   </g>
@@ -65,6 +89,9 @@ const ticks = Array.from({ length: 181 }, (_, i) => i);
               </g>
             )
           })}
+          
+          <!-- Inner Guiding Line underneath the numbers -->
+          <path d="M 70 200 A 130 130 0 0 1 330 200" fill="none" stroke="currentColor" stroke-width="0.75" />
         </svg>
       </div>
     </div>
