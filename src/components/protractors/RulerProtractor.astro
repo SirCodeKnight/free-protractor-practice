@@ -1,0 +1,89 @@
+---
+const ticks = Array.from({ length: 181 }, (_, i) => i);
+export interface Props {
+  width?: string;
+  id?: string;
+}
+const { width = "100%", id } = Astro.props;
+---
+<svg viewBox="0 0 400 240" width={width} id={id} style="font-family: Arial, Helvetica, sans-serif; color: #000000; overflow: visible;">
+  <!-- Outer Boundary Arc -->
+  <path d="M 20 180 A 180 180 0 0 1 380 180" fill="none" stroke="currentColor" stroke-width="1.5"/>
+  
+  <!-- Ruler Box -->
+  <rect x="20" y="180" width="360" height="40" fill="none" stroke="currentColor" stroke-width="1.5" />
+  
+  <!-- Center Crosshair -->
+  <line x1="200" y1="170" x2="200" y2="190" stroke="currentColor" stroke-width="1.5"/>
+  <line x1="190" y1="180" x2="210" y2="180" stroke="currentColor" stroke-width="1.5"/>
+  <circle cx="200" cy="180" r="2.5" fill="currentColor"/>
+  
+  <!-- Ruler Marks -->
+  {Array.from({length: 37}, (_, i) => {
+    // 360 width = 14 cm roughly (just visual representation)
+    const x = 20 + (i * 10);
+    const isCm = i % 10 === 0;
+    const isHalf = i % 5 === 0 && !isCm;
+    const length = isCm ? 15 : isHalf ? 10 : 5;
+    return (
+      <g>
+        <line x1={x} y1="220" x2={x} y2={220 - length} stroke="currentColor" stroke-width={isCm ? 1.5 : 1} />
+        {isCm && i < 36 && (
+          <text x={x} y="195" font-size="8" text-anchor="middle" font-weight="bold">{i / 2}</text>
+        )}
+      </g>
+    )
+  })}
+
+  {ticks.map(tick => {
+    const angle = (tick * Math.PI) / 180;
+    const isMajor = tick % 10 === 0;
+    const isMedium = tick % 5 === 0 && !isMajor;
+    const length = isMajor ? 15 : isMedium ? 10 : 5;
+    
+    // Ticks drop inwards from the outer radius (180), center is at y=180 now
+    const xOuter = 200 - 180 * Math.cos(angle);
+    const yOuter = 180 - 180 * Math.sin(angle);
+    const xInner = 200 - (180 - length) * Math.cos(angle);
+    const yInner = 180 - (180 - length) * Math.sin(angle);
+    
+    const textRadiusOuter = 155; 
+    const txO = 200 - textRadiusOuter * Math.cos(angle);
+    const tyO = 180 - textRadiusOuter * Math.sin(angle);
+
+    const textRadiusInner = 140;
+    const txI = 200 - textRadiusInner * Math.cos(angle);
+    const tyI = 180 - textRadiusInner * Math.sin(angle);
+
+    return (
+      <g>
+        <line x1={xOuter} y1={yOuter} x2={xInner} y2={yInner} stroke="currentColor" stroke-width={isMajor ? 1.5 : 1}/>
+        
+        {isMajor && (
+          <g>
+            <text 
+              x={txO} y={tyO} 
+              text-anchor="middle" dominant-baseline="middle" 
+              font-size="9" 
+              font-weight="bold"
+              transform={`rotate(${tick - 90}, ${txO}, ${tyO})`}
+            >
+              {tick}
+            </text>
+            <text 
+              x={txI} y={tyI} 
+              text-anchor="middle" dominant-baseline="middle" 
+              font-size="8" 
+              fill="#555"
+              transform={`rotate(${tick - 90}, ${txI}, ${tyI})`}
+            >
+              {180 - tick}
+            </text>
+          </g>
+        )}
+      </g>
+    )
+  })}
+  
+  <path d="M 70 180 A 130 130 0 0 1 330 180" fill="none" stroke="currentColor" stroke-width="0.75" />
+</svg>

@@ -1,0 +1,66 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import ContentSection from '../../components/ContentSection.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import RelatedTools from '../../components/RelatedTools.astro';
+import RulerProtractor from '../../components/protractors/RulerProtractor.astro';
+
+const title = "Printable Protractor With Ruler - Free PDF Download";
+const description = "Print a free high-resolution protractor with an integrated ruler along the straight edge. Perfect for math exams and technical drawing.";
+
+const webAppSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebApplication',
+  name: 'Printable Protractor With Ruler',
+  url: 'https://webprotractor.netlify.app/printable-protractors/with-ruler',
+  description: description,
+  applicationCategory: 'UtilityApplication',
+  operatingSystem: 'Any',
+};
+
+const websiteSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'Online Geometry Tools',
+  url: 'https://webprotractor.netlify.app'
+};
+---
+<Layout title={title} description={description} schemas={[webAppSchema, websiteSchema]}>
+  <ContentSection>
+    <div class="w-full flex justify-center">
+      <Breadcrumbs items={[
+        { name: 'Printable Protractors', url: '/printable-protractors' },
+        { name: 'Protractor With Ruler', url: '/printable-protractors/with-ruler' }
+      ]} />
+    </div>
+    <div class="max-w-[768px] w-full mx-auto text-center" style="margin-bottom: var(--spacing-xl);">
+      <p class="caption-mono text-[var(--color-mute)]" style="margin-bottom: var(--spacing-xs);">FREE PRINTABLE TOOL</p>
+      <h1 class="display-lg text-[var(--color-ink)]">Protractor With Ruler</h1>
+      <p class="body-lg text-[var(--color-body)] mt-4">
+        Measure angles and straight lines with one tool. Print this page at 100% scale to get an accurate protractor and ruler combo.
+      </p>
+    </div>
+
+    <!-- Printable Area -->
+    <div class="flex justify-center my-12 print:my-0">
+      <div class="w-[600px] max-w-full p-8 rounded-xl shadow-sm print:shadow-none print:p-0 border border-[var(--color-hairline)] print:border-none" style="background-color: #ffffff; color: #000000;">
+        <RulerProtractor width="100%" />
+      </div>
+    </div>
+
+    <div class="text-center print:hidden flex flex-col items-center gap-4">
+      <button onclick="window.print()" class="btn-primary flex items-center gap-2">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M6 9V2h12v7" />
+          <path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2" />
+          <path d="M6 14h12v8H6z" />
+        </svg>
+        Print Protractor
+      </button>
+      <p class="body-sm text-[var(--color-mute)]">
+        Tip: Set your printer scaling to "Default" or "100%" to ensure accurate measurements.
+      </p>
+    </div>
+  </ContentSection>
+  <RelatedTools currentPath="/printable-protractors/with-ruler" />
+</Layout>

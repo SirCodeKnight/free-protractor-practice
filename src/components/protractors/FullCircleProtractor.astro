@@ -1,0 +1,73 @@
+---
+const ticks = Array.from({ length: 360 }, (_, i) => i);
+export interface Props {
+  width?: string;
+  id?: string;
+}
+const { width = "100%", id } = Astro.props;
+---
+<svg viewBox="0 0 400 400" width={width} id={id} style="font-family: Arial, Helvetica, sans-serif; color: #000000; overflow: visible;">
+  <!-- Outer Boundary Arc -->
+  <circle cx="200" cy="200" r="180" fill="none" stroke="currentColor" stroke-width="1.5"/>
+  
+  <!-- Center Crosshair -->
+  <line x1="200" y1="190" x2="200" y2="210" stroke="currentColor" stroke-width="1.5"/>
+  <line x1="190" y1="200" x2="210" y2="200" stroke="currentColor" stroke-width="1.5"/>
+  <circle cx="200" cy="200" r="2.5" fill="currentColor"/>
+  
+  <!-- Horizontal & Vertical Baselines -->
+  <line x1="20" y1="200" x2="380" y2="200" stroke="currentColor" stroke-width="0.5" stroke-dasharray="4 4"/>
+  <line x1="200" y1="20" x2="200" y2="380" stroke="currentColor" stroke-width="0.5" stroke-dasharray="4 4"/>
+  
+  {ticks.map(tick => {
+    const angle = (tick * Math.PI) / 180;
+    const isMajor = tick % 10 === 0;
+    const isMedium = tick % 5 === 0 && !isMajor;
+    const length = isMajor ? 15 : isMedium ? 10 : 5;
+    
+    const xOuter = 200 + 180 * Math.cos(angle);
+    const yOuter = 200 - 180 * Math.sin(angle);
+    const xInner = 200 + (180 - length) * Math.cos(angle);
+    const yInner = 200 - (180 - length) * Math.sin(angle);
+    
+    const textRadiusOuter = 155; 
+    const txO = 200 + textRadiusOuter * Math.cos(angle);
+    const tyO = 200 - textRadiusOuter * Math.sin(angle);
+
+    const textRadiusInner = 140;
+    const txI = 200 + textRadiusInner * Math.cos(angle);
+    const tyI = 200 - textRadiusInner * Math.sin(angle);
+
+    return (
+      <g>
+        <line x1={xOuter} y1={yOuter} x2={xInner} y2={yInner} stroke="currentColor" stroke-width={isMajor ? 1.5 : 1}/>
+        
+        {isMajor && (
+          <g>
+            <text 
+              x={txO} y={tyO} 
+              text-anchor="middle" dominant-baseline="middle" 
+              font-size="9" 
+              font-weight="bold"
+              transform={`rotate(${90 - tick}, ${txO}, ${tyO})`}
+            >
+              {tick}
+            </text>
+            
+            <text 
+              x={txI} y={tyI} 
+              text-anchor="middle" dominant-baseline="middle" 
+              font-size="8" 
+              fill="#555"
+              transform={`rotate(${90 - tick}, ${txI}, ${tyI})`}
+            >
+              {tick === 0 ? 0 : 360 - tick}
+            </text>
+          </g>
+        )}
+      </g>
+    )
+  })}
+  
+  <circle cx="200" cy="200" r="130" fill="none" stroke="currentColor" stroke-width="0.75" />
+</svg>

@@ -1,0 +1,77 @@
+---
+const ticks = Array.from({ length: 181 }, (_, i) => i);
+export interface Props {
+  width?: string;
+  id?: string;
+}
+const { width = "100%", id } = Astro.props;
+---
+<svg viewBox="0 0 400 220" width={width} id={id} style="font-family: Arial, Helvetica, sans-serif; color: #000000; overflow: visible;">
+  <!-- Outer Boundary Arc -->
+  <path d="M 20 200 A 180 180 0 0 1 380 200" fill="none" stroke="currentColor" stroke-width="1.5"/>
+  
+  <!-- Baseline -->
+  <line x1="10" y1="200" x2="390" y2="200" stroke="currentColor" stroke-width="1.5"/>
+  
+  <!-- Center Crosshair -->
+  <line x1="200" y1="190" x2="200" y2="210" stroke="currentColor" stroke-width="1.5"/>
+  <line x1="190" y1="200" x2="210" y2="200" stroke="currentColor" stroke-width="1.5"/>
+  <circle cx="200" cy="200" r="2.5" fill="currentColor"/>
+  
+  {ticks.map(tick => {
+    const angle = (tick * Math.PI) / 180;
+    const isMajor = tick % 10 === 0;
+    const isMedium = tick % 5 === 0 && !isMajor;
+    const length = isMajor ? 15 : isMedium ? 10 : 5;
+    
+    // Ticks drop inwards from the outer radius (180)
+    const xOuter = 200 - 180 * Math.cos(angle);
+    const yOuter = 200 - 180 * Math.sin(angle);
+    const xInner = 200 - (180 - length) * Math.cos(angle);
+    const yInner = 200 - (180 - length) * Math.sin(angle);
+    
+    // Text positions
+    const textRadiusOuter = 155; // Outer numbers
+    const txO = 200 - textRadiusOuter * Math.cos(angle);
+    const tyO = 200 - textRadiusOuter * Math.sin(angle);
+
+    const textRadiusInner = 140; // Inner numbers
+    const txI = 200 - textRadiusInner * Math.cos(angle);
+    const tyI = 200 - textRadiusInner * Math.sin(angle);
+
+    return (
+      <g>
+        <line x1={xOuter} y1={yOuter} x2={xInner} y2={yInner} stroke="currentColor" stroke-width={isMajor ? 1.5 : 1}/>
+        
+        {isMajor && (
+          <g>
+            <!-- Outer scale (0 on left, 180 on right) -->
+            <text 
+              x={txO} y={tyO} 
+              text-anchor="middle" dominant-baseline="middle" 
+              font-size="9" 
+              font-weight="bold"
+              transform={`rotate(${tick - 90}, ${txO}, ${tyO})`}
+            >
+              {tick}
+            </text>
+            
+            <!-- Inner scale (180 on left, 0 on right) -->
+            <text 
+              x={txI} y={tyI} 
+              text-anchor="middle" dominant-baseline="middle" 
+              font-size="8" 
+              fill="#555"
+              transform={`rotate(${tick - 90}, ${txI}, ${tyI})`}
+            >
+              {180 - tick}
+            </text>
+          </g>
+        )}
+      </g>
+    )
+  })}
+  
+  <!-- Inner Guiding Line underneath the numbers -->
+  <path d="M 70 200 A 130 130 0 0 1 330 200" fill="none" stroke="currentColor" stroke-width="0.75" />
+</svg>

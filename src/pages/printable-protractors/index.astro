@@ -1,0 +1,69 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import ContentSection from '../../components/ContentSection.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import RelatedTools from '../../components/RelatedTools.astro';
+
+// Components for preview
+import StandardProtractor from '../../components/protractors/StandardProtractor.astro';
+import FullCircleProtractor from '../../components/protractors/FullCircleProtractor.astro';
+import TriangleProtractor from '../../components/protractors/TriangleProtractor.astro';
+import RulerProtractor from '../../components/protractors/RulerProtractor.astro';
+
+const title = "Printable Protractors Directory - Free PDF & Image Downloads";
+const description = "A complete library of free printable protractors. Download 180 degree, 360 degree circular, triangle, and small protractors as high-quality PDFs.";
+
+const webAppSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebApplication',
+  name: 'Printable Protractors Library',
+  url: 'https://webprotractor.netlify.app/printable-protractors',
+  description: description,
+  applicationCategory: 'UtilityApplication',
+  operatingSystem: 'Any',
+};
+
+const websiteSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'Online Geometry Tools',
+  url: 'https://webprotractor.netlify.app'
+};
+
+const protractors = [
+  { name: 'Standard 180° Protractor', url: '/printable-protractor', Component: StandardProtractor },
+  { name: '360° Degree Protractor', url: '/printable-protractors/360-degree-protractor', Component: FullCircleProtractor },
+  { name: 'Circular Protractor', url: '/printable-protractors/circular-protractor', Component: FullCircleProtractor },
+  { name: 'Triangle Protractor', url: '/printable-protractors/triangle-protractor', Component: TriangleProtractor },
+  { name: 'Protractor with Ruler', url: '/printable-protractors/with-ruler', Component: RulerProtractor },
+  { name: 'Small Protractor', url: '/printable-protractors/small', Component: StandardProtractor },
+];
+---
+<Layout title={title} description={description} schemas={[webAppSchema, websiteSchema]}>
+  <ContentSection>
+    <div class="w-full flex justify-center">
+      <Breadcrumbs items={[{ name: 'Printable Protractors', url: '/printable-protractors' }]} />
+    </div>
+    <div class="max-w-[768px] w-full mx-auto text-center" style="margin-bottom: var(--spacing-xl);">
+      <p class="caption-mono text-[var(--color-mute)]" style="margin-bottom: var(--spacing-xs);">FREE PRINTABLE TEMPLATES</p>
+      <h1 class="display-lg text-[var(--color-ink)]">Printable Protractors</h1>
+      <p class="body-lg text-[var(--color-body)] mt-4">
+        Choose from our extensive library of free printable protractor templates. We offer perfectly scaled PDFs and high-resolution images for 180°, 360°, triangle, and ruler variations.
+      </p>
+    </div>
+
+    <div class="max-w-[1000px] mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      {protractors.map(p => (
+        <a href={p.url} class="card-base elevation-1 hover:elevation-3 transition-all p-6 flex flex-col items-center text-center bg-[var(--color-canvas)] no-underline border border-[var(--color-hairline)] hover:border-[var(--color-link)] group">
+          <div class="w-full aspect-square flex items-center justify-center mb-6 bg-[var(--color-canvas-soft)] rounded-lg overflow-hidden border border-[var(--color-hairline)]">
+            <div style="transform: scale(0.6); pointer-events: none;">
+              <p.Component width="400" id={p.name.replace(/\s+/g, '-').toLowerCase()} />
+            </div>
+          </div>
+          <h2 class="display-sm text-[var(--color-ink)] group-hover:text-[var(--color-link)] transition-colors">{p.name}</h2>
+        </a>
+      ))}
+    </div>
+  </ContentSection>
+  <RelatedTools currentPath="/printable-protractors" />
+</Layout>
