@@ -1,0 +1,73 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import ContentSection from '../../components/ContentSection.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import RelatedTools from '../../components/RelatedTools.astro';
+
+const title = "The Hidden Math: Unlocking the Golden Ratio in Modern Design";
+const description = "Why do certain websites look inherently beautiful? The answer lies in a 2,000-year-old mathematical sequence.";
+const image = "/images/blog/golden-ratio.png";
+
+const articleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: title,
+  image: `https://webprotractor.netlify.app${image}`,
+  description: description,
+  author: {
+    '@type': 'Organization',
+    name: 'Online Geometry Tools'
+  }
+};
+---
+<Layout title={title} description={description} schemas={[articleSchema]}>
+  <ContentSection>
+    <div class="w-full flex justify-center mb-8">
+      <Breadcrumbs items={[
+        { name: 'Blog', url: '/blog' },
+        { name: 'Golden Ratio', url: '/blog/golden-ratio-modern-design' }
+      ]} />
+    </div>
+
+    <article class="max-w-[800px] mx-auto">
+      <header class="text-center mb-12">
+        <div class="flex items-center justify-center gap-3 mb-6">
+          <span class="caption-mono text-[var(--color-link)] uppercase tracking-wider text-sm">Web Design</span>
+          <span class="w-1.5 h-1.5 rounded-full bg-[var(--color-hairline-strong)]"></span>
+          <span class="caption text-[var(--color-mute)]">July 14, 2026 • 7 min read</span>
+        </div>
+        <h1 class="display-xl text-[var(--color-ink)] mb-8 leading-tight">The Hidden Math: Unlocking the Golden Ratio in Modern Design</h1>
+        <img src={image} alt="Visual representation of the Golden Ratio overlaid onto a beautiful modern web design interface" class="w-full rounded-2xl shadow-lg border border-[var(--color-hairline)]" />
+      </header>
+      
+      <div class="prose prose-lg mx-auto text-[var(--color-body)] prose-headings:text-[var(--color-ink)] prose-a:text-[var(--color-link)] prose-strong:text-[var(--color-ink)] prose-img:rounded-xl">
+        <p class="lead text-xl text-[var(--color-ink)] mb-8 font-medium">When you look at a poorly designed website, you feel it immediately. The layout feels "off," even if you can't articulate why. When you look at an Apple product page, it feels harmonious, balanced, and perfect. The secret isn't magic; it's geometry.</p>
+        
+        <p>Specifically, it is the <strong>Golden Ratio (1:1.618)</strong>.</p>
+
+        <h2>What is the Golden Ratio?</h2>
+        <p>The Golden Ratio, often denoted by the Greek letter Phi (φ), is a mathematical concept found throughout nature, from the spirals of galaxies to the shells of nautiluses. In geometry, a Golden Rectangle is one whose side lengths are in the golden ratio. If you remove a square from this rectangle, the remaining shape is another Golden Rectangle. It is infinitely recursive.</p>
+
+        <h2>Applying the Math to UI/UX</h2>
+        <p>Top-tier designers do not guess when they size elements; they use math.</p>
+        
+        <ul>
+          <li><strong>Typography:</strong> If your body text is 16px, multiply it by 1.618 to get your Header size (approx 26px). Multiply that by 1.618 for your Hero Title (approx 42px). This creates perfect typographic hierarchy.</li>
+          <li><strong>Layouts:</strong> Dividing a standard 1920px wide screen by 1.618 gives you a main content area of roughly 1187px, leaving exactly enough room for a perfectly proportioned sidebar.</li>
+        </ul>
+
+        <h2>Using Geometry Tools for Design Validation</h2>
+        <p>You don't need a calculator to verify if a design follows geometric best practices. Professional UI engineers frequently use digital measurement tools to audit websites.</p>
+        
+        <div class="bg-[var(--color-canvas-soft)] p-6 rounded-xl border border-[var(--color-hairline)] my-8">
+          <h4 class="display-xs mt-0 mb-2">Audit Your Designs</h4>
+          <p class="m-0">Use our <a href="/ruler">Online Digital Ruler</a> to measure the exact pixel widths of your layout columns and ensure they conform to the 1.618 ratio.</p>
+        </div>
+
+        <h3>The Takeaway</h3>
+        <p>Design is highly subjective, but human psychology is deeply wired to appreciate mathematical balance. By anchoring your design decisions in the Golden Ratio, you remove the guesswork and guarantee an aesthetically pleasing result.</p>
+      </div>
+    </article>
+  </ContentSection>
+  <RelatedTools currentPath="/blog/golden-ratio-modern-design" />
+</Layout>

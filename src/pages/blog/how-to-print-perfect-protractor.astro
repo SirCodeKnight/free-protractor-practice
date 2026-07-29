@@ -1,0 +1,74 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import ContentSection from '../../components/ContentSection.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import RelatedTools from '../../components/RelatedTools.astro';
+
+const title = "How to Print a Perfectly Accurate Protractor at Home";
+const description = "Printer scaling issues ruining your measurements? Learn the exact settings to print a mathematically perfect protractor.";
+const image = "/images/blog/printing-protractor.png";
+
+const articleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: title,
+  image: `https://webprotractor.netlify.app${image}`,
+  description: description,
+  author: {
+    '@type': 'Organization',
+    name: 'Online Geometry Tools'
+  }
+};
+---
+<Layout title={title} description={description} schemas={[articleSchema]}>
+  <ContentSection>
+    <div class="w-full flex justify-center mb-8">
+      <Breadcrumbs items={[
+        { name: 'Blog', url: '/blog' },
+        { name: 'Printing Protractors', url: '/blog/how-to-print-perfect-protractor' }
+      ]} />
+    </div>
+
+    <article class="max-w-[800px] mx-auto">
+      <header class="text-center mb-12">
+        <div class="flex items-center justify-center gap-3 mb-6">
+          <span class="caption-mono text-[var(--color-link)] uppercase tracking-wider text-sm">Resources</span>
+          <span class="w-1.5 h-1.5 rounded-full bg-[var(--color-hairline-strong)]"></span>
+          <span class="caption text-[var(--color-mute)]">July 22, 2026 • 4 min read</span>
+        </div>
+        <h1 class="display-xl text-[var(--color-ink)] mb-8 leading-tight">How to Print a Perfectly Accurate Protractor at Home</h1>
+        <img src={image} alt="High-end printer printing a crisp black-and-white protractor" class="w-full rounded-2xl shadow-lg border border-[var(--color-hairline)]" />
+      </header>
+      
+      <div class="prose prose-lg mx-auto text-[var(--color-body)] prose-headings:text-[var(--color-ink)] prose-a:text-[var(--color-link)] prose-strong:text-[var(--color-ink)] prose-img:rounded-xl">
+        <p class="lead text-xl text-[var(--color-ink)] mb-8 font-medium">You downloaded a free printable protractor, printed it out, and suddenly your math homework is completely wrong. What happened?</p>
+        
+        <p>The problem isn't you, and it isn't the file. It's your printer's default settings. Printers are notoriously aggressive about resizing images to fit into "safe print margins," which completely distorts the mathematical geometry of a protractor. Here is how to fix it.</p>
+
+        <h2>The Golden Rule: Do Not Scale</h2>
+        <p>When you hit `Ctrl+P` (or `Cmd+P`), your printer dialogue box will usually default to a setting called <strong>"Fit to Page"</strong> or <strong>"Scale to Fit"</strong>. You must disable this.</p>
+        <p>Change your scaling setting to <strong>"Actual Size"</strong>, <strong>"100%"</strong>, or <strong>"Custom Scale: 100"</strong>. This ensures the printer outputs the file exactly as it was mathematically generated.</p>
+
+        <h2>Choose the Right File Type</h2>
+        <p>Never print a `.JPG` or `.PNG` if you can avoid it. Raster images can be blurry and are easily distorted by printer software. Always use a Vector format like SVG or a high-quality PDF.</p>
+        
+        <div class="bg-[var(--color-canvas-soft)] p-6 rounded-xl border border-[var(--color-hairline)] my-8">
+          <h4 class="display-xs mt-0 mb-2">Get Vector Protractors</h4>
+          <p class="m-0">Our entire <a href="/printable-protractors">Printable Protractor Library</a> is generated using perfect SVG mathematics. When you print from our site, you are printing infinitely precise vectors.</p>
+        </div>
+
+        <h2>Paper Quality Matters</h2>
+        <p>Standard 20lb copy paper will warp and bend when you try to measure with it. If you want a printable protractor that feels like a real tool:</p>
+        <ul>
+          <li>Print on <strong>Cardstock (65lb - 110lb)</strong>.</li>
+          <li>Or, print on standard paper and use a glue stick to adhere it to a piece of cardboard before cutting it out.</li>
+          <li>For the ultimate hack: Print it on transparent acetate sheets (transparency film) so you can see through it just like a plastic protractor!</li>
+        </ul>
+
+        <h3>Test the Accuracy</h3>
+        <p>Before you trust your newly printed tool, draw a straight line on a piece of paper. Use your printed protractor to mark exactly 90 degrees. Use a known square edge (like the corner of a book) to verify that your 90-degree mark is perfect. If it is, your printer settings were correct.</p>
+      </div>
+    </article>
+  </ContentSection>
+  <RelatedTools currentPath="/blog/how-to-print-perfect-protractor" />
+</Layout>
