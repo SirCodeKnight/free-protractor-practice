@@ -1,0 +1,300 @@
+---
+---
+
+<div id="panel-camera" class="hidden flex-col items-center" style="gap: var(--spacing-lg);" role="tabpanel" aria-labelledby="tab-camera">
+  <!-- Initial state: choose source -->
+  <div id="camera-start" class="flex flex-col items-center text-center" style="gap: var(--spacing-md); padding: var(--spacing-xl) var(--spacing-lg);">
+    <div class="flex items-center justify-center w-16 h-16 rounded-full bg-[var(--color-canvas-soft-2)]">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--color-mute)" stroke-width="1.5" stroke-linecap="round">
+        <path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z" />
+        <circle cx="12" cy="13" r="4" />
+      </svg>
+    </div>
+    <p class="display-sm text-[var(--color-ink)]">Camera Protractor</p>
+    <p class="body-md text-[var(--color-body)]" style="max-width: 440px;">
+      Capture an image or upload a photo, then place two markers to measure the angle between them.
+    </p>
+    <div class="flex flex-wrap items-center justify-center" style="gap: var(--spacing-sm);">
+      <button id="camera-capture-btn" class="btn-primary" type="button">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z" />
+          <circle cx="12" cy="13" r="4" />
+        </svg>
+        Use Camera
+      </button>
+      <label class="btn-secondary cursor-pointer">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" />
+          <polyline points="17 8 12 3 7 8" />
+          <line x1="12" y1="3" x2="12" y2="15" />
+        </svg>
+        Upload Image
+        <input type="file" accept="image/*" id="camera-upload" class="hidden" />
+      </label>
+    </div>
+    <p class="caption text-[var(--color-mute)]">Camera requires HTTPS and browser permission.</p>
+  </div>
+
+  <!-- Video preview -->
+  <div id="camera-preview" class="hidden flex-col items-center w-full" style="gap: var(--spacing-md);">
+    <div class="relative w-full overflow-hidden rounded-[var(--radius-md)] bg-[var(--color-ink)]" style="max-width: 560px; aspect-ratio: 4/3;">
+      <video id="camera-video" class="w-full h-full object-cover" autoplay playsinline></video>
+    </div>
+    <div class="flex items-center" style="gap: var(--spacing-sm);">
+      <button id="camera-snap-btn" class="btn-primary" type="button">
+        Capture Photo
+      </button>
+      <button id="camera-cancel-btn" class="btn-secondary-sm" type="button">
+        Cancel
+      </button>
+    </div>
+  </div>
+
+  <!-- Image with markers -->
+  <div id="camera-measure" class="hidden flex-col items-center w-full" style="gap: var(--spacing-md);">
+    <p class="caption-mono text-[var(--color-mute)]" id="camera-instructions">
+      CLICK TO PLACE POINT 1 OF 3 (VERTEX)
+    </p>
+    <div
+      class="relative w-full overflow-hidden rounded-[var(--radius-md)] bg-[var(--color-canvas-soft-2)] cursor-crosshair"
+      style="max-width: 560px;"
+      id="camera-canvas-wrapper"
+    >
+      <canvas id="camera-canvas" class="w-full h-full block"></canvas>
+    </div>
+    <div class="flex items-center justify-center" style="gap: var(--spacing-sm);">
+      <div id="camera-angle-result" class="hidden items-center body-lg text-[var(--color-ink)]" style="gap: var(--spacing-xs);">
+        <span class="caption-mono text-[var(--color-mute)]">ANGLE</span>
+        <span id="camera-angle-value" class="display-md text-[var(--color-link)]">0°</span>
+      </div>
+    </div>
+    <div class="flex items-center" style="gap: var(--spacing-sm);">
+      <button id="camera-reset-btn" class="btn-secondary-sm" type="button">
+        Reset Points
+      </button>
+      <button id="camera-new-btn" class="btn-secondary-sm" type="button">
+        New Image
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const cameraStart = document.getElementById('camera-start')!;
+  const cameraPreview = document.getElementById('camera-preview')!;
+  const cameraMeasure = document.getElementById('camera-measure')!;
+  const captureBtn = document.getElementById('camera-capture-btn')!;
+  const uploadInput = document.getElementById('camera-upload') as HTMLInputElement;
+  const video = document.getElementById('camera-video') as HTMLVideoElement;
+  const snapBtn = document.getElementById('camera-snap-btn')!;
+  const cancelBtn = document.getElementById('camera-cancel-btn')!;
+  const canvas = document.getElementById('camera-canvas') as HTMLCanvasElement;
+  const canvasWrapper = document.getElementById('camera-canvas-wrapper')!;
+  const instructions = document.getElementById('camera-instructions')!;
+  const angleResult = document.getElementById('camera-angle-result')!;
+  const angleVal = document.getElementById('camera-angle-value')!;
+  const resetPointsBtn = document.getElementById('camera-reset-btn')!;
+  const newImageBtn = document.getElementById('camera-new-btn')!;
+  const angleDisplay = document.getElementById('angle-value');
+  const levelIndicator = document.getElementById('level-indicator');
+
+  let stream: MediaStream | null = null;
+  let points: { x: number; y: number }[] = [];
+  let loadedImage: HTMLImageElement | null = null;
+
+  function showCameraState(state: 'start' | 'preview' | 'measure') {
+    cameraStart.classList.toggle('hidden', state !== 'start');
+    cameraStart.classList.toggle('flex', state === 'start');
+    cameraPreview.classList.toggle('hidden', state !== 'preview');
+    cameraPreview.classList.toggle('flex', state === 'preview');
+    cameraMeasure.classList.toggle('hidden', state !== 'measure');
+    cameraMeasure.classList.toggle('flex', state === 'measure');
+  }
+
+  function stopStream() {
+    stream?.getTracks().forEach((t) => t.stop());
+    stream = null;
+  }
+
+  // Open camera
+  captureBtn.addEventListener('click', async () => {
+    try {
+      stream = await navigator.mediaDevices.getUserMedia({
+        video: { facingMode: 'environment', width: { ideal: 1280 }, height: { ideal: 960 } },
+      });
+      video.srcObject = stream;
+      showCameraState('preview');
+    } catch {
+      alert('Camera access denied or unavailable. Please use the upload option instead.');
+    }
+  });
+
+  // Cancel camera
+  cancelBtn.addEventListener('click', () => {
+    stopStream();
+    showCameraState('start');
+  });
+
+  // Snap photo from camera
+  snapBtn.addEventListener('click', () => {
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+    const ctx = canvas.getContext('2d')!;
+    ctx.drawImage(video, 0, 0);
+    stopStream();
+
+    // Store as image for redrawing
+    const img = new Image();
+    img.src = canvas.toDataURL();
+    img.onload = () => {
+      loadedImage = img;
+      points = [];
+      updateInstructions();
+      showCameraState('measure');
+    };
+  });
+
+  // Upload image
+  uploadInput.addEventListener('change', () => {
+    const file = uploadInput.files?.[0];
+    if (!file) return;
+    const img = new Image();
+    img.onload = () => {
+      canvas.width = img.width;
+      canvas.height = img.height;
+      const ctx = canvas.getContext('2d')!;
+      ctx.drawImage(img, 0, 0);
+      loadedImage = img;
+      points = [];
+      updateInstructions();
+      showCameraState('measure');
+    };
+    img.src = URL.createObjectURL(file);
+  });
+
+  function updateInstructions() {
+    const labels = ['VERTEX', 'ARM 1 END', 'ARM 2 END'];
+    if (points.length < 3) {
+      instructions.textContent = `CLICK TO PLACE POINT ${points.length + 1} OF 3 (${labels[points.length]})`;
+      angleResult.classList.add('hidden');
+      angleResult.classList.remove('flex');
+    } else {
+      instructions.textContent = 'MEASUREMENT COMPLETE';
+    }
+  }
+
+  function drawOverlay() {
+    if (!loadedImage) return;
+    const ctx = canvas.getContext('2d')!;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.drawImage(loadedImage, 0, 0);
+
+    const colors = ['#0070f3', '#7928ca', '#ff0080'];
+    const labels = ['V', 'A', 'B'];
+
+    // Draw lines
+    if (points.length >= 2) {
+      ctx.beginPath();
+      ctx.moveTo(points[0].x, points[0].y);
+      ctx.lineTo(points[1].x, points[1].y);
+      ctx.strokeStyle = '#0070f3';
+      ctx.lineWidth = 3;
+      ctx.stroke();
+    }
+    if (points.length >= 3) {
+      ctx.beginPath();
+      ctx.moveTo(points[0].x, points[0].y);
+      ctx.lineTo(points[2].x, points[2].y);
+      ctx.strokeStyle = '#7928ca';
+      ctx.lineWidth = 3;
+      ctx.stroke();
+    }
+
+    // Draw points
+    points.forEach((p, i) => {
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, 8, 0, Math.PI * 2);
+      ctx.fillStyle = colors[i];
+      ctx.fill();
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, 12, 0, Math.PI * 2);
+      ctx.strokeStyle = colors[i];
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      // Label
+      ctx.fillStyle = '#ffffff';
+      ctx.font = 'bold 10px sans-serif';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(labels[i], p.x, p.y);
+    });
+
+    // Calculate and show angle
+    if (points.length === 3) {
+      const [v, a, b] = points;
+      const angle1 = Math.atan2(a.y - v.y, a.x - v.x);
+      const angle2 = Math.atan2(b.y - v.y, b.x - v.x);
+      let deg = Math.abs((angle2 - angle1) * (180 / Math.PI));
+      if (deg > 180) deg = 360 - deg;
+      deg = Math.round(deg * 10) / 10;
+
+      angleVal.textContent = deg + '°';
+      angleResult.classList.remove('hidden');
+      angleResult.classList.add('flex');
+
+      if (angleDisplay) angleDisplay.textContent = deg.toFixed(1) + '°';
+      const cardinals = [0, 90, 180, 270, 360];
+      const isLevel = cardinals.some((c) => Math.abs(deg - c) < 1.5);
+      if (levelIndicator) levelIndicator.style.display = isLevel ? 'inline-flex' : 'none';
+
+      // Draw angle arc
+      const arcR = Math.min(60, Math.min(Math.hypot(a.x - v.x, a.y - v.y), Math.hypot(b.x - v.x, b.y - v.y)) * 0.4);
+      ctx.beginPath();
+      const startAngle = angle1;
+      const endAngle = angle2;
+      ctx.arc(v.x, v.y, arcR, Math.min(startAngle, endAngle), Math.max(startAngle, endAngle));
+      ctx.strokeStyle = '#0070f3';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      // Angle label near arc
+      const midAngle = (startAngle + endAngle) / 2;
+      const labelX = v.x + (arcR + 20) * Math.cos(midAngle);
+      const labelY = v.y + (arcR + 20) * Math.sin(midAngle);
+      ctx.fillStyle = '#0070f3';
+      ctx.font = 'bold 14px sans-serif';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(deg + '°', labelX, labelY);
+    }
+  }
+
+  // Click handler on canvas
+  canvasWrapper.addEventListener('click', (e) => {
+    if (points.length >= 3) return;
+    const rect = canvas.getBoundingClientRect();
+    const scaleX = canvas.width / rect.width;
+    const scaleY = canvas.height / rect.height;
+    const x = (e.clientX - rect.left) * scaleX;
+    const y = (e.clientY - rect.top) * scaleY;
+
+    points.push({ x, y });
+    updateInstructions();
+    drawOverlay();
+  });
+
+  // Reset points
+  resetPointsBtn.addEventListener('click', () => {
+    points = [];
+    updateInstructions();
+    drawOverlay();
+  });
+
+  // New image
+  newImageBtn.addEventListener('click', () => {
+    loadedImage = null;
+    points = [];
+    showCameraState('start');
+  });
+</script>

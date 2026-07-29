@@ -1,0 +1,58 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import ContentSection from '../../components/ContentSection.astro';
+
+const title = 'Blog – Online Protractor Tool';
+const description = 'Educational articles about angle measurement, protractor usage, geometry tips, and digital measurement tools.';
+
+const posts = [
+  {
+    title: 'How to Measure Angles Online — A Complete Guide',
+    excerpt: 'Learn the different methods for measuring angles digitally, including screen-based, sensor-based, and camera-based techniques.',
+    href: '/blog/how-to-measure-angles',
+    date: 'July 20, 2026',
+    category: 'Guide',
+  },
+  {
+    title: 'Physical vs Digital Protractors — Which is Better?',
+    excerpt: 'Compare traditional physical protractors with modern digital alternatives. Discover the pros, cons, and best use cases for each.',
+    href: '/blog/protractor-vs-digital',
+    date: 'July 15, 2026',
+    category: 'Comparison',
+  },
+];
+---
+
+<Layout title={title} description={description}>
+  <ContentSection variant="light">
+    <div class="mx-auto" style="max-width: 720px;">
+      <p class="caption-mono text-[var(--color-mute)]" style="margin-bottom: var(--spacing-xs);">BLOG</p>
+      <h1 class="display-xl text-[var(--color-ink)]" style="margin-bottom: var(--spacing-sm);">
+        Angles, measurement, and more.
+      </h1>
+      <p class="body-lg text-[var(--color-body)]" style="margin-bottom: var(--spacing-xl);">
+        Educational articles to help you understand angle measurement, geometry, and how to get the most from digital tools.
+      </p>
+
+      <div class="flex flex-col" style="gap: var(--spacing-md);">
+        {posts.map((post) => (
+          <a
+            href={post.href}
+            class="card-base elevation-2 flex flex-col no-underline transition-all duration-200 hover:elevation-4"
+            style="gap: var(--spacing-sm);"
+          >
+            <div class="flex items-center" style="gap: var(--spacing-xs);">
+              <span class="caption-mono text-[var(--color-link)] bg-[var(--color-link-bg-soft)] rounded-full" style="padding: 2px var(--spacing-xs);">
+                {post.category}
+              </span>
+              <span class="caption text-[var(--color-mute)]">{post.date}</span>
+            </div>
+            <h2 class="display-sm text-[var(--color-ink)]">{post.title}</h2>
+            <p class="body-md text-[var(--color-body)]">{post.excerpt}</p>
+            <span class="body-sm text-[var(--color-link)]">Read article →</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </ContentSection>
+</Layout>

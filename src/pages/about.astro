@@ -1,0 +1,68 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ContentSection from '../components/ContentSection.astro';
+
+const title = 'About Us – Online Protractor Tool';
+const description = 'Learn about the Online Protractor Tool — a free, browser-based angle measurement tool built for students, engineers, and creators.';
+---
+
+<Layout title={title} description={description}>
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://onlineprotractor.tool' },
+      { '@type': 'ListItem', position: 2, name: 'About', item: 'https://onlineprotractor.tool/about' },
+    ],
+  })} />
+
+  <ContentSection variant="light">
+    <div class="mx-auto" style="max-width: 720px;">
+      <p class="caption-mono text-[var(--color-mute)]" style="margin-bottom: var(--spacing-xs);">ABOUT US</p>
+      <h1 class="display-xl text-[var(--color-ink)]" style="margin-bottom: var(--spacing-lg);">
+        Precision angle measurement, free for everyone.
+      </h1>
+
+      <div class="flex flex-col body-md text-[var(--color-body)]" style="gap: var(--spacing-lg);">
+        <p class="body-lg">
+          Online Protractor Tool is a free, open-source web application that transforms any browser into a precise angle measurement instrument. We believe that essential measurement tools should be accessible to everyone — students, professionals, and hobbyists alike.
+        </p>
+
+        <div>
+          <h2 class="display-sm text-[var(--color-ink)]" style="margin-bottom: var(--spacing-xs);">Our Mission</h2>
+          <p>
+            We aim to eliminate the need for specialized hardware for basic angle measurements. Whether you're a student learning geometry, an engineer checking a blueprint angle, a carpenter cutting wood, or a curious tinkerer measuring a slope, our tool gives you accurate results instantly — right in your browser.
+          </p>
+        </div>
+
+        <div>
+          <h2 class="display-sm text-[var(--color-ink)]" style="margin-bottom: var(--spacing-xs);">Technology</h2>
+          <p>
+            Our protractor is built with modern web technologies for the best possible experience:
+          </p>
+          <ul class="flex flex-col pl-5" style="gap: var(--spacing-xxs); margin-top: var(--spacing-xs);">
+            <li><strong>Astro</strong> — Static site generation for blazing-fast page loads</li>
+            <li><strong>SVG rendering</strong> — Crisp, resolution-independent protractor graphics</li>
+            <li><strong>Device Orientation API</strong> — Real-time sensor data from mobile devices</li>
+            <li><strong>getUserMedia API</strong> — Camera access for photo-based measurement</li>
+            <li><strong>Zero dependencies</strong> — No heavy frameworks, just vanilla JavaScript</li>
+          </ul>
+        </div>
+
+        <div>
+          <h2 class="display-sm text-[var(--color-ink)]" style="margin-bottom: var(--spacing-xs);">Privacy First</h2>
+          <p>
+            All measurements happen locally in your browser. We don't send your camera images, sensor data, or angle measurements to any server. Your data stays on your device. Read our <a href="/privacy" class="text-[var(--color-link)] underline">Privacy Policy</a> for more details.
+          </p>
+        </div>
+
+        <div>
+          <h2 class="display-sm text-[var(--color-ink)]" style="margin-bottom: var(--spacing-xs);">Get In Touch</h2>
+          <p>
+            Have a suggestion, found a bug, or want to contribute? We'd love to hear from you. Visit our <a href="/contact" class="text-[var(--color-link)] underline">Contact page</a> to send us a message.
+          </p>
+        </div>
+      </div>
+    </div>
+  </ContentSection>
+</Layout>

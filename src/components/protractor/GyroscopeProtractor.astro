@@ -1,0 +1,244 @@
+---
+---
+
+<div id="panel-gyroscope" class="hidden flex-col items-center" style="gap: var(--spacing-lg);" role="tabpanel" aria-labelledby="tab-gyroscope">
+  <!-- Permission/Unsupported state -->
+  <div id="gyro-unsupported" class="hidden flex flex-col items-center text-center" style="gap: var(--spacing-md); padding: var(--spacing-3xl) var(--spacing-lg);">
+    <div class="flex items-center justify-center w-16 h-16 rounded-full bg-[var(--color-canvas-soft-2)]">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--color-mute)" stroke-width="1.5" stroke-linecap="round">
+        <rect x="5" y="2" width="14" height="20" rx="3" />
+        <circle cx="12" cy="18" r="1" fill="var(--color-mute)" />
+      </svg>
+    </div>
+    <p class="display-sm text-[var(--color-ink)]">Mobile Device Required</p>
+    <p class="body-md text-[var(--color-body)]" style="max-width: 400px;">
+      The gyroscope protractor uses your device's orientation sensors. Please open this page on a mobile device or tablet to use this feature.
+    </p>
+  </div>
+
+  <!-- Permission request (iOS 13+) -->
+  <div id="gyro-permission" class="hidden flex flex-col items-center text-center" style="gap: var(--spacing-md); padding: var(--spacing-3xl) var(--spacing-lg);">
+    <div class="flex items-center justify-center w-16 h-16 rounded-full bg-[var(--color-link-bg-soft)]">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--color-link)" stroke-width="1.5" stroke-linecap="round">
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+      </svg>
+    </div>
+    <p class="display-sm text-[var(--color-ink)]">Sensor Access Required</p>
+    <p class="body-md text-[var(--color-body)]" style="max-width: 400px;">
+      To measure angles with your device's gyroscope, we need permission to access motion sensors.
+    </p>
+    <button id="gyro-permission-btn" class="btn-primary" type="button">
+      Enable Motion Sensors
+    </button>
+  </div>
+
+  <!-- Active gyroscope view -->
+  <div id="gyro-active" class="hidden flex-col items-center w-full" style="gap: var(--spacing-lg);">
+    <!-- Circular dial -->
+    <div class="relative w-full flex items-center justify-center" style="max-width: 400px; aspect-ratio: 1;">
+      <svg id="gyro-svg" viewBox="0 0 400 400" class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+        <!-- Outer ring -->
+        <circle cx="200" cy="200" r="180" fill="none" stroke="var(--color-hairline)" stroke-width="1" />
+        <circle cx="200" cy="200" r="170" fill="none" stroke="var(--color-hairline)" stroke-width="0.5" />
+
+        <!-- Degree marks generated in JS -->
+        <g id="gyro-marks"></g>
+        <g id="gyro-labels" style="font-size: 10px;" fill="var(--color-mute)"></g>
+
+        <!-- Compass cardinal labels -->
+        <text x="200" y="30" text-anchor="middle" class="body-sm-strong" fill="var(--color-ink)">N</text>
+        <text x="380" y="205" text-anchor="middle" class="body-sm-strong" fill="var(--color-ink)">E</text>
+        <text x="200" y="385" text-anchor="middle" class="body-sm-strong" fill="var(--color-ink)">S</text>
+        <text x="20" y="205" text-anchor="middle" class="body-sm-strong" fill="var(--color-ink)">W</text>
+
+        <!-- Needle -->
+        <line id="gyro-needle" x1="200" y1="200" x2="200" y2="40" stroke="var(--color-link)" stroke-width="3" stroke-linecap="round" />
+        <circle cx="200" cy="200" r="6" fill="var(--color-ink)" />
+        <circle cx="200" cy="200" r="10" fill="var(--color-ink)" opacity="0.1" />
+      </svg>
+    </div>
+
+    <!-- Controls -->
+    <div class="flex flex-wrap items-center justify-center" style="gap: var(--spacing-sm);">
+      <button id="gyro-calibrate" class="btn-secondary-sm" type="button">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+          <circle cx="7" cy="7" r="5" />
+          <line x1="7" y1="2" x2="7" y2="5" />
+          <line x1="7" y1="9" x2="7" y2="12" />
+          <line x1="2" y1="7" x2="5" y2="7" />
+          <line x1="9" y1="7" x2="12" y2="7" />
+        </svg>
+        Set Zero
+      </button>
+      <button id="gyro-lock" class="btn-secondary-sm" type="button" aria-pressed="false">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+          <rect x="3" y="7" width="8" height="5" rx="1" />
+          <path d="M5 7V5a2 2 0 014 0v2" />
+        </svg>
+        Lock
+      </button>
+    </div>
+
+    <p class="caption text-[var(--color-mute)] text-center">
+      Tilt your device to measure angles. Tap "Set Zero" to calibrate from current position.
+    </p>
+  </div>
+</div>
+
+<script>
+  const gyroPanel = document.getElementById('panel-gyroscope');
+  const gyroUnsupported = document.getElementById('gyro-unsupported');
+  const gyroPermission = document.getElementById('gyro-permission');
+  const gyroActive = document.getElementById('gyro-active');
+  const permBtn = document.getElementById('gyro-permission-btn');
+  const needle = document.getElementById('gyro-needle') as SVGLineElement | null;
+  const calibrateBtn = document.getElementById('gyro-calibrate');
+  const lockBtn = document.getElementById('gyro-lock');
+  const angleValue = document.getElementById('angle-value');
+  const levelIndicator = document.getElementById('level-indicator');
+
+  let offset = 0;
+  let locked = false;
+  let currentAngle = 0;
+
+  function showState(state: 'unsupported' | 'permission' | 'active') {
+    gyroUnsupported!.classList.toggle('hidden', state !== 'unsupported');
+    gyroUnsupported!.classList.toggle('flex', state === 'unsupported');
+    gyroPermission!.classList.toggle('hidden', state !== 'permission');
+    gyroPermission!.classList.toggle('flex', state === 'permission');
+    gyroActive!.classList.toggle('hidden', state !== 'active');
+    gyroActive!.classList.toggle('flex', state === 'active');
+  }
+
+  // Draw marks for gyro dial
+  const gyroMarks = document.getElementById('gyro-marks')!;
+  const gyroLabels = document.getElementById('gyro-labels')!;
+  const GCX = 200, GCY = 200, GR = 170;
+
+  for (let deg = 0; deg < 360; deg += 5) {
+    const rad = ((90 - deg) * Math.PI) / 180;
+    const isMajor = deg % 30 === 0;
+    const inner = isMajor ? GR - 14 : GR - 8;
+    const x1 = GCX + inner * Math.cos(rad);
+    const y1 = GCY - inner * Math.sin(rad);
+    const x2 = GCX + GR * Math.cos(rad);
+    const y2 = GCY - GR * Math.sin(rad);
+
+    const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+    line.setAttribute('x1', String(x1)); line.setAttribute('y1', String(y1));
+    line.setAttribute('x2', String(x2)); line.setAttribute('y2', String(y2));
+    line.setAttribute('stroke', 'var(--color-hairline-strong)');
+    line.setAttribute('stroke-width', isMajor ? '1' : '0.5');
+    gyroMarks.appendChild(line);
+
+    if (deg % 30 === 0 && deg % 90 !== 0) {
+      const lr = GR - 24;
+      const lx = GCX + lr * Math.cos(rad);
+      const ly = GCY - lr * Math.sin(rad);
+      const t = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+      t.setAttribute('x', String(lx)); t.setAttribute('y', String(ly));
+      t.setAttribute('text-anchor', 'middle'); t.setAttribute('dominant-baseline', 'central');
+      t.textContent = deg + '°';
+      gyroLabels.appendChild(t);
+    }
+  }
+
+  function updateGyro(deg: number) {
+    if (locked) return;
+    currentAngle = ((deg - offset) % 360 + 360) % 360;
+    currentAngle = Math.round(currentAngle * 10) / 10;
+
+    // Rotate needle (CSS rotation, clockwise from top)
+    if (needle) {
+      const nx = GCX + 160 * Math.sin((currentAngle * Math.PI) / 180);
+      const ny = GCY - 160 * Math.cos((currentAngle * Math.PI) / 180);
+      needle.setAttribute('x2', String(nx));
+      needle.setAttribute('y2', String(ny));
+    }
+
+    if (angleValue) angleValue.textContent = currentAngle.toFixed(1) + '°';
+
+    // Level indicator
+    const cardinals = [0, 90, 180, 270, 360];
+    const isLevel = cardinals.some((c) => Math.abs(currentAngle - c) < 1.5);
+    if (levelIndicator) levelIndicator.style.display = isLevel ? 'inline-flex' : 'none';
+  }
+
+  function startListening() {
+    showState('active');
+    window.addEventListener('deviceorientation', (e: DeviceOrientationEvent) => {
+      let deg = 0;
+      // alpha: 0-360 compass heading
+      if (e.alpha !== null) {
+        deg = e.alpha;
+      }
+      // Compensate for screen orientation
+      const orient = screen.orientation?.angle || 0;
+      deg = (deg + orient) % 360;
+      updateGyro(deg);
+    });
+  }
+
+  // Initialize based on device capabilities
+  function initGyroscope() {
+    if (!('DeviceOrientationEvent' in window)) {
+      showState('unsupported');
+      return;
+    }
+
+    // Check if we're on desktop (no touch)
+    const isMobile = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    if (!isMobile) {
+      showState('unsupported');
+      return;
+    }
+
+    // iOS 13+ requires permission
+    if (typeof (DeviceOrientationEvent as any).requestPermission === 'function') {
+      showState('permission');
+      permBtn?.addEventListener('click', async () => {
+        try {
+          const response = await (DeviceOrientationEvent as any).requestPermission();
+          if (response === 'granted') {
+            startListening();
+          } else {
+            showState('unsupported');
+          }
+        } catch {
+          showState('unsupported');
+        }
+      });
+    } else {
+      startListening();
+    }
+  }
+
+  // Calibrate
+  calibrateBtn?.addEventListener('click', () => {
+    offset = currentAngle + offset;
+    updateGyro(currentAngle + offset);
+  });
+
+  // Lock
+  lockBtn?.addEventListener('click', () => {
+    locked = !locked;
+    lockBtn.setAttribute('aria-pressed', String(locked));
+    if (locked) {
+      lockBtn.classList.add('bg-[var(--color-canvas-soft-2)]');
+    } else {
+      lockBtn.classList.remove('bg-[var(--color-canvas-soft-2)]');
+    }
+  });
+
+  // Listen for mode switch to init
+  document.addEventListener('protractor-mode-change', ((e: CustomEvent) => {
+    if (e.detail === 'gyroscope') {
+      initGyroscope();
+    }
+  }) as EventListener);
+
+  // Init if already visible
+  if (gyroPanel && !gyroPanel.classList.contains('hidden')) {
+    initGyroscope();
+  }
+</script>

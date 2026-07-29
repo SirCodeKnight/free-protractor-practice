@@ -1,0 +1,72 @@
+---
+import AngleDisplay from './AngleDisplay.astro';
+import ModeSwitcher from './ModeSwitcher.astro';
+import ScreenProtractor from './ScreenProtractor.astro';
+import GyroscopeProtractor from './GyroscopeProtractor.astro';
+import CameraProtractor from './CameraProtractor.astro';
+---
+
+<div
+  id="protractor-tool"
+  class="flex flex-col items-center bg-[var(--color-canvas)] elevation-4"
+  style="border-radius: var(--radius-lg); padding: var(--spacing-xl); gap: var(--spacing-lg);"
+>
+  <!-- Angle Display -->
+  <AngleDisplay />
+
+  <!-- Mode Switcher -->
+  <ModeSwitcher />
+
+  <!-- Panels -->
+  <div class="w-full" id="protractor-panels">
+    <ScreenProtractor />
+    <GyroscopeProtractor />
+    <CameraProtractor />
+  </div>
+</div>
+
+<script>
+  // Mode switching logic
+  const tabs = document.querySelectorAll<HTMLButtonElement>('#mode-switcher [role="tab"]');
+  const panels = ['screen', 'gyroscope', 'camera'];
+
+  function switchMode(mode: string) {
+    panels.forEach((p) => {
+      const panel = document.getElementById(`panel-${p}`);
+      if (panel) {
+        panel.classList.toggle('hidden', p !== mode);
+        panel.classList.toggle('flex', p === mode);
+      }
+    });
+
+    tabs.forEach((tab) => {
+      const isActive = tab.dataset.mode === mode;
+      tab.setAttribute('aria-selected', String(isActive));
+      if (isActive) {
+        tab.classList.remove('bg-[var(--color-canvas)]', 'text-[var(--color-body)]');
+        tab.classList.add('bg-[var(--color-ink)]', 'text-[var(--color-on-primary)]');
+      } else {
+        tab.classList.add('bg-[var(--color-canvas)]', 'text-[var(--color-body)]');
+        tab.classList.remove('bg-[var(--color-ink)]', 'text-[var(--color-on-primary)]');
+      }
+    });
+
+    // Reset angle display for new mode
+    const angleValue = document.getElementById('angle-value');
+    const levelIndicator = document.getElementById('level-indicator');
+    if (mode !== 'screen') {
+      if (angleValue) angleValue.textContent = '0.0°';
+      if (levelIndicator) levelIndicator.style.display = 'none';
+    }
+
+    // Dispatch custom event for mode-specific initialization
+    document.dispatchEvent(new CustomEvent('protractor-mode-change', { detail: mode }));
+  }
+
+  tabs.forEach((tab) => {
+    tab.addEventListener('click', () => {
+      const mode = tab.dataset.mode;
+      if (mode) switchMode(mode);
+    });
+  });
+</script>

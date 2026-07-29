@@ -1,0 +1,100 @@
+---
+export interface FAQItem {
+  question: string;
+  answer: string;
+}
+
+export interface Props {
+  items: FAQItem[];
+}
+
+const { items } = Astro.props;
+
+// Generate JSON-LD for FAQPage schema
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: items.map((item) => ({
+    '@type': 'Question',
+    name: item.question,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: item.answer,
+    },
+  })),
+};
+---
+
+<div id="faq">
+  <div class="flex flex-col" style="gap: var(--spacing-xs);">
+    {items.map((item, i) => (
+      <div class="border border-[var(--color-hairline)] rounded-[var(--radius-md)] bg-[var(--color-canvas)] elevation-2 overflow-hidden" data-faq-item>
+        <button
+          class="w-full flex items-center justify-between text-left bg-transparent border-none cursor-pointer body-md-strong text-[var(--color-ink)] transition-colors hover:bg-[var(--color-canvas-soft)]"
+          style="padding: var(--spacing-md) var(--spacing-lg);"
+          aria-expanded="false"
+          aria-controls={`faq-answer-${i}`}
+          data-faq-toggle
+          type="button"
+        >
+          <span>{item.question}</span>
+          <svg
+            class="shrink-0 transition-transform duration-200"
+            width="16"
+            height="16"
+            viewBox="0 0 16 16"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            data-faq-chevron
+          >
+            <polyline points="4 6 8 10 12 6" />
+          </svg>
+        </button>
+        <div
+          id={`faq-answer-${i}`}
+          class="overflow-hidden transition-all duration-200 ease-in-out"
+          style="max-height: 0; opacity: 0;"
+          data-faq-content
+          role="region"
+        >
+          <p class="body-md text-[var(--color-body)] m-0" style="padding: 0 var(--spacing-lg) var(--spacing-lg);">
+            {item.answer}
+          </p>
+        </div>
+      </div>
+    ))}
+  </div>
+</div>
+
+<!-- FAQPage JSON-LD -->
+<script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+
+<script>
+  document.querySelectorAll('[data-faq-toggle]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const item = btn.closest('[data-faq-item]');
+      const content = item?.querySelector('[data-faq-content]') as HTMLElement | null;
+      const chevron = item?.querySelector('[data-faq-chevron]') as HTMLElement | null;
+      const expanded = btn.getAttribute('aria-expanded') === 'true';
+
+      if (content) {
+        if (expanded) {
+          content.style.maxHeight = '0';
+          content.style.opacity = '0';
+        } else {
+          content.style.maxHeight = content.scrollHeight + 'px';
+          content.style.opacity = '1';
+        }
+      }
+
+      if (chevron) {
+        chevron.style.transform = expanded ? 'rotate(0deg)' : 'rotate(180deg)';
+      }
+
+      btn.setAttribute('aria-expanded', String(!expanded));
+    });
+  });
+</script>

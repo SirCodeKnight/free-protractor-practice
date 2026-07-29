@@ -1,0 +1,21 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="404 – Page Not Found | Protractor.tool" description="The page you're looking for doesn't exist." noindex={true}>
+  <section class="flex flex-col items-center justify-center text-center" style="min-height: 60vh; padding: var(--spacing-4xl) var(--spacing-lg);">
+    <div class="flex flex-col items-center" style="gap: var(--spacing-lg); max-width: 480px;">
+      <span class="text-[var(--color-hairline)]" style="font-family: var(--font-sans); font-size: 120px; font-weight: 600; line-height: 1; letter-spacing: -6px;">
+        404
+      </span>
+      <h1 class="display-lg text-[var(--color-ink)]">Page not found.</h1>
+      <p class="body-lg text-[var(--color-body)]">
+        The page you're looking for doesn't exist or has been moved. Let's get you back on track.
+      </p>
+      <div class="flex flex-wrap items-center justify-center" style="gap: var(--spacing-sm);">
+        <a href="/" class="btn-primary no-underline">Go Home</a>
+        <a href="/contact" class="btn-secondary no-underline">Contact Us</a>
+      </div>
+    </div>
+  </section>
+</Layout>

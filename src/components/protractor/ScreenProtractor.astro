@@ -1,0 +1,356 @@
+---
+---
+
+<div id="panel-screen" class="flex flex-col items-center" style="gap: var(--spacing-lg);" role="tabpanel" aria-labelledby="tab-screen">
+  <!-- SVG Protractor Canvas -->
+  <div class="relative w-full flex items-center justify-center" style="max-width: min(100%, 55vh); aspect-ratio: 1;">
+    <svg
+      id="protractor-svg"
+      viewBox="0 0 560 560"
+      class="w-full h-full select-none"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-label="Interactive protractor. Click and drag to set angle arms."
+      role="img"
+    >
+      <!-- Outer circle -->
+      <circle cx="280" cy="280" r="260" fill="none" stroke="var(--color-hairline)" stroke-width="1" />
+      <circle cx="280" cy="280" r="240" fill="none" stroke="var(--color-hairline)" stroke-width="0.5" />
+
+      <!-- Degree marks -->
+      <g id="protractor-marks"></g>
+
+      <!-- Degree labels -->
+      <g id="protractor-labels" class="caption-mono" fill="var(--color-mute)" style="font-size: 10px;"></g>
+
+      <!-- Grid (optional, toggled) -->
+      <g id="protractor-grid" class="hidden"></g>
+
+      <!-- Arm 1 (fixed reference — right / 0°) -->
+      <line
+        id="arm-1"
+        x1="280" y1="280" x2="520" y2="280"
+        stroke="var(--color-link)"
+        stroke-width="2.5"
+        stroke-linecap="round"
+      />
+      <!-- Arm 1 handle -->
+      <circle id="handle-1" cx="520" cy="280" r="12" fill="var(--color-link)" opacity="0.2" class="cursor-grab" />
+      <circle cx="520" cy="280" r="5" fill="var(--color-link)" id="handle-1-dot" class="cursor-grab" />
+
+      <!-- Arm 2 (draggable) -->
+      <line
+        id="arm-2"
+        x1="280" y1="280" x2="460" y2="120"
+        stroke="var(--color-gradient-preview-start)"
+        stroke-width="2.5"
+        stroke-linecap="round"
+      />
+      <!-- Arm 2 handle -->
+      <circle id="handle-2" cx="460" cy="120" r="12" fill="var(--color-gradient-preview-start)" opacity="0.2" class="cursor-grab" />
+      <circle cx="460" cy="120" r="5" fill="var(--color-gradient-preview-start)" id="handle-2-dot" class="cursor-grab" />
+
+      <!-- Arc showing the measured angle -->
+      <path id="angle-arc" fill="none" stroke="var(--color-link)" stroke-width="1.5" opacity="0.3" />
+      <path id="angle-arc-fill" fill="var(--color-link)" opacity="0.06" />
+
+      <!-- Center point -->
+      <circle cx="280" cy="280" r="4" fill="var(--color-ink)" />
+      <circle cx="280" cy="280" r="8" fill="var(--color-ink)" opacity="0.1" />
+    </svg>
+  </div>
+
+  <!-- Controls -->
+  <div class="flex flex-wrap items-center justify-center" style="gap: var(--spacing-sm);">
+    <!-- Manual angle input -->
+    <div class="flex items-center" style="gap: var(--spacing-xs);">
+      <label for="manual-angle" class="caption-mono text-[var(--color-mute)]">ANGLE</label>
+      <input
+        type="number"
+        id="manual-angle"
+        min="0"
+        max="360"
+        step="0.1"
+        value="0"
+        class="body-sm text-[var(--color-ink)] bg-[var(--color-canvas)] border border-[var(--color-hairline)] text-center"
+        style="width: 80px; height: 32px; border-radius: var(--radius-sm); padding: 0 var(--spacing-xs);"
+        aria-label="Set angle manually in degrees"
+      />
+      <span class="caption text-[var(--color-mute)]">°</span>
+    </div>
+
+    <!-- Snap toggle -->
+    <button
+      id="snap-toggle"
+      class="btn-secondary-sm"
+      type="button"
+      aria-pressed="false"
+    >
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.2">
+        <rect x="1" y="1" width="5" height="5" /><rect x="8" y="1" width="5" height="5" />
+        <rect x="1" y="8" width="5" height="5" /><rect x="8" y="8" width="5" height="5" />
+      </svg>
+      Snap
+    </button>
+
+    <!-- Reset -->
+    <button id="reset-protractor" class="btn-secondary-sm" type="button">
+      Reset
+    </button>
+  </div>
+
+  <p class="caption text-[var(--color-mute)] text-center">
+    Drag the arms to measure angles. Use mouse wheel for ±1° fine-tuning. Keyboard: Arrow keys adjust by 1°.
+  </p>
+</div>
+
+<script>
+  // ─── Screen Protractor Logic ───
+  const svg = document.getElementById('protractor-svg') as SVGSVGElement | null;
+  if (!svg) throw new Error('Protractor SVG not found');
+
+  const CX = 280, CY = 280, RADIUS = 240;
+
+  // Elements
+  const arm1 = document.getElementById('arm-1') as SVGLineElement;
+  const arm2 = document.getElementById('arm-2') as SVGLineElement;
+  const handle1 = document.getElementById('handle-1') as SVGCircleElement;
+  const handle1Dot = document.getElementById('handle-1-dot') as SVGCircleElement;
+  const handle2 = document.getElementById('handle-2') as SVGCircleElement;
+  const handle2Dot = document.getElementById('handle-2-dot') as SVGCircleElement;
+  const angleArc = document.getElementById('angle-arc') as SVGPathElement;
+  const angleArcFill = document.getElementById('angle-arc-fill') as SVGPathElement;
+  const angleValue = document.getElementById('angle-value');
+  const levelIndicator = document.getElementById('level-indicator');
+  const manualInput = document.getElementById('manual-angle') as HTMLInputElement;
+  const snapToggle = document.getElementById('snap-toggle');
+  const resetBtn = document.getElementById('reset-protractor');
+
+  // State
+  let angle1 = 0; // radians
+  let angle2 = -Math.PI / 4; // radians (~45°)
+  let dragging: 'arm1' | 'arm2' | null = null;
+  let snapEnabled = false;
+
+  // Draw degree marks
+  const marksGroup = document.getElementById('protractor-marks')!;
+  const labelsGroup = document.getElementById('protractor-labels')!;
+
+  for (let deg = 0; deg < 360; deg++) {
+    const rad = (deg * Math.PI) / 180;
+    const isMajor = deg % 10 === 0;
+    const isMinor = deg % 5 === 0;
+    const inner = isMajor ? RADIUS - 16 : isMinor ? RADIUS - 10 : RADIUS - 6;
+    const outer = RADIUS;
+
+    const x1 = CX + inner * Math.cos(rad);
+    const y1 = CY - inner * Math.sin(rad);
+    const x2 = CX + outer * Math.cos(rad);
+    const y2 = CY - outer * Math.sin(rad);
+
+    const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+    line.setAttribute('x1', String(x1));
+    line.setAttribute('y1', String(y1));
+    line.setAttribute('x2', String(x2));
+    line.setAttribute('y2', String(y2));
+    line.setAttribute('stroke', 'var(--color-hairline-strong)');
+    line.setAttribute('stroke-width', isMajor ? '1' : '0.5');
+    if (!isMajor && !isMinor) line.setAttribute('opacity', '0.3');
+    marksGroup.appendChild(line);
+
+    if (deg % 30 === 0) {
+      const labelR = RADIUS - 28;
+      const lx = CX + labelR * Math.cos(rad);
+      const ly = CY - labelR * Math.sin(rad);
+      const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+      text.setAttribute('x', String(lx));
+      text.setAttribute('y', String(ly));
+      text.setAttribute('text-anchor', 'middle');
+      text.setAttribute('dominant-baseline', 'central');
+      text.textContent = String(deg) + '°';
+      labelsGroup.appendChild(text);
+    }
+  }
+
+  function posFromAngle(angle: number, r = RADIUS) {
+    return { x: CX + r * Math.cos(angle), y: CY - r * Math.sin(angle) };
+  }
+
+  function angleBetween(a1: number, a2: number): number {
+    let diff = a2 - a1;
+    while (diff < 0) diff += 2 * Math.PI;
+    while (diff >= 2 * Math.PI) diff -= 2 * Math.PI;
+    return diff;
+  }
+
+  function describeArc(startAngle: number, endAngle: number, r: number): string {
+    let sweep = angleBetween(startAngle, endAngle);
+    const largeArc = sweep > Math.PI ? 1 : 0;
+    const start = posFromAngle(startAngle, r);
+    const end = posFromAngle(endAngle, r);
+    return `M ${start.x} ${start.y} A ${r} ${r} 0 ${largeArc} 0 ${end.x} ${end.y}`;
+  }
+
+  function describeArcFill(startAngle: number, endAngle: number, r: number): string {
+    const arcPath = describeArc(startAngle, endAngle, r);
+    return `M ${CX} ${CY} L ${posFromAngle(startAngle, r).x} ${posFromAngle(startAngle, r).y} ${arcPath.substring(arcPath.indexOf('A'))} L ${CX} ${CY} Z`;
+  }
+
+  function updateDisplay() {
+    const p1 = posFromAngle(angle1);
+    const p2 = posFromAngle(angle2);
+
+    // Update arms
+    arm1.setAttribute('x2', String(p1.x));
+    arm1.setAttribute('y2', String(p1.y));
+    handle1.setAttribute('cx', String(p1.x));
+    handle1.setAttribute('cy', String(p1.y));
+    handle1Dot.setAttribute('cx', String(p1.x));
+    handle1Dot.setAttribute('cy', String(p1.y));
+
+    arm2.setAttribute('x2', String(p2.x));
+    arm2.setAttribute('y2', String(p2.y));
+    handle2.setAttribute('cx', String(p2.x));
+    handle2.setAttribute('cy', String(p2.y));
+    handle2Dot.setAttribute('cx', String(p2.x));
+    handle2Dot.setAttribute('cy', String(p2.y));
+
+    // Calculate angle in degrees
+    let deg = angleBetween(angle1, angle2) * (180 / Math.PI);
+    deg = Math.round(deg * 10) / 10;
+
+    // Update arc
+    const arcR = 60;
+    angleArc.setAttribute('d', describeArc(angle1, angle2, arcR));
+    angleArcFill.setAttribute('d', describeArcFill(angle1, angle2, arcR));
+
+    // Update display
+    if (angleValue) angleValue.textContent = deg.toFixed(1) + '°';
+    if (manualInput) manualInput.value = deg.toFixed(1);
+
+    // Level indicator for cardinal angles
+    const cardinals = [0, 90, 180, 270, 360];
+    const isLevel = cardinals.some((c) => Math.abs(deg - c) < 1.5);
+    if (levelIndicator) {
+      levelIndicator.style.display = isLevel ? 'inline-flex' : 'none';
+    }
+  }
+
+  // SVG coordinate conversion
+  function getSVGPoint(e: MouseEvent | Touch): { x: number; y: number } {
+    const pt = svg!.createSVGPoint();
+    const clientX = 'clientX' in e ? e.clientX : (e as Touch).clientX;
+    const clientY = 'clientY' in e ? e.clientY : (e as Touch).clientY;
+    pt.x = clientX;
+    pt.y = clientY;
+    const ctm = svg!.getScreenCTM()?.inverse();
+    if (!ctm) return { x: 0, y: 0 };
+    const svgPt = pt.matrixTransform(ctm);
+    return { x: svgPt.x, y: svgPt.y };
+  }
+
+  function angleFromPoint(x: number, y: number): number {
+    return Math.atan2(-(y - CY), x - CX);
+  }
+
+  function snapAngle(rad: number): number {
+    if (!snapEnabled) return rad;
+    const deg = (rad * 180) / Math.PI;
+    const snapped = Math.round(deg / 5) * 5;
+    return (snapped * Math.PI) / 180;
+  }
+
+  // Mouse events
+  function onPointerDown(e: MouseEvent | TouchEvent) {
+    e.preventDefault();
+    const point = 'touches' in e ? getSVGPoint(e.touches[0]) : getSVGPoint(e as MouseEvent);
+    const a1p = posFromAngle(angle1);
+    const a2p = posFromAngle(angle2);
+    const d1 = Math.hypot(point.x - a1p.x, point.y - a1p.y);
+    const d2 = Math.hypot(point.x - a2p.x, point.y - a2p.y);
+
+    if (d1 < 30 || d2 < 30) {
+      dragging = d1 < d2 ? 'arm1' : 'arm2';
+    } else {
+      // Click on empty area — move arm2
+      dragging = 'arm2';
+      angle2 = snapAngle(angleFromPoint(point.x, point.y));
+      updateDisplay();
+    }
+  }
+
+  function onPointerMove(e: MouseEvent | TouchEvent) {
+    if (!dragging) return;
+    e.preventDefault();
+    const point = 'touches' in e ? getSVGPoint(e.touches[0]) : getSVGPoint(e as MouseEvent);
+    const newAngle = snapAngle(angleFromPoint(point.x, point.y));
+
+    if (dragging === 'arm1') angle1 = newAngle;
+    else angle2 = newAngle;
+
+    updateDisplay();
+  }
+
+  function onPointerUp() {
+    dragging = null;
+  }
+
+  svg.addEventListener('mousedown', onPointerDown);
+  svg.addEventListener('touchstart', onPointerDown, { passive: false });
+  window.addEventListener('mousemove', onPointerMove);
+  window.addEventListener('touchmove', onPointerMove, { passive: false });
+  window.addEventListener('mouseup', onPointerUp);
+  window.addEventListener('touchend', onPointerUp);
+
+  // Mouse wheel for fine-tuning
+  svg.addEventListener('wheel', (e) => {
+    e.preventDefault();
+    const delta = e.deltaY > 0 ? -1 : 1;
+    angle2 += (delta * Math.PI) / 180;
+    updateDisplay();
+  }, { passive: false });
+
+  // Keyboard controls
+  svg.setAttribute('tabindex', '0');
+  svg.addEventListener('keydown', (e) => {
+    const step = e.shiftKey ? 10 : 1;
+    if (e.key === 'ArrowRight' || e.key === 'ArrowUp') {
+      e.preventDefault();
+      angle2 += (step * Math.PI) / 180;
+      updateDisplay();
+    } else if (e.key === 'ArrowLeft' || e.key === 'ArrowDown') {
+      e.preventDefault();
+      angle2 -= (step * Math.PI) / 180;
+      updateDisplay();
+    }
+  });
+
+  // Manual input
+  manualInput?.addEventListener('input', () => {
+    const deg = parseFloat(manualInput.value) || 0;
+    angle2 = angle1 + (deg * Math.PI) / 180;
+    updateDisplay();
+  });
+
+  // Snap toggle
+  snapToggle?.addEventListener('click', () => {
+    snapEnabled = !snapEnabled;
+    snapToggle.setAttribute('aria-pressed', String(snapEnabled));
+    if (snapEnabled) {
+      snapToggle.classList.remove('bg-[var(--color-canvas)]');
+      snapToggle.classList.add('bg-[var(--color-canvas-soft-2)]');
+    } else {
+      snapToggle.classList.add('bg-[var(--color-canvas)]');
+      snapToggle.classList.remove('bg-[var(--color-canvas-soft-2)]');
+    }
+  });
+
+  // Reset
+  resetBtn?.addEventListener('click', () => {
+    angle1 = 0;
+    angle2 = -Math.PI / 4;
+    updateDisplay();
+  });
+
+  // Initial draw
+  updateDisplay();
+</script>

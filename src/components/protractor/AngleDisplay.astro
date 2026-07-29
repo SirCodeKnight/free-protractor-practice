@@ -1,0 +1,28 @@
+---
+---
+
+<div class="flex flex-col items-center" style="gap: var(--spacing-xs);" id="angle-display-wrapper">
+  <div class="relative flex items-center justify-center">
+    <span
+      id="angle-value"
+      class="tabular-nums text-[var(--color-ink)]"
+      style="font-family: var(--font-sans); font-size: 72px; font-weight: 600; line-height: 1; letter-spacing: -3.6px;"
+      aria-live="polite"
+      aria-atomic="true"
+    >
+      0.0°
+    </span>
+  </div>
+  <div class="flex items-center" style="gap: var(--spacing-xs);">
+    <span
+      id="level-indicator"
+      class="hidden items-center caption-mono text-[var(--color-cyan-deep)] bg-[var(--color-cyan-soft)] rounded-full"
+      style="padding: 2px var(--spacing-xs); gap: 4px;"
+      aria-live="polite"
+    >
+      <span class="inline-block w-2 h-2 rounded-full bg-[var(--color-cyan-deep)]"></span>
+      LEVEL
+    </span>
+    <span id="angle-label" class="caption-mono text-[var(--color-mute)]">DEGREES</span>
+  </div>
+</div>

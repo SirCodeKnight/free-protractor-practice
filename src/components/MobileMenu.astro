@@ -1,0 +1,87 @@
+---
+const currentPath = Astro.url.pathname;
+const navLinks = [
+  { href: '/', label: 'Home' },
+  { href: '/about', label: 'About' },
+  { href: '/blog', label: 'Blog' },
+  { href: '/contact', label: 'Contact' },
+];
+---
+
+<div
+  id="mobile-menu"
+  class="fixed inset-0 z-[60] bg-[var(--color-canvas)] translate-x-full transition-transform duration-300 ease-in-out md:hidden"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Navigation menu"
+>
+  <div class="flex items-center justify-between" style="height: 64px; padding: 0 var(--spacing-lg);">
+    <a href="/" class="flex items-center gap-2 no-underline" aria-label="Home">
+      <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+        <path d="M14 2C7.373 2 2 7.373 2 14h24C26 7.373 20.627 2 14 2Z" fill="var(--color-ink)" />
+        <circle cx="14" cy="14" r="3" fill="var(--color-link)" />
+        <line x1="14" y1="14" x2="24" y2="6" stroke="var(--color-link)" stroke-width="2" stroke-linecap="round" />
+      </svg>
+      <span class="body-sm-strong text-[var(--color-ink)]">Protractor<span class="text-[var(--color-mute)] font-normal">.tool</span></span>
+    </a>
+    <button
+      id="mobile-menu-close"
+      class="flex items-center justify-center w-10 h-10 rounded-[var(--radius-sm)] text-[var(--color-ink)] bg-transparent border-none cursor-pointer"
+      aria-label="Close menu"
+      type="button"
+    >
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+        <line x1="4" y1="4" x2="16" y2="16" />
+        <line x1="16" y1="4" x2="4" y2="16" />
+      </svg>
+    </button>
+  </div>
+
+  <div class="flex flex-col" style="padding: var(--spacing-lg); gap: var(--spacing-xs);">
+    {navLinks.map((link) => (
+      <a
+        href={link.href}
+        class:list={[
+          'display-sm no-underline py-3 border-b border-[var(--color-hairline)] transition-colors duration-150',
+          currentPath === link.href || (link.href !== '/' && currentPath.startsWith(link.href))
+            ? 'text-[var(--color-ink)]'
+            : 'text-[var(--color-body)] hover:text-[var(--color-ink)]',
+        ]}
+      >
+        {link.label}
+      </a>
+    ))}
+  </div>
+
+  <div style="padding: var(--spacing-lg); padding-top: var(--spacing-xl);">
+    <a href="/#protractor-tool" class="btn-primary no-underline w-full text-center">
+      Start Measuring
+    </a>
+  </div>
+</div>
+
+<script>
+  const closeBtn = document.getElementById('mobile-menu-close');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const menuBtn = document.getElementById('mobile-menu-btn');
+
+  function closeMenu() {
+    mobileMenu?.classList.add('translate-x-full');
+    mobileMenu?.classList.remove('translate-x-0');
+    menuBtn?.setAttribute('aria-expanded', 'false');
+  }
+
+  closeBtn?.addEventListener('click', closeMenu);
+
+  // Close on link click
+  mobileMenu?.querySelectorAll('a').forEach((link) => {
+    link.addEventListener('click', closeMenu);
+  });
+
+  // Close on Escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !mobileMenu?.classList.contains('translate-x-full')) {
+      closeMenu();
+    }
+  });
+</script>

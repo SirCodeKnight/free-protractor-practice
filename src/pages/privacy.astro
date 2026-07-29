@@ -1,0 +1,60 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ContentSection from '../components/ContentSection.astro';
+
+const title = 'Privacy Policy – Online Protractor Tool';
+const description = 'Privacy policy for the Online Protractor Tool. Learn how we handle your data, camera access, sensor data, and cookies.';
+---
+
+<Layout title={title} description={description}>
+  <ContentSection variant="light">
+    <div class="mx-auto" style="max-width: 720px;">
+      <p class="caption-mono text-[var(--color-mute)]" style="margin-bottom: var(--spacing-xs);">LEGAL</p>
+      <h1 class="display-xl text-[var(--color-ink)]" style="margin-bottom: var(--spacing-sm);">Privacy Policy</h1>
+      <p class="caption text-[var(--color-mute)]" style="margin-bottom: var(--spacing-xl);">Last updated: July 2026</p>
+
+      <div class="flex flex-col body-md text-[var(--color-body)]" style="gap: var(--spacing-lg);">
+        <div>
+          <h2 class="display-sm text-[var(--color-ink)]" style="margin-bottom: var(--spacing-xs);">Overview</h2>
+          <p>Online Protractor Tool ("we," "our," or "us") respects your privacy. This Privacy Policy explains how we collect, use, and protect your information when you use our website and tools.</p>
+        </div>
+
+        <div>
+          <h2 class="display-sm text-[var(--color-ink)]" style="margin-bottom: var(--spacing-xs);">Data We Collect</h2>
+          <p><strong>Camera and Sensor Data:</strong> When you use the Gyroscope or Camera modes, your device's sensor data and camera feed are processed entirely in your browser. We do not transmit, store, or access any camera images or sensor readings. All processing happens locally on your device.</p>
+          <p style="margin-top: var(--spacing-xs);"><strong>Analytics Data:</strong> We may use Google Analytics to collect anonymous usage statistics such as page views, device type, browser version, and geographic region. This data helps us improve the tool and is not linked to your personal identity.</p>
+          <p style="margin-top: var(--spacing-xs);"><strong>Contact Information:</strong> If you submit our contact form, we collect your name, email address, and message content to respond to your inquiry. This data is processed through Formspree and is not used for marketing.</p>
+        </div>
+
+        <div>
+          <h2 class="display-sm text-[var(--color-ink)]" style="margin-bottom: var(--spacing-xs);">Cookies</h2>
+          <p>We use minimal cookies for essential functionality:</p>
+          <ul class="flex flex-col pl-5" style="gap: var(--spacing-xxs); margin-top: var(--spacing-xs);">
+            <li><strong>Theme preference:</strong> Stored in localStorage (not a cookie) to remember your dark/light mode choice.</li>
+            <li><strong>Analytics cookies:</strong> Google Analytics may set cookies to distinguish unique users and track sessions.</li>
+          </ul>
+        </div>
+
+        <div>
+          <h2 class="display-sm text-[var(--color-ink)]" style="margin-bottom: var(--spacing-xs);">Third-Party Services</h2>
+          <p>We may use the following third-party services:</p>
+          <ul class="flex flex-col pl-5" style="gap: var(--spacing-xxs); margin-top: var(--spacing-xs);">
+            <li>Google Analytics — Anonymous usage statistics</li>
+            <li>Google Fonts — Font delivery (Inter, JetBrains Mono)</li>
+            <li>Formspree — Contact form processing</li>
+          </ul>
+        </div>
+
+        <div>
+          <h2 class="display-sm text-[var(--color-ink)]" style="margin-bottom: var(--spacing-xs);">Your Rights</h2>
+          <p>You have the right to access, correct, or delete your personal data. Since we collect minimal data, most users have no stored personal information. For inquiries, please <a href="/contact" class="text-[var(--color-link)] underline">contact us</a>.</p>
+        </div>
+
+        <div>
+          <h2 class="display-sm text-[var(--color-ink)]" style="margin-bottom: var(--spacing-xs);">Changes</h2>
+          <p>We may update this Privacy Policy periodically. Changes will be posted on this page with an updated "Last updated" date.</p>
+        </div>
+      </div>
+    </div>
+  </ContentSection>
+</Layout>

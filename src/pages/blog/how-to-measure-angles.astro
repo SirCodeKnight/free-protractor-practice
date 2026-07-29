@@ -1,0 +1,129 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import ContentSection from '../../components/ContentSection.astro';
+
+const title = 'How to Measure Angles Online — A Complete Guide | Protractor.tool';
+const description = 'Learn how to measure angles online using screen, gyroscope, and camera-based digital protractor tools. Step-by-step guide with tips for accuracy.';
+---
+
+<Layout title={title} description={description}>
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: 'How to Measure Angles Online — A Complete Guide',
+    description: description,
+    datePublished: '2026-07-20',
+    dateModified: '2026-07-20',
+    author: { '@type': 'Organization', name: 'Online Protractor Tool' },
+    publisher: { '@type': 'Organization', name: 'Online Protractor Tool' },
+  })} />
+
+  <ContentSection variant="light">
+    <div class="mx-auto" style="max-width: 720px;">
+      <a href="/blog" class="body-sm text-[var(--color-link)] no-underline hover:underline" style="margin-bottom: var(--spacing-md); display: inline-block;">← Back to Blog</a>
+
+      <div style="margin-bottom: var(--spacing-xl);">
+        <div class="flex items-center" style="gap: var(--spacing-xs); margin-bottom: var(--spacing-sm);">
+          <span class="caption-mono text-[var(--color-link)] bg-[var(--color-link-bg-soft)] rounded-full" style="padding: 2px var(--spacing-xs);">GUIDE</span>
+          <span class="caption text-[var(--color-mute)]">July 20, 2026 · 5 min read</span>
+        </div>
+        <h1 class="display-xl text-[var(--color-ink)]">How to Measure Angles Online — A Complete Guide.</h1>
+      </div>
+
+      <article class="flex flex-col body-md text-[var(--color-body)]" style="gap: var(--spacing-lg);">
+        <p class="body-lg">
+          Measuring angles has never been easier. With modern web technologies, you can accurately measure angles using nothing but your browser. This guide covers every method available to you — from on-screen protractors to phone sensors and camera-based measurement.
+        </p>
+
+        <div>
+          <h2 class="display-sm text-[var(--color-ink)]" style="margin-bottom: var(--spacing-xs);">Method 1: Screen-Based Protractor</h2>
+          <p>
+            The most straightforward method is using an on-screen digital protractor. This approach renders a circular or semicircular protractor dial directly in your browser using SVG (Scalable Vector Graphics). Two adjustable arms extend from a center point, and you drag them to the desired positions. The angle between the arms is calculated in real-time using the mathematical function <code>atan2()</code>, which computes the angle from the center to each arm endpoint.
+          </p>
+          <p style="margin-top: var(--spacing-xs);">
+            <strong>Best for:</strong> Digital design work, homework, quick reference measurements, and any scenario where you need to measure or verify an angle on your screen.
+          </p>
+          <p style="margin-top: var(--spacing-xs);">
+            <strong>Tips for accuracy:</strong> Use the mouse wheel for fine-tuning in ±1° increments. Enable snap-to-grid for common angles (multiples of 5°). For exact values, type the degree directly into the input field.
+          </p>
+        </div>
+
+        <div>
+          <h2 class="display-sm text-[var(--color-ink)]" style="margin-bottom: var(--spacing-xs);">Method 2: Gyroscope/Accelerometer-Based</h2>
+          <p>
+            Modern smartphones contain inertial measurement units (IMUs) with accelerometers and gyroscopes. These sensors detect the orientation and tilt of your device in three-dimensional space. Web browsers expose this data through the Device Orientation API, allowing websites to read your phone's tilt angle in real-time.
+          </p>
+          <p style="margin-top: var(--spacing-xs);">
+            When you hold your phone against a surface — a wall, a ramp, a roof beam — the sensor reports the angle of tilt relative to the Earth's gravity vector. This makes your phone an incredibly convenient angle meter that you always have in your pocket.
+          </p>
+          <p style="margin-top: var(--spacing-xs);">
+            <strong>Best for:</strong> Measuring real-world surfaces, slopes, inclines, and tilts. Construction, carpentry, and DIY projects.
+          </p>
+          <p style="margin-top: var(--spacing-xs);">
+            <strong>Tips for accuracy:</strong> Calibrate the sensor by tapping "Set Zero" on a known flat surface before measuring. Keep the phone steady for 1–2 seconds to get a stable reading. Note that sensor accuracy varies by device (typically ±0.5° to ±2°).
+          </p>
+        </div>
+
+        <div>
+          <h2 class="display-sm text-[var(--color-ink)]" style="margin-bottom: var(--spacing-xs);">Method 3: Camera-Based Measurement</h2>
+          <p>
+            The camera method lets you photograph (or upload an image of) an angle and measure it digitally. You place three points on the image: a vertex point where the two lines meet, and one endpoint for each arm. The tool then calculates the angle between the two arms using trigonometry.
+          </p>
+          <p style="margin-top: var(--spacing-xs);">
+            This approach is particularly powerful for measuring angles on objects you can't physically reach or touch — architectural features, distant structures, printed drawings, or photographs.
+          </p>
+          <p style="margin-top: var(--spacing-xs);">
+            <strong>Best for:</strong> Measuring angles in photographs, blueprints, architectural details, and physical objects.
+          </p>
+          <p style="margin-top: var(--spacing-xs);">
+            <strong>Tips for accuracy:</strong> Take photos perpendicular to the surface being measured (avoid perspective distortion). Zoom in for precise marker placement. Place markers at clearly defined intersections or edges.
+          </p>
+        </div>
+
+        <div>
+          <h2 class="display-sm text-[var(--color-ink)]" style="margin-bottom: var(--spacing-xs);">Choosing the Right Method</h2>
+          <p>Each method has its strengths:</p>
+          <div class="overflow-x-auto" style="margin-top: var(--spacing-sm);">
+            <table class="w-full border-collapse body-sm">
+              <thead>
+                <tr class="border-b border-[var(--color-hairline)]">
+                  <th class="text-left caption-mono text-[var(--color-mute)] bg-[var(--color-canvas-soft)]" style="padding: var(--spacing-xs) var(--spacing-sm);">METHOD</th>
+                  <th class="text-left caption-mono text-[var(--color-mute)] bg-[var(--color-canvas-soft)]" style="padding: var(--spacing-xs) var(--spacing-sm);">ACCURACY</th>
+                  <th class="text-left caption-mono text-[var(--color-mute)] bg-[var(--color-canvas-soft)]" style="padding: var(--spacing-xs) var(--spacing-sm);">BEST FOR</th>
+                  <th class="text-left caption-mono text-[var(--color-mute)] bg-[var(--color-canvas-soft)]" style="padding: var(--spacing-xs) var(--spacing-sm);">DEVICE</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="border-b border-[var(--color-hairline)]">
+                  <td style="padding: var(--spacing-xs) var(--spacing-sm);">Screen</td>
+                  <td style="padding: var(--spacing-xs) var(--spacing-sm);">0.1°</td>
+                  <td style="padding: var(--spacing-xs) var(--spacing-sm);">Digital/on-screen</td>
+                  <td style="padding: var(--spacing-xs) var(--spacing-sm);">Any</td>
+                </tr>
+                <tr class="border-b border-[var(--color-hairline)]">
+                  <td style="padding: var(--spacing-xs) var(--spacing-sm);">Gyroscope</td>
+                  <td style="padding: var(--spacing-xs) var(--spacing-sm);">±1°</td>
+                  <td style="padding: var(--spacing-xs) var(--spacing-sm);">Real-world surfaces</td>
+                  <td style="padding: var(--spacing-xs) var(--spacing-sm);">Mobile</td>
+                </tr>
+                <tr>
+                  <td style="padding: var(--spacing-xs) var(--spacing-sm);">Camera</td>
+                  <td style="padding: var(--spacing-xs) var(--spacing-sm);">~1°</td>
+                  <td style="padding: var(--spacing-xs) var(--spacing-sm);">Photos/objects</td>
+                  <td style="padding: var(--spacing-xs) var(--spacing-sm);">Any with camera</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div>
+          <h2 class="display-sm text-[var(--color-ink)]" style="margin-bottom: var(--spacing-xs);">Try It Now</h2>
+          <p>
+            Ready to measure your first angle? Head to our <a href="/" class="text-[var(--color-link)] underline">Online Protractor Tool</a> and start measuring instantly — no downloads, no sign-ups, no cost.
+          </p>
+        </div>
+      </article>
+    </div>
+  </ContentSection>
+</Layout>

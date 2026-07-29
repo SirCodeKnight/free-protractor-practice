@@ -1,0 +1,25 @@
+---
+export interface Props {
+  variant?: 'light' | 'dark' | 'soft';
+  id?: string;
+  class?: string;
+}
+
+const { variant = 'light', id, class: className } = Astro.props;
+
+const bgClasses = {
+  light: 'bg-[var(--color-canvas)]',
+  soft: 'bg-[var(--color-canvas-soft)]',
+  dark: 'bg-[var(--color-ink)] text-[var(--color-on-primary)]',
+};
+---
+
+<section
+  id={id}
+  class:list={[bgClasses[variant], className]}
+  style="padding: var(--spacing-5xl) var(--spacing-lg);"
+>
+  <div class="mx-auto" style="max-width: 1400px;">
+    <slot />
+  </div>
+</section>

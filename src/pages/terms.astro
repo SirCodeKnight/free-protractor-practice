@@ -1,0 +1,59 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ContentSection from '../components/ContentSection.astro';
+
+const title = 'Terms & Conditions – Online Protractor Tool';
+const description = 'Terms of service for the Online Protractor Tool. Read about usage terms, disclaimers, and intellectual property.';
+---
+
+<Layout title={title} description={description}>
+  <ContentSection variant="light">
+    <div class="mx-auto" style="max-width: 720px;">
+      <p class="caption-mono text-[var(--color-mute)]" style="margin-bottom: var(--spacing-xs);">LEGAL</p>
+      <h1 class="display-xl text-[var(--color-ink)]" style="margin-bottom: var(--spacing-sm);">Terms & Conditions</h1>
+      <p class="caption text-[var(--color-mute)]" style="margin-bottom: var(--spacing-xl);">Last updated: July 2026</p>
+
+      <div class="flex flex-col body-md text-[var(--color-body)]" style="gap: var(--spacing-lg);">
+        <div>
+          <h2 class="display-sm text-[var(--color-ink)]" style="margin-bottom: var(--spacing-xs);">Acceptance of Terms</h2>
+          <p>By accessing and using the Online Protractor Tool website ("Service"), you agree to be bound by these Terms & Conditions. If you do not agree to these terms, please do not use the Service.</p>
+        </div>
+
+        <div>
+          <h2 class="display-sm text-[var(--color-ink)]" style="margin-bottom: var(--spacing-xs);">Use of Service</h2>
+          <p>The Online Protractor Tool is provided free of charge for personal and commercial use. You may use the tool for educational, professional, or recreational purposes. You agree not to misuse the Service or attempt to interfere with its operation.</p>
+        </div>
+
+        <div>
+          <h2 class="display-sm text-[var(--color-ink)]" style="margin-bottom: var(--spacing-xs);">Accuracy Disclaimer</h2>
+          <p>While we strive for accuracy, the Online Protractor Tool is provided "as is" without warranty of any kind. Measurement accuracy depends on several factors including your device's hardware, screen calibration, sensor quality, and environmental conditions. <strong>Do not rely on this tool for safety-critical measurements.</strong> For professional applications requiring certified accuracy, please use calibrated measurement instruments.</p>
+        </div>
+
+        <div>
+          <h2 class="display-sm text-[var(--color-ink)]" style="margin-bottom: var(--spacing-xs);">Intellectual Property</h2>
+          <p>The Online Protractor Tool, including its design, code, and content, is owned by Online Protractor Tool. You may not copy, modify, distribute, or create derivative works of our proprietary materials without written permission.</p>
+        </div>
+
+        <div>
+          <h2 class="display-sm text-[var(--color-ink)]" style="margin-bottom: var(--spacing-xs);">Limitation of Liability</h2>
+          <p>In no event shall Online Protractor Tool be liable for any indirect, incidental, special, consequential, or punitive damages arising from your use of the Service. This includes, but is not limited to, damages for loss of profits, data, or other intangible losses resulting from inaccurate measurements or tool malfunction.</p>
+        </div>
+
+        <div>
+          <h2 class="display-sm text-[var(--color-ink)]" style="margin-bottom: var(--spacing-xs);">Device Permissions</h2>
+          <p>Certain features of the Service require access to your device's camera, motion sensors, or other hardware. These permissions are requested only when needed and can be revoked at any time through your browser or device settings. We do not access these features without your explicit consent.</p>
+        </div>
+
+        <div>
+          <h2 class="display-sm text-[var(--color-ink)]" style="margin-bottom: var(--spacing-xs);">Changes to Terms</h2>
+          <p>We reserve the right to modify these Terms & Conditions at any time. Changes will be posted on this page with an updated date. Continued use of the Service after changes constitutes acceptance of the revised terms.</p>
+        </div>
+
+        <div>
+          <h2 class="display-sm text-[var(--color-ink)]" style="margin-bottom: var(--spacing-xs);">Contact</h2>
+          <p>If you have any questions about these Terms & Conditions, please <a href="/contact" class="text-[var(--color-link)] underline">contact us</a>.</p>
+        </div>
+      </div>
+    </div>
+  </ContentSection>
+</Layout>
