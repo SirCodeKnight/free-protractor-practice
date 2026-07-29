@@ -1,5 +1,54 @@
+# ==========================================
+# Advanced SEO robots.txt for Web Protractor
+# ==========================================
+
+# ------------------------------------------
+# Default rules for all well-behaved bots
+# ------------------------------------------
 User-agent: *
 Allow: /
-Sitemap: https://webprotractor.netlify.app/sitemap-index.xml
+
+# Prevent crawling of non-public / backend paths
 Disallow: /admin/
 Disallow: /api/
+
+# Prevent crawling of URLs with query parameters (saves crawl budget & prevents duplicate content issues)
+Disallow: /*?*
+Disallow: /*&*
+
+# ------------------------------------------
+# Googlebot Specific Rules
+# ------------------------------------------
+# Ensure Googlebot-Image can crawl all image assets properly
+User-agent: Googlebot-Image
+Allow: /
+Allow: /*.jpg$
+Allow: /*.jpeg$
+Allow: /*.png$
+Allow: /*.gif$
+Allow: /*.webp$
+Allow: /*.svg$
+
+# ------------------------------------------
+# Block Bad Bots & Aggressive Scrapers
+# ------------------------------------------
+# These bots often waste server resources and crawl budget
+User-agent: BLEXBot
+Disallow: /
+
+User-agent: DataForSeoBot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
+
+User-agent: PetalBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+# ------------------------------------------
+# Sitemaps
+# ------------------------------------------
+Sitemap: https://webprotractor.netlify.app/sitemap-index.xml

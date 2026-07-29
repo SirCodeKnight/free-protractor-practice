@@ -97,6 +97,26 @@ const orgSchema = {
   logo: 'https://webprotractor.netlify.app/favicon.svg',
   description: 'Free online angle measurement tools for education, engineering, construction, and DIY projects.',
 };
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqItems.map(item => ({
+    '@type': 'Question',
+    name: item.question,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: item.answer
+    }
+  }))
+};
+
+const websiteSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'Online Protractor Tool',
+  url: 'https://webprotractor.netlify.app'
+};
 ---
 
 <Layout title={title} description={description}>
@@ -104,6 +124,8 @@ const orgSchema = {
   <script slot="head" type="application/ld+json" set:html={JSON.stringify(webAppSchema)} />
   <script slot="head" type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
   <script slot="head" type="application/ld+json" set:html={JSON.stringify(orgSchema)} />
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
 
   <!-- Hero Section -->
   <section class="relative overflow-hidden bg-[var(--color-canvas)]" style="padding: var(--spacing-4xl) var(--spacing-lg);">
@@ -235,6 +257,14 @@ const orgSchema = {
       </h2>
 
       <div class="flex flex-col body-md text-[var(--color-body)]" style="gap: var(--spacing-lg);">
+        <!-- AI Optimization Box -->
+        <div class="card-base elevation-1" style="background: var(--color-canvas-soft); border-left: 4px solid var(--color-primary); padding: var(--spacing-md);">
+          <h3 class="display-sm text-[var(--color-ink)]" style="margin-bottom: var(--spacing-xs);">Quick Answer</h3>
+          <p>
+            An <strong>online protractor</strong> is a free digital tool used to measure angles accurately directly in your web browser. It features a 360-degree interactive dial for measuring angles on your screen, a gyroscope mode for measuring physical slopes using your phone's sensors, and a camera mode to measure angles in photos. It is designed for students, teachers, engineers, and DIY enthusiasts who need a reliable angle measurement tool without downloading an app.
+          </p>
+        </div>
+
         <div>
           <h3 class="display-sm text-[var(--color-ink)]" style="margin-bottom: var(--spacing-xs);">What is an Online Protractor?</h3>
           <p>

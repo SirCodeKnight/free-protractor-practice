@@ -1,0 +1,102 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ContentSection from '../components/ContentSection.astro';
+
+const title = "Printable Protractor - Free High-Res PDF & Image";
+const description = "Download and print a free high-resolution 180-degree protractor. Perfect for students, teachers, and math practice. Standard actual size.";
+
+const ticks = Array.from({ length: 181 }, (_, i) => i);
+---
+<Layout title={title} description={description}>
+  <ContentSection>
+    <div class="max-w-3xl mx-auto text-center" style="margin-bottom: var(--spacing-xl);">
+      <p class="caption-mono text-[var(--color-mute)]" style="margin-bottom: var(--spacing-xs);">FREE PRINTABLE TOOL</p>
+      <h1 class="display-lg text-[var(--color-ink)]">Printable Protractor</h1>
+      <p class="body-lg text-[var(--color-body)] mt-4">
+        Need a physical protractor? Print this page at 100% scale (no margins) to get an accurate, high-resolution paper protractor for math practice and geometry.
+      </p>
+    </div>
+
+    <!-- Printable Area -->
+    <div class="flex justify-center my-12 print:my-0">
+      <div class="w-[600px] max-w-full bg-white p-8 rounded-xl shadow-sm print:shadow-none print:p-0 border border-gray-200 print:border-none">
+        <svg viewBox="0 0 400 220" class="w-full text-black" style="font-family: Arial, sans-serif;">
+          <!-- Main Arc -->
+          <path d="M 20 200 A 180 180 0 0 1 380 200" fill="rgba(0,0,0,0.02)" stroke="currentColor" stroke-width="2"/>
+          <line x1="20" y1="200" x2="380" y2="200" stroke="currentColor" stroke-width="2"/>
+          <!-- Inner Arc -->
+          <path d="M 60 200 A 140 140 0 0 1 340 200" fill="none" stroke="currentColor" stroke-width="1" stroke-dasharray="2 4"/>
+          <circle cx="200" cy="200" r="4" fill="currentColor"/>
+          
+          {ticks.map(tick => {
+            const angle = (tick * Math.PI) / 180;
+            const isMajor = tick % 10 === 0;
+            const isMedium = tick % 5 === 0 && !isMajor;
+            const length = isMajor ? 12 : isMedium ? 8 : 4;
+            
+            const x1 = 200 - 180 * Math.cos(angle);
+            const y1 = 200 - 180 * Math.sin(angle);
+            const x2 = 200 - (180 - length) * Math.cos(angle);
+            const y2 = 200 - (180 - length) * Math.sin(angle);
+            
+            const textRadiusOuter = 160;
+            const txO = 200 - textRadiusOuter * Math.cos(angle);
+            const tyO = 200 - textRadiusOuter * Math.sin(angle);
+
+            const textRadiusInner = 125;
+            const txI = 200 - textRadiusInner * Math.cos(angle);
+            const tyI = 200 - textRadiusInner * Math.sin(angle);
+
+            return (
+              <g>
+                <line x1={x1} y1={y1} x2={x2} y2={y2} stroke="currentColor" stroke-width={isMajor ? 1.5 : 1}/>
+                {isMajor && (
+                  <g>
+                    <!-- Outer scale (0-180 left to right) -->
+                    <text x={txO} y={tyO} text-anchor="middle" dominant-baseline="middle" font-size="8" transform={`rotate(${tick - 90}, ${txO}, ${tyO})`}>
+                      {tick}
+                    </text>
+                    <!-- Inner scale (180-0 left to right) -->
+                    <text x={txI} y={tyI} text-anchor="middle" dominant-baseline="middle" font-size="8" transform={`rotate(${tick - 90}, ${txI}, ${tyI})`}>
+                      {180 - tick}
+                    </text>
+                  </g>
+                )}
+              </g>
+            )
+          })}
+        </svg>
+      </div>
+    </div>
+
+    <div class="text-center print:hidden flex flex-col items-center gap-4">
+      <button onclick="window.print()" class="btn-primary flex items-center gap-2">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M6 9V2h12v7" />
+          <path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2" />
+          <path d="M6 14h12v8H6z" />
+        </svg>
+        Print Protractor
+      </button>
+      <p class="body-sm text-[var(--color-mute)]">
+        Tip: Set your printer scaling to "Default" or "100%" to ensure accurate measurements.
+      </p>
+    </div>
+  </ContentSection>
+  
+  <ContentSection variant="light" class="print:hidden">
+    <div class="max-w-3xl mx-auto">
+      <h2 class="display-md text-[var(--color-ink)] mb-6">How to use a printable protractor</h2>
+      <div class="body-md text-[var(--color-body)] flex flex-col gap-4">
+        <p>A printable protractor works exactly like a physical plastic or metal one. It is a fantastic free resource for students learning geometry, teachers preparing classroom materials, or anyone who needs to measure an angle in a pinch.</p>
+        <ol class="list-decimal pl-6 flex flex-col gap-2">
+          <li><strong>Print accurately:</strong> Click the print button above. In your print dialog settings, ensure that "Scale" is set to 100% or "Actual Size". Do not use "Fit to Page" as this will distort the size of the protractor.</li>
+          <li><strong>Cut it out:</strong> For best results, print on thicker paper or cardstock. Carefully cut along the straight bottom edge and the curved top edge.</li>
+          <li><strong>Place the vertex:</strong> Place the center mark (the small circle at the bottom straight edge) exactly over the vertex (the point) of the angle you want to measure.</li>
+          <li><strong>Align the baseline:</strong> Rotate the protractor so that the zero-degree line aligns perfectly with one of the lines forming the angle.</li>
+          <li><strong>Read the angle:</strong> Follow the other line of the angle to where it intersects the curved edge of the protractor. Read the number to get your measurement. Use the outer numbers if your angle opens to the right, and the inner numbers if it opens to the left.</li>
+        </ol>
+      </div>
+    </div>
+  </ContentSection>
+</Layout>
