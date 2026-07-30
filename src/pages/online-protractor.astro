@@ -109,54 +109,39 @@ const websiteSchema = {
 ---
 
 <Layout title={title} description={description} schemas={[webAppSchema, orgSchema, websiteSchema]}>
-  <!-- Hero Section -->
-  <section class="relative overflow-hidden bg-[var(--color-canvas)]" style="padding: var(--spacing-4xl) var(--spacing-lg);">
-    <!-- Mesh gradient backdrop -->
-    <div class="absolute inset-0 opacity-20 pointer-events-none" aria-hidden="true"
-      style="background: radial-gradient(ellipse at 20% 50%, #007cf0 0%, transparent 50%),
-             radial-gradient(ellipse at 80% 20%, #7928ca 0%, transparent 50%),
-             radial-gradient(ellipse at 60% 80%, #ff0080 0%, transparent 50%),
-             radial-gradient(ellipse at 40% 30%, #00dfd8 0%, transparent 50%),
-             radial-gradient(ellipse at 90% 60%, #f9cb28 0%, transparent 40%);"
+  <!-- Main Tool Section (Above the Fold) -->
+  <section id="protractor-tool-section" class="relative bg-[var(--color-canvas-soft)] pt-6 pb-12 px-4 md:px-8">
+    <!-- Mesh gradient backdrop for premium feel -->
+    <div class="absolute inset-0 opacity-[0.15] pointer-events-none" aria-hidden="true"
+      style="background: radial-gradient(ellipse at 50% 0%, #007cf0 0%, transparent 60%),
+             radial-gradient(ellipse at 80% 20%, #7928ca 0%, transparent 50%);"
     ></div>
 
-    <div class="relative mx-auto text-center flex flex-col items-center" style="max-width: 800px; gap: var(--spacing-lg);">
-      <div class="w-full mt-4 flex justify-center">
-        <Breadcrumbs items={[{ name: 'Online Protractor', url: '/online-protractor' }]} />
-      </div>
+    <div class="relative mx-auto" style="max-width: 1200px; z-index: 1;">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 items-center">
+        <!-- Left: Text Content -->
+        <div class="lg:col-span-5 flex flex-col justify-center text-center lg:text-left">
+          <div class="mb-4 flex justify-center lg:justify-start">
+            <Breadcrumbs items={[{ name: 'Online Protractor', url: '/online-protractor' }]} />
+          </div>
+          
+          <h1 class="display-lg text-[var(--color-ink)] mb-3">
+            Free Online Protractor
+          </h1>
+          <p class="body-lg text-[var(--color-body)]">
+            Measure angles accurately using your screen, device sensors, or camera. Works on any device instantly.
+          </p>
+        </div>
 
-      <!-- Eyebrow badge -->
-      <div class="inline-flex items-center caption-mono text-[var(--color-body)] bg-[var(--color-canvas-soft)] border border-[var(--color-hairline)]"
-        style="padding: var(--spacing-xxs) var(--spacing-sm); border-radius: var(--radius-full); gap: var(--spacing-xs);">
-        <span class="inline-block w-1.5 h-1.5 rounded-full bg-[var(--color-cyan-deep)]"></span>
-        FREE TOOL — NO DOWNLOAD REQUIRED
-      </div>
-
-      <h1 class="display-xl text-[var(--color-ink)]" style="max-width: 700px;">
-        Free Online Protractor – Digital Angle Measurement Tool.
-      </h1>
-
-      <p class="body-lg text-[var(--color-body)]" style="max-width: 560px;">
-        Measure angles accurately using your screen, phone sensors, or camera. Works on any device, any browser. Zero setup required.
-      </p>
-
-      <div class="flex flex-wrap items-center justify-center" style="gap: var(--spacing-sm);">
-        <a href="#protractor-tool" class="btn-primary no-underline">
-          Start Measuring
-        </a>
-        <a href="#how-it-works" class="btn-secondary no-underline">
-          Learn More
-        </a>
+        <!-- Right: Tool -->
+        <div class="lg:col-span-7 flex justify-center">
+          <div class="w-full elevation-3 rounded-2xl bg-[var(--color-canvas)] border border-[var(--color-hairline)] overflow-hidden">
+            <ProtractorTool />
+          </div>
+        </div>
       </div>
     </div>
   </section>
-
-  <!-- Protractor Tool Section -->
-  <ContentSection variant="soft" id="protractor-tool-section">
-    <div class="mx-auto" style="max-width: 700px;">
-      <ProtractorTool />
-    </div>
-  </ContentSection>
 
   <!-- Features Section -->
   <ContentSection variant="light" id="how-it-works">

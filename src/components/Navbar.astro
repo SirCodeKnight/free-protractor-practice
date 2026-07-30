@@ -8,7 +8,7 @@ const navLinks = [
 const currentPath = Astro.url.pathname;
 ---
 
-<nav class="fixed top-0 left-0 right-0 z-50 bg-[var(--color-canvas)] border-b border-[var(--color-hairline)]" style="height: 64px;" id="main-nav">
+<nav class="fixed top-0 left-0 right-0 z-50 bg-[var(--color-canvas)]/80 backdrop-blur-md border-b border-[var(--color-hairline)]" style="height: 64px;" id="main-nav">
   <div class="mx-auto flex items-center justify-between h-full" style="max-width: 1400px; padding: 0 var(--spacing-lg);">
     <!-- Logo -->
     <a href="/" class="flex items-center gap-2 no-underline" aria-label="Online Protractor Tool - Home">
@@ -17,7 +17,7 @@ const currentPath = Astro.url.pathname;
         <circle cx="14" cy="14" r="3" fill="var(--color-link)" />
         <line x1="14" y1="14" x2="24" y2="6" stroke="var(--color-link)" stroke-width="2" stroke-linecap="round" />
       </svg>
-      <span class="body-sm-strong text-[var(--color-ink)]">Protractor<span class="text-[var(--color-mute)] font-normal">.tool</span></span>
+      <span class="body-sm-strong text-[var(--color-ink)] tracking-tight">Web<span class="text-[var(--color-link)] font-medium">Protractor</span></span>
     </a>
 
     <!-- Desktop Nav Links -->
