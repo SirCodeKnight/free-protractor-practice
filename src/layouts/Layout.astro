@@ -14,9 +14,10 @@ export interface Props {
   type?: string;
   noindex?: boolean;
   schemas?: object[];
+  hideNav?: boolean;
 }
 
-const { title, description, canonicalUrl, ogImage, type, noindex, schemas } = Astro.props;
+const { title, description, canonicalUrl, ogImage, type, noindex, schemas, hideNav = false } = Astro.props;
 ---
 
 <!doctype html>
@@ -35,7 +36,7 @@ const { title, description, canonicalUrl, ogImage, type, noindex, schemas } = As
       schemas={schemas}
     />
 
-    <title>{title}</title>
+    <title>{title.includes('WebProtractor') ? title : `${title} | WebProtractor`}</title>
 
     <!-- Preconnect to Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -45,25 +46,25 @@ const { title, description, canonicalUrl, ogImage, type, noindex, schemas } = As
     <link
       rel="preload"
       as="style"
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&family=Caveat:wght@400..700&display=swap"
     />
     <link
       rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&family=Caveat:wght@400..700&display=swap"
       media="print"
       onload="this.media='all'"
     />
     <noscript>
       <link
         rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&family=Caveat:wght@400..700&display=swap"
       />
     </noscript>
 
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="apple-touch-icon" href="/favicon.svg" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon.ico" />
     <link rel="sitemap" href="/sitemap-index.xml" />
 
     <!-- Structured Data Slot -->
@@ -92,8 +93,8 @@ const { title, description, canonicalUrl, ogImage, type, noindex, schemas } = As
     </script>
   </head>
   <body class="flex flex-col min-h-dvh relative">
-    <Navbar />
-    <MobileMenu />
+    {!hideNav && <Navbar />}
+    {!hideNav && <MobileMenu />}
     <main class="flex-1 relative z-10">
       <slot />
     </main>

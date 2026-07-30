@@ -10,8 +10,31 @@ export interface Props {
 }
 
 const { title, category = "GEOMETRY", author = "SirCodeKnight", updatedAt = "Today", views = "10,000+" } = Astro.props;
+
+const articleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: title,
+  description: `${title} - A practical guide from WebProtractor covering essential geometry concepts and techniques.`,
+  author: {
+    '@type': 'Person',
+    name: author,
+  },
+  publisher: {
+    '@type': 'Organization',
+    name: 'WebProtractor',
+    logo: {
+      '@type': 'ImageObject',
+      url: 'https://webprotractor.netlify.app/favicon.svg',
+    },
+  },
+  mainEntityOfPage: {
+    '@type': 'WebPage',
+    '@id': `https://webprotractor.netlify.app${Astro.url.pathname}`,
+  },
+};
 ---
-<Layout title={title} description={`Read ${title} on our wikiHow inspired blog.`}>
+<Layout title={title} description={`${title} - A practical guide from WebProtractor covering essential geometry concepts and techniques.`} schemas={[articleSchema]} hideNav={true}>
 <div class="bg-white min-h-screen font-sans">
   <!-- WikiHow Style Top Header -->
   <header class="bg-[#9eb96e] text-white py-2 px-4 shadow-md sticky top-0 z-50">

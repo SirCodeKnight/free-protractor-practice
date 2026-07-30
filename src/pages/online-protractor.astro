@@ -6,7 +6,7 @@ import FAQ from '../components/FAQ.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
 import RelatedTools from '../components/RelatedTools.astro';
 
-const title = 'Free Online Protractor Tool – Measure Angles Accurately | Protractor.tool';
+const title = 'Free Online Protractor Tool – Measure Angles Accurately | WebProtractor';
 const description = 'Measure angles online with our free digital protractor tool. Use your phone\'s accelerometer, mouse, or camera. No download required. Accurate 0-360° measurement.';
 
 const faqItems = [
@@ -56,7 +56,7 @@ const faqItems = [
 const webAppSchema = {
   '@context': 'https://schema.org',
   '@type': 'WebApplication',
-  name: 'Online Protractor Tool',
+  name: 'WebProtractor',
   url: 'https://webprotractor.netlify.app/online-protractor',
   description: description,
   applicationCategory: 'UtilityApplication',
@@ -81,7 +81,7 @@ const webAppSchema = {
 const orgSchema = {
   '@context': 'https://schema.org',
   '@type': 'Organization',
-  name: 'Online Protractor Tool',
+  name: 'WebProtractor',
   url: 'https://webprotractor.netlify.app',
   logo: 'https://webprotractor.netlify.app/favicon.svg',
   description: 'Free online angle measurement tools for education, engineering, construction, and DIY projects.',
@@ -103,12 +103,12 @@ const faqSchema = {
 const websiteSchema = {
   '@context': 'https://schema.org',
   '@type': 'WebSite',
-  name: 'Online Protractor Tool',
+  name: 'WebProtractor',
   url: 'https://webprotractor.netlify.app'
 };
 ---
 
-<Layout title={title} description={description} schemas={[webAppSchema, orgSchema, faqSchema, websiteSchema]}>
+<Layout title={title} description={description} schemas={[webAppSchema, orgSchema, websiteSchema]}>
   <!-- Hero Section -->
   <section class="relative overflow-hidden bg-[var(--color-canvas)]" style="padding: var(--spacing-4xl) var(--spacing-lg);">
     <!-- Mesh gradient backdrop -->
