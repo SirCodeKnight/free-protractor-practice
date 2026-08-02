@@ -10,5 +10,19 @@ export default defineConfig({
   vite: {
     plugins: [tailwindcss()]
   },
-  integrations: [sitemap()]
+  integrations: [
+    sitemap({
+      changefreq: 'weekly',
+      priority: 0.8,
+      lastmod: new Date(),
+      serialize(item) {
+        // Boost priority for the home page
+        if (item.url === 'https://free-protractor-practice.vercel.app/') {
+          item.priority = 1.0;
+          item.changefreq = 'daily';
+        }
+        return item;
+      }
+    })
+  ]
 });
