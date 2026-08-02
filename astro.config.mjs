@@ -19,6 +19,7 @@ export default defineConfig({
         // Boost priority for the home page
         if (item.url === 'https://free-protractor-practice.vercel.app/') {
           item.priority = 1.0;
+          // @ts-ignore
           item.changefreq = 'daily';
         }
         return item;
