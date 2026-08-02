@@ -19,7 +19,7 @@ const {
   schemas = [],
 } = Astro.props;
 
-const siteUrl = 'https://webprotractor.netlify.app';
+const siteUrl = 'https://free-protractor-practice.vercel.app';
 const canonical = canonicalUrl || new URL(Astro.url.pathname, siteUrl).href;
 const ogImageUrl = ogImage.startsWith('http') ? ogImage : new URL(ogImage, siteUrl).href;
 ---

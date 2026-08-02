@@ -51,4 +51,4 @@ Disallow: /
 # ------------------------------------------
 # Sitemaps
 # ------------------------------------------
-Sitemap: https://webprotractor.netlify.app/sitemap-index.xml
+Sitemap: https://free-protractor-practice.vercel.app/sitemap-index.xml
